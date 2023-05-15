@@ -132,14 +132,14 @@ include "structuralAdminPage.php";
            
             <!-- ================ pending companies List ================= -->
             <div class="details">
-                            <style>
-                                /* .scroll{
-                                    overflow: scroll;
-                                } */
-                                .scroll::--webkit-scrollbar{
-                                    display:none;
-                                }
-                            </style>
+                <style>
+                    /* .scroll{
+                        overflow: scroll;
+                    } */
+                    .scroll::--webkit-scrollbar{
+                        display:none;
+                    }
+                </style>
 
                 <?php
                    $select_courses = mysqli_query($conn, "SELECT * FROM feedback ");
