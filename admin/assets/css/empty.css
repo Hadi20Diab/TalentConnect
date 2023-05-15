@@ -1,0 +1,77 @@
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/* =============== Globals ============== */
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+:root {
+  --white: #fff;
+  --black: #24292d;
+  --nav-main: #4590ef;
+  --switchers-main: #0b3cc1;
+  --gray: #f5f5f5; 
+  --black2: #999;
+  
+  
+  
+}
+
+
+.empty{
+   transform: translate(60%, 100%);
+ width: 60%;
+ padding: 7rem;
+
+ height: 10rem;
+ border-radius: 15px;
+ font-family:  Helvetica, sans-serif;
+ font-style: oblique;
+ font-size: 20px;
+ font-weight: 1000;
+ color: var(--nav-main);
+ color: var(--black);
+ 
+ background-image: linear-gradient(to bottom, var(--nav-main), rgb(255, 255, 255));
+ 
+} 
+       /* ====================== Responsive Design ========================== */
+@media (max-width: 1500px) {
+  .empty{
+      
+
+      width: 500px;
+ padding: 7rem;
+
+ 
+  }
+}    
+@media (max-width: 1400px) {
+   .empty{
+      
+
+      width: 80%;
+ padding: 4rem;
+ 
+
+
+  }
+}
+
+@media (max-width: 768px) {
+   .empty{
+      
+
+      width: 400px;
+      margin-left: -100px;
+      
+ padding: 3rem;
+
+ 
+}
+}
