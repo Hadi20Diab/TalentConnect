@@ -20,9 +20,6 @@ if(isset($_GET['vcid']) && isset($_GET['cname'])){
     $company_Logo=$fetch_company['company_Logo'];
     $company_Website=$fetch_company['company_Website'];
     $company_Linkedin=$fetch_company['company_Linkedin'];
-    $company_Twitter=$fetch_company['company_Twitter'];
-    $company_Facebook=$fetch_company['company_Facebook'];
-    $company_Instagram=$fetch_company['company_Instagram'];
     $company_About=$fetch_company['company_About'];
 
     echo'
@@ -68,22 +65,17 @@ if(isset($_GET['vcid']) && isset($_GET['cname'])){
             <h3>Contact</h3>
             <div class="contactLinks" style="margin-top: 10px;">
                 <i class="fad fa-duotone fa-browser"></i>
-                <a href="'. $company_Website .' " target="_blank">Visit Website</a>
+                <a href="https://'. $company_Website .' " target="_blank">Visit Website</a>
             </div>
             
             <div class="contactLinks" style="margin-top: 10px;">
                 <i class="fa fa-brands fa-linkedin"></i>
-                <a href="'. $company_Linkedin .' " target="_blank">View linkedin Profile</a>
+                <a href="https://'. $company_Linkedin .' " target="_blank">View linkedin Profile</a>
             </div>
 
             <div class="contactLinks" style="margin-top: 10px;">
                 <i class="fa-brands fa-instagram"></i>
-                <a href="tel:+'. $company_Instagram .' ">'. $company_Instagram .' </a>
-            </div>
-
-            <div class="contactLinks" style="margin-top: 10px;">
-                <i class="fa-brands fa-instagram"></i>
-                <a href="tel:+'. $company_PhoneNumber .' "> Call us: '. $company_PhoneNumber .' </a>
+                <a href="tel:+'. $company_Linkedin .' "> Call us: '. $company_PhoneNumber .' </a>
             </div>
         </div>
     </div>

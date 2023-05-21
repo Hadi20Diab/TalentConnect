@@ -18,7 +18,7 @@ include "structuralAdminPage.php";
                         ?>
                             <div>
                                 <div class="numbers"><?= $numbers_of_companys ; ?></div>
-                                <div class="cardName">Companys </div>
+                                <div class="cardName">Companies </div>
                             </div>
     
                             <div class="iconBx">
@@ -86,6 +86,7 @@ include "structuralAdminPage.php";
 
 ?>
 <!-- Chart -->
+<h2 style="padding: 30px;">System OverView</h2>
 <div class="ChartDIV">
   <style>
     #chartContainer {

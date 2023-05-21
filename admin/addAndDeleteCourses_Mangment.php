@@ -218,13 +218,9 @@ include "structuralAdminPage.php";
                             <option value="">->Course Creator <-</option>
                             ';
 
-                            $select_companies = mysqli_query($conn, "SELECT * FROM `company`");
+                            $select_companies = mysqli_query($conn, "SELECT company_Name FROM `company`");
                                 
-                            $fetch_companies = mysqli_fetch_assoc($select_companies);
-                            
-
-                                
-                            while ($fetch_company = mysqli_fetch_assoc($select_Companies)) {
+                            while ($fetch_company = mysqli_fetch_assoc($select_companies)) {
                                 echo"
                                     <option value=" . $fetch_company['company_Name'] . " > " .$fetch_company['company_Name']. " </option>
                                 ";
@@ -234,10 +230,10 @@ include "structuralAdminPage.php";
                     ?>  
                     </select>
                     <select name="course_category" id="" style="padding: 1.2rem;     width: 90%;     margin: 4% 5%;     border-radius: 0.8rem;">
-                            <option value="">->Course Creator <-</option>
+                            <option value="">->Course Category <-</option>
                     
                     <?php
-                            $select_categories = mysqli_query($conn, "SELECT * FROM `categories`");
+                            $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
                                 
                             while ($select_categoy = mysqli_fetch_assoc($select_categories)) {
                                 echo"
