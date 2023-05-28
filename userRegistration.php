@@ -3,31 +3,34 @@ include "connection.php";
 session_start();
 error_reporting(0);
 
-//if user logged in and be in home page , then we don't allow it to access again the login page because its already logged in
-//if(isset($_SESSION['user_id'])){  //if user id is set in the session, this means he registerd and its value in the sessino, then we redirect it to the home page and when logged in  user in home page and want to go again to login page , then he can't go to it because we write here that's if user id in session then redurect it to home page
-//  header('location:home.php');
-//}
+// if user logged in and be in home page , then we don't allow it to access again the login page because its already logged in
+if(isset($_SESSION['company_id'])){  //if company id is set in the session, this means he registerd and its value in the sessino, then we redirect it to the home page and when logged in to  home page and want to go again to login page , then he can't go to it because we write here that's if user id in session then redurect it to home page
+ header('location:company/home.php');
+}
+if(isset($_SESSION['university_ID'])){  //if user id is set in the session, this means he registerd and its value in the sessino, then we redirect it to the home page and when logged in to home page and want to go again to login page , then he can't go to it because we write here that's if user id in session then redurect it to home page
+ header('location:university/home.php');
+}
+if(isset($_SESSION['individual_ID'])){  //if user id is set in the session, this means he registerd and its value in the sessino, then we redirect it to the home page and when logged in to home page and want to go again to login page , then he can't go to it because we write here that's if user id in session then redurect it to home page
+ header('location:individual/home.php');
+}
 
 
 //this will be executed when we press on the sign up button
 if (isset($_POST['signup-btn'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['signup-username']);//we get the value of entered value by user fromn $_post by using this method in order to prevent the sql injection from hacker
+    // $username = mysqli_real_escape_string($conn, $_POST['signup-username']);//we get the value of entered value by user fromn $_post by using this method in order to prevent the sql injection from hacker
     $email = mysqli_real_escape_string($conn, $_POST['signup-email']);
     $password = mysqli_real_escape_string($conn, md5($_POST['signup-password'])); //we use md5 to encrypt the password that's user enetered it
     $passwordConf = mysqli_real_escape_string($conn, md5($_POST['passwordConf']));
 
-    $image= $_FILES['image']['name'];
-    $image_size = $_FILES['image']['size'];
-    $image_tmp_name = $_FILES['image']['tmp_name'];
-    // $image_folder = 'uploaded_img/'.$image;
+    // $image= $_FILES['image']['name'];
+    // $image_size = $_FILES['image']['size'];
+    // $image_tmp_name = $_FILES['image']['tmp_name'];
+    // // $image_folder = 'uploaded_img/'.$image;
 
-    //get the type of user
-    $type = $_POST['type'];
+    // //get the type of user
+    // $type = $_POST['type'];
 
 if ($type === 'company') {
-
-    $image_folder = 'images/companies_images/'.$image;
-
 
     //check if email aleardy exists in our database
     $resultemail = mysqli_query($conn, "SELECT company_Email FROM `company` WHERE email='$email'");
@@ -61,12 +64,11 @@ if ($type === 'company') {
             $sql = "INSERT INTO `company` (company_Name, company_Email, company_Password) VALUES ('$name', '$email', '$password')";
             $result = mysqli_query($conn, $sql);
             if ($result) {
-                $_POST['signup-username'] = '';
-                $_POST['signup-email'] = '';
-                $_POST['signup-password'] = '';
-                $_POST['passwordConf'] = '';
 
-                header("location: company/home.php?");
+                $_SESSION['company_id'] = $row['company_id'];
+                $_SESSION['company_Email'] = $row['company_Email'];
+
+                header("location: company/updateProfile.php");
 
             } else {  //if registration failed in database
                 
@@ -74,7 +76,7 @@ if ($type === 'company') {
                 echo '<div class="popup " id="popup">
                 <img src="admin/assets/imgs/error.jpg" >
                 <h2>Warning!</h2>
-                <p>User registration failed!</br> try again!</p>
+                <p>User registration failed!</br>Please try again!</p>
                 <button type="button" onclick="closePopup()">OK</button>
             </div>
             
@@ -118,10 +120,11 @@ if ($type === 'company') {
           $sql = "INSERT INTO `universities` (university_Name, 	university_Email, university_password, university_Logo) VALUES ('$name', '$email', '$password','$image')";
           $result = mysqli_query($conn, $sql);
           if ($result) {
-            $_POST['signup-username'] = '';
-            $_POST['signup-email'] = '';
-            $_POST['signup-password'] = '';
-            $_POST['passwordConf'] = '';
+
+            $_SESSION['university_ID'] = $row['university_ID'];
+            $_SESSION['university_Email'] = $row['university_Email'];
+
+            header("location: university/updateProfile.php");
   
               
           } else {  //if registration failed in database
@@ -167,14 +170,14 @@ if ($type === 'company') {
         
          ';
       } else {
-          $sql = "INSERT INTO `individuals` (individual_UserName, individual_Name, individual_Email, individual_Password, individual_photo) VALUES ('$username','$name' '$email', '$password','$image')";
+          $sql = "INSERT INTO `individuals` (individual_Name, individual_Email, individual_Password, individual_photo) VALUES ('$name' '$email', '$password','$image')";
           $result = mysqli_query($conn, $sql);
           if ($result) {
-            $_POST['signup-username'] = '';
-            $_POST['signup-email'] = '';
-            $_POST['signup-password'] = '';
-            $_POST['passwordConf'] = '';
-  
+
+            $_SESSION['individual_ID'] = $row['individual_ID'];
+            $_SESSION['individual_Email'] = $row['individual_Email'];
+
+            header("location: individual/updateProfile.php");
               
               
           } else {  //if registration failed in database
@@ -203,7 +206,7 @@ if(isset($_POST['login-btn'])){
  $type = $_POST['type'];
 //if the user is a customer
 if ($type === 'company') {
-    $result = mysqli_query($conn, "SELECT * FROM `company` WHERE (company_Email='$email' OR company_UserName='$email') AND company_Password= '$password'");
+    $result = mysqli_query($conn, "SELECT * FROM `company` WHERE company_Email='$email' AND company_Password= '$password'");
     $check_user = mysqli_num_rows($result);
 
     if ($check_user > 0) {   //if the user registerd in our website, then he successfully logged in
@@ -211,14 +214,12 @@ if ($type === 'company') {
         $status = $row['company_Status'];
 
         if ($status == 'approved') {
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['email'] = $row['email'];
+            $_SESSION['company_id'] = $row['company_id'];
+            $_SESSION['company_Email'] = $row['company_Email'];
 
-            $_POST['email'] = '';  //we put it empty to remove the writing of user from inputs fields when hi logged in successfully
-            $_POST['password'] = '';
-
-            header("location: company/home.php");
+            // $_POST['email'] = '';  //we put it empty to remove the writing of user from inputs fields when hi logged in successfully
+            // $_POST['password'] = '';
+            header("location: company/companyDashboard.php");
         }
         elseif($status == 'blocked'){
           echo '<div class="popup " id="popup">
@@ -255,7 +256,6 @@ if ($type === 'company') {
        ';
     }
 
-    //username ma3 l email lzm ykunu unique ma3 ba3d , msh mn la7elun.
 }
 
 //if the user is university
@@ -319,7 +319,7 @@ else{ //if user didn't registered in our website
 
 elseif($type === 'individuals'){
   
-  $result = mysqli_query($conn, "SELECT * FROM `individuals` WHERE (individual_Email='$email' OR individual_UserName='$email') AND individual_Password= '$password'");
+  $result = mysqli_query($conn, "SELECT * FROM `individuals` WHERE individual_Email='$email' AND individual_Password= '$password'");
   $check_delivery = mysqli_num_rows($result);
 
   if($check_delivery > 0){   //if the user registerd in our website, then he successfully logged in
@@ -532,7 +532,7 @@ elseif($type === 'individuals'){
             <h2 class="title" style='color: var(--switchers-main)'>Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Email or username" value="<?php echo  $_POST['email']; ?>" name="email" required/>
+              <input type="text" placeholder="Email" value="<?php echo  $_POST['email']; ?>" name="email" required/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
@@ -571,10 +571,10 @@ elseif($type === 'individuals'){
           </form>
           <form action="userRegistration.php" enctype="multipart/form-data" method="post" class="sign-up-form">
             <h2 class="title" style='color: var(--switchers-main)'>Sign up</h2>
-            <div class="input-field">
+            <!-- <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" value="<?php echo  $_POST['signup-username']?>" name="signup-username" required/>
-            </div>
+              <input type="text" placeholder="Username" value="<?php //echo  $_POST['signup-username']?>" name="signup-username" required/>
+            </div> -->
             <div class="input-field">
               <i class="fas fa-envelope"></i>
               <input type="email" pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'  placeholder="Email"  value="<?php echo  $_POST['signup-email']?>" name="signup-email" required/>

@@ -1,0 +1,120 @@
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/* =============== Globals ============== */
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+:root {
+  --white: #fff;
+  --black: #24292d;
+  --nav-main: #4590ef;
+  --switchers-main: #0b3cc1;
+  --gray: #f5f5f5; 
+  --black2: #999;
+  
+  
+  
+}
+
+/* ================== Order Details List ============== */
+.details {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
+    /* margin-top: 10px; */
+    
+    /*left: 5rem;
+    right: 5rem; */
+
+  }
+  
+  .details .recentOrders {
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    
+    width: 100%;
+    
+  }
+  
+  .details .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .cardHeader h2 {
+    font-weight: 600;
+    color: var(--nav-main);
+  }
+  .cardHeader .btn {
+    position: relative;
+    padding: 5px 10px;
+    background: var(--nav-main);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px;
+  }
+  
+  .details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    
+    
+  }
+  .details table thead td {
+    font-weight: 600;
+  }
+  .details .recentOrders table tr {
+    color: black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .details .recentOrders table tr:last-child {
+    border-bottom: none;
+  }
+  .details .recentOrders table tbody tr:hover {
+    background: var(--nav-main);
+    color: var(--white);
+  }
+  .details .recentOrders table tr td {
+    padding: 10px;
+  }
+  .details .recentOrders table tr td:last-child {
+    text-align: start;
+  }
+  .details .recentOrders table tr td:nth-child(2) {
+    text-align: center;
+  }
+  .details .recentOrders table tr td:nth-child(3) {
+    text-align: center;
+  }
+  
+  
+  .imgBx {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  .imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
