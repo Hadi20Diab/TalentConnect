@@ -30,8 +30,8 @@ include "structuralAdminPage.php";
                             </div>
     
                             <div class="iconBx">
-                                <i class="fa fa-books-medical"></i>
-                                <i class="fa fas fa-regular fa-books"></i>
+                                <!-- <i class="fa fa-books-medical"></i> -->
+                                <i class="fa fa-duotone fa-book-atlas"></i>
                             </div>
                     </div>
 
@@ -82,7 +82,7 @@ include "structuralAdminPage.php";
                             </div>
 
                             <div class="iconBx">
-                                <i class="fa fa-books-medical"></i>
+                                <i class="fa fa-duotone fa-user-plus"></i>
                             </div>
                     </div>
 
@@ -95,8 +95,7 @@ include "structuralAdminPage.php";
                             </div>
 
                             <div class="iconBx">
-                                <i class="fa fa-books-medical"></i>
-                                <i class="fa fas fa-regular fa-books"></i>
+                                <i class="fa fa-duotone fa-user-minus"></i>
                             </div>
                     </div>
 

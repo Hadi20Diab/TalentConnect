@@ -136,13 +136,13 @@ include "structuralAdminPage.php";
    
                 $course_name = mysqli_real_escape_string($conn,$_POST['course_name']);
                 $course_description = mysqli_real_escape_string($conn,$_POST['course_description'] );
-                $course_instructor =mysqli_real_escape_string($conn, $_POST['course_instructor'] );     
+                // $course_instructor =mysqli_real_escape_string($conn, $_POST['course_instructor'] );     
                 $course_creator = mysqli_real_escape_string($conn, $_POST['course_creator'] );
                 $course_category = mysqli_real_escape_string($conn, $_POST['course_category'] );
                 $course_fees = mysqli_real_escape_string($conn, $_POST['course_fees'] );
            
 
-                $insert_course = mysqli_query($conn, "INSERT INTO `courses`(course_name,course_description	, course_instructor , course_creator, course_category, course_fees) VALUES('$course_name', '$course_description', '$course_instructor', '$course_creator', '$course_category', '$course_fees')");
+                $insert_course = mysqli_query($conn, "INSERT INTO `courses`(course_name,course_description , course_creator, course_category, course_fees) VALUES('$course_name', '$course_description', '$course_creator', '$course_category', '$course_fees')");
                         
                 echo '
                         <div class="popup" id="popup" style="background: rgb(226, 252, 214);">
@@ -300,7 +300,7 @@ include "structuralAdminPage.php";
                             <thead>
                                 <tr>
                                     <td>Course Name</td>
-                                    <td>Instructor</td>
+                                    <!-- <td>Instructor</td> -->
                                     <td>Creator</td>
                                     <td>Category</td>
                                     <td>Fees</td>
@@ -361,9 +361,9 @@ include "structuralAdminPage.php";
                                             </p>
                                         </td>
                                         
-                                        <td>
-                                            <?= $fetch_course['course_Instructor']; ?>
-                                        </td>
+                                        <!-- <td>
+                                            < $fetch_course['course_Instructor']; ?>
+                                        </td> -->
                                         <td>
                                             <?= $fetch_course['course_Creator']; ?>
                                         </td>

@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.companyProfileContainer{
+    width: 70%;
+    margin: 5% 10%;
+    padding: 5%;
+    border: none 1px black;
+    border-radius: 30px;
+    box-shadow: 5px 10px 18px #ffffff;
+    background-color: whitesmoke;
+}
+.companyHeader{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.companyLogo{
+    text-align: center;
+    margin: 30px 0;
+}
+.logoIMG{
+    height: 230px;
+    border-radius: 50%;
+    text-align: center;
+}
+.DIV{
+    margin: 30px 0;
+}
+.contactInformation{
+    margin: 5% 0;
+    height: 100%;
+    width: 250px;
+}
+.about h3{
+    margin-bottom: 20px;
+}
+.about p, .jobsCardContainer, .contactLinks{
+    margin: 0 2%;
+}

@@ -7,10 +7,10 @@ include "structuralAdminPage.php";
 
  //alert window for confirm the deletion of a courses
 //  if(isset($_GET['rid'])){
-//     $rid= $_GET['rid'];
+//     $course_id= $_GET['rid'];
  
     
-//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$rid'");
+//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$course_id'");
  
 //  header("location:companiesView_Mangment.php");
 
@@ -237,7 +237,7 @@ if(isset($_GET['cid'])){
                              
                                 while ($fetch_pending_companies = mysqli_fetch_assoc($select_courses)) {
                                     $number +=1; 
-                                    $rid = $fetch_pending_companies['course_ID'];
+                                    $course_id = $fetch_pending_companies['course_ID'];
 
                                     
                         ?>
@@ -253,7 +253,7 @@ if(isset($_GET['cid'])){
                                 <td><?= $fetch_pending_companies['course_Creator']; ?></td>
                                 <td><?= $fetch_pending_companies['course_Fees']; ?>$</td>
 
-                                <td><a href="viewCompanyProfile.php?vcid=<?= $rid; ?>&cname=<?= $fetch_pending_companies['company_Name']; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td><a href="viewCourse.php?course_id=<?= $course_id; ?>" class="foods-btn" target="_blank">View</a></td>
                             </tr>
 
                             <!-- Script Search Bar -->

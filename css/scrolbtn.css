@@ -1,0 +1,36 @@
+#scrolbtn{ /* style of button that's will go us to beginning of page */
+    width:70px;
+    height: 70px;
+    border: none;
+	transition: 1s;
+    
+    border-radius: 50%;
+    cursor: pointer;
+    position:fixed;
+    bottom: 15px;
+    right:15px;
+    z-index: 1000;
+    color: rgb(40, 4, 41);
+   background-color: var(--switchers-main);
+   text-decoration: none;
+   font-size:2em;
+   font-weight:600;
+   
+    display:none; /*firstly,it is  hidden 
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    transition: 0.3s ease;*/
+ }  
+ #scrolbtn:hover{
+   /* width: 90px;
+    height: 90px;*/
+    background: var(--switchers-main);
+    transform: scale(1.2);
+    color: #fff;
+    font-weight: 600;
+   box-shadow: 0 5px 25px rgba(1,1,1, 15%); 
+
+ } 
+
+ 

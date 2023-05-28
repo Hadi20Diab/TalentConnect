@@ -2,12 +2,11 @@
 
 require_once '../connection.php';
 
+if(isset($_GET['company_id']) && isset($_GET['companyName'])){
+    $company_id = $_GET['company_id'];
+    $companyName = $_GET['companyName'];
 
-if(isset($_GET['vcid']) && isset($_GET['cname'])){
-    $vcid = $_GET['vcid'];
-    $cname = $_GET['cname'];
-
-    $selectCompany = mysqli_query($conn,"SELECT * FROM company WHERE company_id='$vcid' ");
+    $selectCompany = mysqli_query($conn,"SELECT * FROM company WHERE company_id='$company_id' ");
 
     $fetch_company = mysqli_fetch_assoc($selectCompany);
 
@@ -52,7 +51,7 @@ if(isset($_GET['vcid']) && isset($_GET['cname'])){
     
             <div calss="companyLogo">
         
-                <img src="assets/imgs/ '. $company_Website .' " class="logoIMG" alt="">
+                <img src="../images/companies_universities_images/'. $company_Logo .' " class="logoIMG" alt="">
         
                 <h2>' . $company_Name . '</h2>
                 ';
@@ -144,7 +143,11 @@ if(isset($_GET['vcid']) && isset($_GET['cname'])){
 
 
 
-<!-- 
+
+
+
+
+
 
 
         

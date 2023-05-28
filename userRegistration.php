@@ -27,8 +27,8 @@ if (isset($_POST['signup-btn'])) {
     // $image_tmp_name = $_FILES['image']['tmp_name'];
     // // $image_folder = 'uploaded_img/'.$image;
 
-    // //get the type of user
-    // $type = $_POST['type'];
+    //get the type of user
+    $type = $_POST['type'];
 
 if ($type === 'company') {
 
@@ -150,14 +150,12 @@ if ($type === 'company') {
   
     if ($check_email > 0) {  //we check if email is already exits
       echo '<div class="popup " id="popup">
-      <img src="admin/assets/imgs/error.jpg" >
-      <h2>Warning!</h2>
-      <p>Email already exists!</br> Register with new email!</p>
-      <button type="button" onclick="closePopup()">OK</button>
-  </div>
-  
-      
-       ';
+                <img src="admin/assets/imgs/error.jpg" >
+                <h2>Warning!</h2>
+                <p>Email already exists!</br> Register with new email!</p>
+                <button type="button" onclick="closePopup()">OK</button>
+            </div>
+      ';
     } else {
       if ($password !== $passwordConf) {
         echo '<div class="popup " id="popup">
@@ -166,25 +164,24 @@ if ($type === 'company') {
                   <p>confirm password not matched!</br> Try again!</p>
                   <button type="button" onclick="closePopup()">OK</button>
               </div>
-    
-        
          ';
       } else {
-          $sql = "INSERT INTO `individuals` (individual_Name, individual_Email, individual_Password, individual_photo) VALUES ('$name' '$email', '$password','$image')";
+          $sql = "INSERT INTO `individuals` (individual_Name, individual_Email, individual_Password, 	individual_Status) VALUES ('$name', '$email', '$password', 'pending')";
           $result = mysqli_query($conn, $sql);
-          if ($result) {
 
+          if ($result) {
+            
             $_SESSION['individual_ID'] = $row['individual_ID'];
             $_SESSION['individual_Email'] = $row['individual_Email'];
-
+            
+            
             header("location: individual/updateProfile.php");
-              
               
           } else {  //if registration failed in database
             echo '<div class="popup " id="popup">
                       <img src="admin/assets/imgs/error.jpg" >
                       <h2>Warning!</h2>
-                      <p>delivery registration failed!</br> try again!</p>
+                      <p>Individual registration failed!</br> try again!</p>
                       <button type="button" onclick="closePopup()">OK</button>
                   </div>
             ';
@@ -315,18 +312,18 @@ else{ //if user didn't registered in our website
   
 }
 
-//if the user a delivery man
+//if the user a individual man
 
 elseif($type === 'individuals'){
   
   $result = mysqli_query($conn, "SELECT * FROM `individuals` WHERE individual_Email='$email' AND individual_Password= '$password'");
-  $check_delivery = mysqli_num_rows($result);
+  $check_individual = mysqli_num_rows($result);
 
-  if($check_delivery > 0){   //if the user registerd in our website, then he successfully logged in
+  if($check_individual > 0){   //if the user registerd in our website, then he successfully logged in
     $row = mysqli_fetch_assoc($result);
     $status = $row['individual_Status'];
     if ($status === 'approved') {
-        $_SESSION['individual_ID'] = $row['id'];
+        $_SESSION['individual_ID'] = $row['individual_ID'];
         $_POST['individual_Email'] = '';  //we put it empty to remove the writing of user from inputs fields when hi logged in successfully
         $_POST['individual_Password'] = '';
 
@@ -334,24 +331,22 @@ elseif($type === 'individuals'){
     } elseif ($status === "blocked") {
         
         echo '<div class="popup " id="popup">
-      <img src="admin/assets/imgs/error.jpg" >
-      <h2>Oooops!</h2>
-      <p>Your account has been blocked from accessing our services. <br> Please contact our support team for assistance.</p>
-      <button type="button" onclick="closePopup()">OK</button>
-  </div>
+                <img src="admin/assets/imgs/error.jpg" >
+                <h2>Oooops!</h2>
+                <p>Your account has been blocked from accessing our services. <br> Please contact our support team for assistance.</p>
+                <button type="button" onclick="closePopup()">OK</button>
+              </div>
   
       
        ';
     } elseif($status === "pending") {
       
       echo '<div class="popup " id="popup">
-      <img src="admin/assets/imgs/pending.png" >
-      <h2>Our team is currently reviewing your account details. </h2>
-      <p>Please stay tuned for further instructions or contact our support team for more information.</p>
-      <button type="button" onclick="closePopup()">OK</button>
-  </div>
-  
-      
+              <img src="admin/assets/imgs/pending.png" >
+              <h2>Our team is currently reviewing your account details. </h2>
+              <p>Please stay tuned for further instructions or contact our support team for more information.</p>
+              <button type="button" onclick="closePopup()">OK</button>
+            </div>    
        ';
     }
   }
