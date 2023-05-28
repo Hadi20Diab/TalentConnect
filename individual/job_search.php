@@ -19,8 +19,10 @@
 
 
         <div class="SelectRow">
+            <input type="text" name="jobName" id="" placeholder="Job Name">
 
             <label for="jobType">Job Type:</label>
+
             <select id="select-state" name="jobType">
               <option value="">All</option>
               <option value="Full-time">Full-time</option>
@@ -88,6 +90,7 @@
     // addmin DELELT 
     if(isset($_GET['jobType'])){
         
+        $jobName = $_GET['jobName'];
         $jobType = $_GET['jobType'];
         $category = $_GET['category'];
         $job_Country = $_GET['job_Country'];
@@ -100,6 +103,9 @@
         //     $conditions[] = "company_name LIKE '%$search%'";
         // }
 
+        if(!empty($jobName)){
+            $conditions[] = "jobName = '$jobName' ";
+        }
         if(!empty($jobType)){
             $conditions[] = "jobType = '$jobType' ";
         }
