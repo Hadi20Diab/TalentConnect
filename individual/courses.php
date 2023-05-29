@@ -128,18 +128,14 @@
                 $bookmarkResult = mysqli_query($conn, $bookmarkSql);
                 $bookmarkCount=mysqli_num_rows($bookmarkResult);
 
-                    if(!$bookmarkCount){
-                        echo mysqli_error($conn);
-                        echo 'asdfasd';
-                    }
 
                     if(!$bookmarkCount>0){ //is not saved before 
                         echo'
-                            <a  class="addBookmark" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+                            <a  class="addBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
 
                                 <i class="fa-regular fa-bookmark fa-2xl" ></i>
                             </a>
-                            <a class="removeBookmark hide" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+                            <a class="removeBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
         
                                 <i class="fas fa-bookmark fa-2xl" ></i>
                             </a>
@@ -147,11 +143,11 @@
                     }
                     else{ // is saved before 
                         echo'
-                        <a  class="addBookmark hide" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+                        <a  class="addBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
 
                             <i class="fa-regular fa-bookmark fa-2xl" ></i>
                         </a>
-                        <a class="removeBookmark" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+                        <a class="removeBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
 
                             <i class="fas fa-bookmark fa-2xl" ></i>
                         </a>
@@ -254,6 +250,9 @@
     }
     .box{
         position: relative;
+    }
+    .hide{
+        display: none;
     }
     .addBookmark, .removeBookmark{
         position: absolute;

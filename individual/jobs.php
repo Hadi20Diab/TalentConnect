@@ -175,11 +175,11 @@ $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_
 
                 if(!$bookmarkCount>0){ //is not saved before 
                     echo'
-                        <a  class="addBookmark" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+                        <a  class="addBookmark" href="../addRemoveBookmark.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
 
                             <i class="fa-regular fa-bookmark fa-2xl" ></i>
                         </a>
-                        <a class="removeBookmark hide" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+                        <a class="removeBookmark hide" href="../addRemoveBookmark.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
     
                             <i class="fas fa-bookmark fa-2xl" ></i>
                         </a>
@@ -187,11 +187,11 @@ $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_
                 }
                 else{ // is saved before 
                     echo'
-                    <a  class="addBookmark hide" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+                    <a  class="addBookmark hide" href="../addRemoveBookmark.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
 
                         <i class="fa-regular fa-bookmark fa-2xl" ></i>
                     </a>
-                    <a class="removeBookmark" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+                    <a class="removeBookmark" href="../addRemoveBookmark.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
 
                         <i class="fas fa-bookmark fa-2xl" ></i>
                     </a>
