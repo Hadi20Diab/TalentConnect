@@ -82,12 +82,12 @@ if( isset($_GET['save_bookmarks'])  ){
          "SELECT * FROM courses 
          INNER JOIN universities ON universities.university_Name  = courses.course_Creator
 
-         WHERE video_ID = $video_id");
+         WHERE course_ID = $course_id and course_Status = 'active' LIMIT 1");
 
 
             if(mysqli_num_rows($select_course) > 0){
                $fetch_course = mysqli_fetch_assoc($select_course);
-               $LogoName = $fetch_course['company_Logo'];
+               $LogoName = $fetch_course['university_Logo'];
             }
          
          }

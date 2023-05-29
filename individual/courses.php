@@ -90,6 +90,16 @@
                 }
 
 
+                $select_university = mysqli_query($conn,"SELECT * FROM universities WHERE university_Name = '$course_Creator'");
+                // $fetch_company = mysqli_fetch_assoc($select_company);
+                
+                if ($select_university) {
+                    $fetch_university = mysqli_fetch_assoc($select_university);
+                } else {
+                    echo "Error: " . mysqli_error($conn);
+                }
+
+
 
             // } 
         // }
@@ -100,15 +110,21 @@
                 <div class="box">
                     <div class="course_Creator">
 
-                        <?php if ($fetch_company && $fetch_company['company_Logo']) :
-                            $LogoName=$fetch_company['company_Logo'];
+                        <?php if ($fetch_company && $fetch_company['company_Logo']) {
+                                $LogoName=$fetch_company['company_Logo'];
                             ?>
+                                <a href="../viewCompanyProfile.php?vcid=<?= $fetch_company['company_id']; ?>&cname=<?= $fetch_company['company_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
                                 <img src="../images/companies_universities_images/<?= $fetch_company['company_Logo']; ?>" alt="">
-                        <?php else : ?>
-                                <img src="../images/companies_universities_images/default_logo.jpg" alt="">
-                        <?php endif; ?>
+                                
+                        <?php }else {
+                            ?>
+                                <a href="../viewUniversityProfile.php?vcid=<?= $fetch_university['university_ID']; ?>&cname=<?= $fetch_university['university_Name'] ?>" class="row" style="text-decoration: none;" target="_blank">
 
-
+                                <img src="../images/companies_universities_images/<?= $fetch_university['university_Logo']; ?>" alt="">
+                        <?php
+                            } 
+                        ?>
+                                </a>
                         <div>
                             <h3><?= $fetch_course['course_Creator'] ?></h3>
                             <span><?= $fetch_course['course_Launch_Date']; ?></span>

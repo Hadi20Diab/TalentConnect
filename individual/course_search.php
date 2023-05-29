@@ -19,7 +19,7 @@
 
 
         <div class="SelectRow">
-            <input type="text" name="jobPosition" id="" placeholder="Job Name">
+            <input type="text" name="jobPosition" id="" placeholder="Course Name">
 
             <label for="jobType">Job Type:</label>
 
