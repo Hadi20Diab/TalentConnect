@@ -19,8 +19,10 @@
 
 
         <div class="SelectRow">
+            <input type="text" name="jobPosition" id="" placeholder="Job Name">
 
             <label for="jobType">Job Type:</label>
+
             <select id="select-state" name="jobType">
               <option value="">All</option>
               <option value="Full-time">Full-time</option>
@@ -88,6 +90,7 @@
     // addmin DELELT 
     if(isset($_GET['jobType'])){
         
+        $jobPosition = $_GET['jobPosition'];
         $jobType = $_GET['jobType'];
         $category = $_GET['category'];
         $job_Country = $_GET['job_Country'];
@@ -100,6 +103,10 @@
         //     $conditions[] = "company_name LIKE '%$search%'";
         // }
 
+        if(!empty($jobPosition)){
+            $conditions[] = "position LIKE '%$jobPosition%' ";
+            
+        }
         if(!empty($jobType)){
             $conditions[] = "jobType = '$jobType' ";
         }
@@ -209,9 +216,9 @@
 
 
     </div>
-    <title>Search Courses</title>
+    <title>Search Jobs</title>
     <script>
-        document.getElementById("Courses-LeftBar").classList.add("actived");
+        document.getElementById("Job-LeftBar").classList.add("actived");
     </script>
 
 </body>

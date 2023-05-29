@@ -19,7 +19,7 @@
 
 
         <div class="SelectRow">
-            <input type="text" name="jobName" id="" placeholder="Job Name">
+            <input type="text" name="jobPosition" id="" placeholder="Job Name">
 
             <label for="jobType">Job Type:</label>
 
@@ -90,7 +90,7 @@
     // addmin DELELT 
     if(isset($_GET['jobType'])){
         
-        $jobName = $_GET['jobName'];
+        $jobPosition = $_GET['jobPosition'];
         $jobType = $_GET['jobType'];
         $category = $_GET['category'];
         $job_Country = $_GET['job_Country'];
@@ -103,8 +103,9 @@
         //     $conditions[] = "company_name LIKE '%$search%'";
         // }
 
-        if(!empty($jobName)){
-            $conditions[] = "jobName = '$jobName' ";
+        if(!empty($jobPosition)){
+            $conditions[] = "position LIKE '%$jobPosition%' ";
+            
         }
         if(!empty($jobType)){
             $conditions[] = "jobType = '$jobType' ";
@@ -137,21 +138,58 @@
         
 
         while ($fetch_jobs = mysqli_fetch_assoc($result)) {
+            $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND job_ID = " . $fetch_jobs['job_id'];
 
+            // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_jobs['company_id'] ";
+            $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+            $bookmarkCount=mysqli_num_rows($bookmarkResult);
             echo'
 
                 <div class="classjobCard">
                     <div class="row">
-                        <a class="companyTitle" href="viewCompanyProfile.php?vcid= '.$fetch_jobs['company_id'].' &cname= '.$fetch_jobs['company_Name'].' " target="_blank">
-                            <img src="'. $fetch_jobs['company_Logo'] .'" alt="">
+                        <a class="companyTitle" href="../viewCompanyProfile.php?vcid= '.$fetch_jobs['company_id'].' &cname= '.$fetch_jobs['company_Name'].' " target="_blank">
+                            <img src="../images/companies_universities_images/'. $fetch_jobs['company_Logo'] .'" alt="">
                             <h3>'. $fetch_jobs['company_Name'] .'</h3>
                         </a>
-                        <i class="fa-regular fa-bookmark fa-xl"></i>
-                    
+                ';
+                if(!$bookmarkCount>0){ //is not saved before 
+                    echo'
+                        <a  class="addBookmark" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+
+                            <i class="fa-regular fa-bookmark fa-xl" ></i>
+                        </a>
+                        <a class="removeBookmark hide" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+    
+                            <i class="fas fa-bookmark fa-xl" ></i>
+                        </a>
+                    ';
+                }
+                else{ // is saved before 
+                    echo'
+                    <a  class="addBookmark hide" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+
+                        <i class="fa-regular fa-bookmark fa-xl" ></i>
+                    </a>
+                    <a class="removeBookmark" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+
+                        <i class="fas fa-bookmark fa-xl" ></i>
+                    </a>
+                ';
+                }
+
+                   
+                
+                echo'
                     </div>
                     <div class="row">
                         <h4>'. $fetch_jobs['position'] .' - '. $fetch_jobs['jobType'] .' - '. $fetch_jobs['job_Country'] .'</h4>
                         <h4>Dead Line: '. $fetch_jobs['applicationDeadline'] .'</h4>
+                    </div>
+
+                    <div class="row">
+                        <a class="companyTitle" href="../viewJob.php?job_id= '.$fetch_jobs['job_id'].' " target="_blank">
+                            Read Details
+                        </a>
                     </div>
 
                 </div>
@@ -197,6 +235,9 @@
         border-radius: 50%;
         margin-right: 20px;
    }
+   .hide{
+    display:none;
+   }
 </style>
 <link rel="stylesheet" href="../css/all_icon.css">
 
@@ -218,6 +259,34 @@
     <title>Search Jobs</title>
     <script>
         document.getElementById("Job-LeftBar").classList.add("actived");
+
+        //  script for Bookmarks add-remove 
+
+        var addBookmarks = document.querySelectorAll('.addBookmark');
+        var removeBookmarks = document.querySelectorAll('.removeBookmark');
+
+        // Add event listener for each addBookmark button
+        addBookmarks.forEach(function(addBookmark) {
+        addBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var removeBookmark = parent.querySelector('.removeBookmark');
+
+            removeBookmark.style.display = 'block'; // Show the removeBookmark element
+            this.style.display = 'none'; // Hide the addBookmark element
+        });
+        });
+
+        // Add event listener for each removeBookmark button
+        removeBookmarks.forEach(function(removeBookmark) {
+        removeBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var addBookmark = parent.querySelector('.addBookmark');
+
+            addBookmark.style.display = 'block'; // Show the addBookmark element
+            this.style.display = 'none'; // Hide the removeBookmark element
+        });
+        });
+
     </script>
 
 </body>

@@ -75,11 +75,9 @@ $jobs_count = mysqli_num_rows($select_jobs);
 
 
             $select_deliveredBy = mysqli_query($conn,
-            "SELECT * FROM jobs 
-            INNER JOIN company ON company.company_Name  = jobs.deliveredBy
-            WHERE jobs.job_id  = $job_id
-            
-        "
+                "SELECT * FROM jobs 
+                INNER JOIN company ON company.company_Name  = jobs.deliveredBy
+                WHERE jobs.job_id  = $job_id"
             );
             $role="company";
             $count = mysqli_num_rows($select_deliveredBy);
@@ -92,13 +90,18 @@ $jobs_count = mysqli_num_rows($select_jobs);
             WHERE jobs.job_id  = $job_id"
             );
             $role="univeristy";
-        
+
          }
         
          $fetch_job_Creator = mysqli_fetch_assoc($select_deliveredBy);
+         
+         if(!$fetch_job_Creator){
+            echo mysqli_error($conn);
+         }
         
+
         
-         if($role="company"){
+         if($role=="company"){
         
             $company_id=$fetch_job_Creator['company_id'];
             $deliveredByLOGO=$fetch_job_Creator['company_Logo'];
@@ -120,26 +123,24 @@ $jobs_count = mysqli_num_rows($select_jobs);
                 <div class="Post">
                     <div class="postHeader">
                         <div class="postTitle">
-
+                            
+        <!--  go to creator  job profile either company or university -->
 <?php
-         if($role="company"){
+         if($role=="company"){
             echo '
-            <a href="viewCompanyProfile.php?vcid=' . $company_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;">
+            <a href="../viewCompanyProfile.php?vcid=' . $company_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;" target="_blank">
             ';
             
         }
         else{
             echo'
-                <a href="viewCompanyProfile.php?vcid=' . $university_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;">
+                <a href="../viewUniversityProfile.php?vcid=' . $university_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;" target="_blank">
             ';
         }
 ?>
 
-
-
-                            <!--  go to company profile -->
-                            <a href="../viewCompanyProfile.php?company_id=<?= $company_id; ?>&companyName=<?= $fetch_pending_companies['company_Name']; ?>" class="foods-btn" target="_blank">
-                                <img src="../images/companies_universities_images/<?= $fetch_job['position']; ?>" alt="">
+                                <img src="../images/companies_universities_images/<?= $deliveredByLOGO ?>" alt="">
+                            
                             </a>
                 
                             <div>
@@ -161,9 +162,45 @@ $jobs_count = mysqli_num_rows($select_jobs);
                     <div class="postDetails">
                         <h5><?= $fetch_job['job_Country']; ?> - <?= $fetch_job['jobType']; ?> - <?= $fetch_job['job_WorkPlace']; ?></h5>
                         <a href="../viewJob.php?job_id=<?= $job_id; ?>" target="_blank">Read Details</a>
+                            
                     </div>
-                    </div>
+
 <?php
+
+$bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND job_ID = " . $fetch_job['job_id'];
+
+            // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_job['company_id'] ";
+            $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+            $bookmarkCount=mysqli_num_rows($bookmarkResult);
+
+                if(!$bookmarkCount>0){ //is not saved before 
+                    echo'
+                        <a  class="addBookmark" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+
+                            <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                        </a>
+                        <a class="removeBookmark hide" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+    
+                            <i class="fas fa-bookmark fa-2xl" ></i>
+                        </a>
+                    ';
+                }
+                else{ // is saved before 
+                    echo'
+                    <a  class="addBookmark hide" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+
+                        <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                    </a>
+                    <a class="removeBookmark" href="saveJob.php?jobID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+
+                        <i class="fas fa-bookmark fa-2xl" ></i>
+                    </a>
+                ';
+                }
+// close post DIV
+            echo'
+                </div>
+            ';
 
         }
         echo"</section>";
@@ -171,6 +208,37 @@ $jobs_count = mysqli_num_rows($select_jobs);
 ?>
 
 
+
+
+<!-- script for Bookmarks add-remove -->
+<script>
+
+        var addBookmarks = document.querySelectorAll('.addBookmark');
+        var removeBookmarks = document.querySelectorAll('.removeBookmark');
+
+        // Add event listener for each addBookmark button
+        addBookmarks.forEach(function(addBookmark) {
+        addBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var removeBookmark = parent.querySelector('.removeBookmark');
+
+            removeBookmark.style.display = 'block'; // Show the removeBookmark element
+            this.style.display = 'none'; // Hide the addBookmark element
+        });
+        });
+
+        // Add event listener for each removeBookmark button
+        removeBookmarks.forEach(function(removeBookmark) {
+        removeBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var addBookmark = parent.querySelector('.addBookmark');
+
+            addBookmark.style.display = 'block'; // Show the addBookmark element
+            this.style.display = 'none'; // Hide the removeBookmark element
+        });
+        });
+
+    </script>
 
 
 
@@ -188,6 +256,7 @@ $jobs_count = mysqli_num_rows($select_jobs);
         background-color: #f3f2ef;
         box-shadow: 7px 7px 10px rgb(0 0 0 / 15%);
         margin: 30px 0px;
+
     }
    .postHeader , .postDetails{
         justify-content: space-between;
@@ -216,6 +285,21 @@ $jobs_count = mysqli_num_rows($select_jobs);
    .postDetails a:hover{
         scale: 1.15;
     }
+    .hide{
+    display:none;
+   }
+   .Post{
+    position: relative;
+   }
+   .addBookmark, .removeBookmark{
+    position: absolute;
+    top: 1px;
+    right: 5%;
+    display: block;
+    background-color: transparent;
+    color: var(--nav-main);
+    padding: 5px;
+   }
 </style>
 
 

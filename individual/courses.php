@@ -117,8 +117,51 @@
                     <img src="../images/courses/<?= $fetch_course['course_Picture']; ?>" class="coursePhoto" alt="">
                     <h3 class="title"><?= $fetch_course['course_Name']; ?></h3>
                     <a href="viewCourse.php?course_id=<?= $course_id; ?> " class="viewCourseBtn">view Course</a>
-                </div>
+                
+
                 <?php
+
+
+                $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND course_ID = " . $course_id ;
+
+                // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
+                $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+                $bookmarkCount=mysqli_num_rows($bookmarkResult);
+
+                    if(!$bookmarkCount){
+                        echo mysqli_error($conn);
+                        echo 'asdfasd';
+                    }
+
+                    if(!$bookmarkCount>0){ //is not saved before 
+                        echo'
+                            <a  class="addBookmark" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+
+                                <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                            </a>
+                            <a class="removeBookmark hide" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+        
+                                <i class="fas fa-bookmark fa-2xl" ></i>
+                            </a>
+                        ';
+                    }
+                    else{ // is saved before 
+                        echo'
+                        <a  class="addBookmark hide" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+
+                            <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                        </a>
+                        <a class="removeBookmark" href="saveJob.php?jobID='. $course_id .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+
+                            <i class="fas fa-bookmark fa-2xl" ></i>
+                        </a>
+                    ';
+                    }
+                    //close Box DIV
+                    echo'</div>';
+
+
+
             }  
       }else{
          echo '<p class="empty">no courses added yet!</p>';
@@ -209,6 +252,18 @@
         cursor: pointer;
         text-align: center;
     }
+    .box{
+        position: relative;
+    }
+    .addBookmark, .removeBookmark{
+        position: absolute;
+        top: 5px;
+        right: 5%;
+        background-color: transparent;
+        color: var(--nav-main);
+    }
+
+
 </style>
 
 
@@ -224,6 +279,36 @@
         document.getElementById("Courses-LeftBar").classList.add("actived");
     </script>
 
+
+<!-- script for Bookmarks add-remove -->
+<script>
+
+        var addBookmarks = document.querySelectorAll('.addBookmark');
+        var removeBookmarks = document.querySelectorAll('.removeBookmark');
+
+        // Add event listener for each addBookmark button
+        addBookmarks.forEach(function(addBookmark) {
+        addBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var removeBookmark = parent.querySelector('.removeBookmark');
+
+            removeBookmark.style.display = 'block'; // Show the removeBookmark element
+            this.style.display = 'none'; // Hide the addBookmark element
+        });
+        });
+
+        // Add event listener for each removeBookmark button
+        removeBookmarks.forEach(function(removeBookmark) {
+        removeBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var addBookmark = parent.querySelector('.addBookmark');
+
+            addBookmark.style.display = 'block'; // Show the addBookmark element
+            this.style.display = 'none'; // Hide the removeBookmark element
+        });
+        });
+
+    </script>
 </body>
 
 </html>
