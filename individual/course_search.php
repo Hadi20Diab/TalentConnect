@@ -20,15 +20,7 @@
 
         <div class="SelectRow">
             <input type="text" name="jobPosition" id="" placeholder="Course Name">
-
-            <label for="jobType">Job Type:</label>
-
-            <select id="select-state" name="jobType">
-              <option value="">All</option>
-              <option value="Full-time">Full-time</option>
-              <option value="Part-time">Part-time</option>
-            </select>
-            
+  
         </div>
 
         <div class="SelectRow">
@@ -256,9 +248,9 @@
 
 
     </div>
-    <title>Search Jobs</title>
+    <title>Courses Search</title>
     <script>
-        document.getElementById("Job-LeftBar").classList.add("actived");
+        document.getElementById("Courses-LeftBar").classList.add("actived");
 
         //  script for Bookmarks add-remove 
 
