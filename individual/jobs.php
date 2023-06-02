@@ -158,6 +158,7 @@ $jobs_count = mysqli_num_rows($select_jobs);
                             <?= $fetch_job['applicationDeadline']; ?>
                         </h4>
                     </div>
+                    
 
                     <div class="postDetails">
                         <h5><?= $fetch_job['job_Country']; ?> - <?= $fetch_job['jobType']; ?> - <?= $fetch_job['job_WorkPlace']; ?></h5>

@@ -19,7 +19,7 @@
 
 
         <div class="SelectRow">
-            <input type="text" name="jobPosition" id="" placeholder="Course Name">
+            <input type="text" name="courseName" id="" placeholder="Course Name">
   
         </div>
 
@@ -42,18 +42,17 @@
               ?>
         </div>
 
-
         <div class="SelectRow">
 
-            <label for="country">country:</label>
-            <select id="select-state" name="job_Country">
+            <label for="course_Creator">CreatedBy:</label>
+            <select id="select-state" name="course_Creator">
               <option value="">All</option>
               <?php
-                      $select_countries = mysqli_query($conn, "SELECT country_name FROM `country`");
+                      $select_course_Creator = mysqli_query($conn, "SELECT course_Creator FROM `courses`");
                           
-                      while ($select_country = mysqli_fetch_assoc($select_countries)) {
+                      while ($select_Creator = mysqli_fetch_assoc($select_course_Creator)) {
                           echo"
-                              <option value=" . $select_country['country_name'] . " > " .$select_country['country_name']. " </option>
+                              <option value=" . $select_Creator['course_Creator'] . " > " .$select_Creator['course_Creator']. " </option>
                           ";
                       }
                       echo'
@@ -63,31 +62,55 @@
           
         </div>
 
+
+        <div class="SelectRow">
+            <label for="fees">Course Fees:</label>
+            <select id="select-state" name="course_fee">
+                <option value="">Select Fee</option>
+                <option value="0">Free</op]tion>
+                <option value="100">$100 or less</option>
+                <option value="500">$500 or less</option>
+                <option value="1000">$1000 or less</option>
+                <option value="5000">$5000 or less</option>
+            </select>
+
+        </div>
+
         <a href="filter.php">
             <button>Filter</button>
         </a>         
 
 
    
-      </div>
+        
+    </form>
+</div>
 
-      </form>
 
 
-<div id="jobList">
+<section class="courses">
+    <div class="box-container">
+
+
+
+<!-- <div id="jobList"> -->
   <!-- Job listings will be dynamically added here -->
-    <h4 id="loding"></h4>
 
 <?php
-    // addmin DELELT 
-    if(isset($_GET['jobType'])){
+    // course Name is set?
+    if(isset($_GET['courseName'])){
         
-        $jobPosition = $_GET['jobPosition'];
-        $jobType = $_GET['jobType'];
+        
+        $courseName = $_GET['courseName'];
         $category = $_GET['category'];
-        $job_Country = $_GET['job_Country'];
+        $course_Creator = $_GET['course_Creator'];
+        $course_fee = $_GET['course_fee'];
 
-        $sql="SELECT * FROM jobs INNER JOIN company ON deliveredBy = company_Name WHERE "; // we join 2 table together 
+        $sql="SELECT * FROM courses
+        
+        LEFT JOIN company ON company_Name=course_Creator
+        LEFT JOIN universities ON university_Name=course_Creator
+         WHERE "; // we join 2 table together 
         $conditions = array();
 
 
@@ -95,21 +118,21 @@
         //     $conditions[] = "company_name LIKE '%$search%'";
         // }
 
-        if(!empty($jobPosition)){
-            $conditions[] = "position LIKE '%$jobPosition%' ";
+        if(!empty($courseName)){
+            $conditions[] = "course_Name LIKE '%$courseName%' ";
             
         }
-        if(!empty($jobType)){
-            $conditions[] = "jobType = '$jobType' ";
-        }
-
-        if(!empty($job_Country)){
-            $conditions[] = "job_Country = '$job_Country' ";
-        }
-
         if(!empty($category)){
-            $conditions[] = "industry = '$category' ";
+            $conditions[] = "course_Category = '$category' ";
         }
+        if(!empty($course_Creator)){
+            $conditions[] = "course_Creator = '$course_Creator' ";
+        }
+        if(!empty($course_fee)){
+            $conditions[] = "course_Fees = '$course_fee' ";
+        }
+
+
 
 
 
@@ -119,120 +142,197 @@
             $sql .= "1"; // Return all records if no conditions are specified
         }
 
-      
         // Execute the query
-        $result = mysqli_query($conn, $sql);
+        $select_courses = mysqli_query($conn, $sql);
 
         // Check for errors
-        if (!$result) {
+        if (!$select_courses) {
             echo "Error: " . mysqli_error($conn);
         }
-        
 
-        while ($fetch_jobs = mysqli_fetch_assoc($result)) {
-            $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND job_ID = " . $fetch_jobs['job_id'];
 
-            // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_jobs['company_id'] ";
-            $bookmarkResult = mysqli_query($conn, $bookmarkSql);
-            $bookmarkCount=mysqli_num_rows($bookmarkResult);
-            echo'
+        while($fetch_course = mysqli_fetch_assoc($select_courses)){
+            $course_id = $fetch_course['course_ID'];
+            $course_Creator = $fetch_course['course_Creator'];
 
-                <div class="classjobCard">
-                    <div class="row">
-                        <a class="companyTitle" href="../viewCompanyProfile.php?vcid= '.$fetch_jobs['company_id'].' &cname= '.$fetch_jobs['company_Name'].' " target="_blank">
-                            <img src="../images/companies_universities_images/'. $fetch_jobs['company_Logo'] .'" alt="">
-                            <h3>'. $fetch_jobs['company_Name'] .'</h3>
-                        </a>
-                ';
+            $select_company = mysqli_query($conn,"SELECT * FROM company WHERE company_Name = '$course_Creator'");
+            // $fetch_company = mysqli_fetch_assoc($select_company);
+            
+            if ($select_company) {
+                $fetch_company = mysqli_fetch_assoc($select_company);
+                // Rest of your code here
+            } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+
+
+            $select_university = mysqli_query($conn,"SELECT * FROM universities WHERE university_Name = '$course_Creator'");
+            // $fetch_company = mysqli_fetch_assoc($select_company);
+            
+            if ($select_university) {
+                $fetch_university = mysqli_fetch_assoc($select_university);
+            } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+
+
+
+        // } 
+    // }
+        ?>
+
+
+            <div class="box">
+                <div class="course_Creator">
+
+                    <?php if ($fetch_company && $fetch_company['company_Logo']) {
+                            $LogoName=$fetch_company['company_Logo'];
+                        ?>
+                            <a href="../viewCompanyProfile.php?vcid=<?= $fetch_company['company_id']; ?>&cname=<?= $fetch_company['company_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+                            <img src="../images/companies_universities_images/<?= $fetch_company['company_Logo']; ?>" alt="">
+                            
+                    <?php }else {
+                        ?>
+                            <a href="../viewUniversityProfile.php?vcid=<?= $fetch_university['university_ID']; ?>&cname=<?= $fetch_university['university_Name'] ?>" class="row" style="text-decoration: none;" target="_blank">
+
+                            <img src="../images/companies_universities_images/<?= $fetch_university['university_Logo']; ?>" alt="">
+                    <?php
+                        } 
+                    ?>
+                            </a>
+                    <div>
+                        <h3><?= $fetch_course['course_Creator'] ?></h3>
+                        <span><?= $fetch_course['course_Launch_Date']; ?></span>
+                    </div>
+                </div>
+                <img src="../images/courses/<?= $fetch_course['course_Picture']; ?>" class="coursePhoto" alt="">
+                <h3 class="title"><?= $fetch_course['course_Name']; ?></h3>
+                <a href="viewCourse.php?course_id=<?= $course_id; ?> " class="viewCourseBtn">view Course</a>
+            
+
+                <?php
+
+
+                $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND course_ID = " . $course_id ;
+
+                // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
+                $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+                $bookmarkCount=mysqli_num_rows($bookmarkResult);
+
+
                 if(!$bookmarkCount>0){ //is not saved before 
                     echo'
-                        <a  class="addBookmark" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+                        <a  class="addBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
 
-                            <i class="fa-regular fa-bookmark fa-xl" ></i>
+                            <i class="fa-regular fa-bookmark fa-2xl" ></i>
                         </a>
-                        <a class="removeBookmark hide" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
+                        <a class="removeBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
     
-                            <i class="fas fa-bookmark fa-xl" ></i>
+                            <i class="fas fa-bookmark fa-2xl" ></i>
                         </a>
                     ';
                 }
                 else{ // is saved before 
                     echo'
-                    <a  class="addBookmark hide" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=add" target="_black">
+                        <a  class="addBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
 
-                        <i class="fa-regular fa-bookmark fa-xl" ></i>
-                    </a>
-                    <a class="removeBookmark" href="saveJob.php?jobID='. $fetch_jobs['job_id'] .'&user_ID= '. $individual_ID .'&status=remove" target="_black">
-
-                        <i class="fas fa-bookmark fa-xl" ></i>
-                    </a>
-                ';
-                }
-
-                   
-                
-                echo'
-                    </div>
-                    <div class="row">
-                        <h4>'. $fetch_jobs['position'] .' - '. $fetch_jobs['jobType'] .' - '. $fetch_jobs['job_Country'] .'</h4>
-                        <h4>Dead Line: '. $fetch_jobs['applicationDeadline'] .'</h4>
-                    </div>
-
-                    <div class="row">
-                        <a class="companyTitle" href="../viewJob.php?job_id= '.$fetch_jobs['job_id'].' " target="_blank">
-                            Read Details
+                            <i class="fa-regular fa-bookmark fa-2xl" ></i>
                         </a>
-                    </div>
+                        <a class="removeBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
 
-                </div>
+                            <i class="fas fa-bookmark fa-2xl" ></i>
+                        </a>
+                    ';
+                }
+                //close Box DIV
+                echo'</div>';
+                
+            }  
+            ?>
 
-';
-}
+
+<!-- close Box contaner     DIV-->
+    </div>
+</section>
+
+<?php
+}else{
+    echo '<p class="empty">no courses added yet!</p>';
 }
 ?>
-
-</div>
-
 <style>
-   #jobList{
-    width:90%;
-    margin:5%;
-   }
-   .classjobCard{
-        margin: 5% 1%;
-        padding: 2%;
-        height: 100px;
-        background-color: gray;
-        border-radius: 25px;
-   }
-   
-   .row{
+
+    .courses{
+        padding: 25px;
+    }
+    .box-container{
+        /* display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; */
+
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 21.5rem);
+        gap: 1.5rem;
+        justify-content: center;
+        align-items: stretch;
+    }
+    .box{
+        border-radius: 0.5rem;
+        background-color: #eee;
+        padding: 2rem;
+    }
+    .box .course_Creator{
+        margin-bottom: 0.5rem;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-   }
-    /* .SelectRow{
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-    } */
-   .companyTitle{
-        align-items: center;
-        display: flex;
-        text-decoration: none;
-        color: blue;
-   }
-   .companyTitle img{
-        width: 65px;
+        align-items: stretch;
+        gap: 2rem;
+    }
+    .box .course_Creator img{
+
+        width: 4rem;
+        height: 4rem;
         border-radius: 50%;
-        margin-right: 20px;
-   }
-   .hide{
-    display:none;
-   }
+        object-fit: cover;
+        margin-bottom: 0.5rem;
+    }
+    .coursePhoto{
+        width: 100%;
+        border-radius: 0.5rem;
+        height: 10rem;
+        object-fit: cover;
+        margin-bottom: 1rem;
+    }
+    .viewCourseBtn{
+        background-color: var(--nav-main);
+        color: white;
+        display: inline-block;
+        border-radius: 0.5rem;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        text-transform: capitalize;
+        cursor: pointer;
+        text-align: center;
+    }
+    .box{
+        position: relative;
+    }
+    .hide{
+        display: none;
+    }
+    .addBookmark, .removeBookmark{
+        position: absolute;
+        top: 5px;
+        right: 5%;
+        background-color: transparent;
+        color: var(--nav-main);
+    }
+
+
 </style>
 <link rel="stylesheet" href="../css/all_icon.css">
-
+<!-- select search script  -->
 <script>
     $(document).ready(function () {
         $('select').selectize({
@@ -248,7 +348,7 @@
 
 
     </div>
-    <title>Courses Search</title>
+    <title>Search courses</title>
     <script>
         document.getElementById("Courses-LeftBar").classList.add("actived");
 
