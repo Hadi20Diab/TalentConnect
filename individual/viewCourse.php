@@ -57,8 +57,13 @@ if( isset($_GET['save_bookmarks'])  ){
 <!-- Course section starts  -->
 
 <section class="playlist">
-
-   <h1 class="heading">Course Details</h1>
+   <h1 class="heading">
+      <!-- back button -->
+      <a href="courses.php"> 
+          <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: var(--nav-main);"></i>
+      </a>
+      
+   Course Details</h1>
 
    <div class="row">
 
@@ -161,6 +166,7 @@ if( isset($_GET['save_bookmarks'])  ){
             <h3><?= $fetch_course['course_Name']; ?></h3>
             <p><?= $fetch_course['course_Description']; ?></p>
             <div class="date"><i class="fas fa-calendar"></i><span><?= $fetch_course['course_Launch_Date']; ?></span></div>
+            <div><h3><?= $fetch_course['course_Fees']; ?>$</h3></div>
          </div>
       </div>
 
