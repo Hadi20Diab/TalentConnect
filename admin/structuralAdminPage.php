@@ -337,5 +337,8 @@ if(isset($_POST['logout-btn'])){
   color: var(--nav-main);
   background-color: var(--white);
 }
+.actived .icon img{
+    filter: invert(0);
+}
 
     </style>
