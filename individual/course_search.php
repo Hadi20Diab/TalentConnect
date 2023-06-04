@@ -19,62 +19,64 @@
 
 
         <div class="SelectRow">
-            <input type="text" name="courseName" id="" placeholder="Course Name">
+            <input type="text" name="courseName" id="" placeholder="Course Name" value="<?= $_GET['courseName'] ?>">
   
         </div>
 
-        <div class="SelectRow">
 
-            <label for="category">category:</label>
-            <select id="select-state" name="category" >
+
+
+        <div class="SelectRow">
+            <label for="category">Category:</label>
+            <select id="select-state" name="category[]" multiple>
                 <option value="">All Category</option>
-          
-              <?php
-                      $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
-                          
-                      while ($select_categoy = mysqli_fetch_assoc($select_categories)) {
-                          echo"
-                              <option value=" . $select_categoy['category_name'] . " > " .$select_categoy['category_name']. " </option>
-                          ";
-                      }
-                      echo'
-                      </select>';
-              ?>
+                <?php
+                $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
+
+                $selectedCategories = isset($_GET['category']) ? $_GET['category'] : array(); // Get the selected categories form the previous filter 
+
+                while ($select_category = mysqli_fetch_assoc($select_categories)) {
+                    $categoryName = $select_category["category_name"];
+                    $selected = in_array($categoryName, $selectedCategories) ? 'selected' : ''; // Check if the category is selected
+                    echo '<option value="'.$categoryName.'" '.$selected.'>'.$categoryName.'</option>';
+                }
+                ?>
+            </select>
         </div>
+
+
 
         <div class="SelectRow">
-
             <label for="course_Creator">CreatedBy:</label>
-            <select id="select-state" name="course_Creator">
-              <option value="">All</option>
-              <?php
-                      $select_course_Creator = mysqli_query($conn, "SELECT course_Creator FROM `courses`");
-                          
-                      while ($select_Creator = mysqli_fetch_assoc($select_course_Creator)) {
-                          echo"
-                              <option value=" . $select_Creator['course_Creator'] . " > " .$select_Creator['course_Creator']. " </option>
-                          ";
-                      }
-                      echo'
-                      </select>';
-              ?>
-          
-          
+            <select id="select-state" name="course_Creator[]" multiple>
+                <option value="">All</option>
+                <?php
+                $select_course_Creator = mysqli_query($conn, "SELECT course_Creator FROM `courses`");
+
+                while ($select_Creator = mysqli_fetch_assoc($select_course_Creator)) {
+                    $courseCreator = $select_Creator["course_Creator"];
+                    $selected = in_array($courseCreator, $_GET['course_Creator']) ? 'selected' : '';
+                    
+                    echo '<option value="' . $courseCreator . '" ' . $selected . ' > ' . $courseCreator . ' </option>';
+                }
+                ?>
+            </select>
         </div>
+
 
 
         <div class="SelectRow">
             <label for="fees">Course Fees:</label>
             <select id="select-state" name="course_fee">
                 <option value="">Select Fee</option>
-                <option value="0">Free</op]tion>
-                <option value="100">$100 or less</option>
-                <option value="500">$500 or less</option>
-                <option value="1000">$1000 or less</option>
-                <option value="5000">$5000 or less</option>
+                <option value="0" <?php echo ($_GET['course_fee'] == '0') ? 'selected' : ''; ?>>Free</option>
+                <option value="100" <?php echo ($_GET['course_fee'] == '100') ? 'selected' : ''; ?>>$100 or less</option>
+                <option value="500" <?php echo ($_GET['course_fee'] == '500') ? 'selected' : ''; ?>>$500 or less</option>
+                <option value="1000" <?php echo ($_GET['course_fee'] == '1000') ? 'selected' : ''; ?>>$1000 or less</option>
+                <option value="5000" <?php echo ($_GET['course_fee'] == '5000') ? 'selected' : ''; ?>>$5000 or less</option>
             </select>
-
         </div>
+
 
         <a href="filter.php">
             <button>Filter</button>
@@ -101,46 +103,100 @@
     if(isset($_GET['courseName'])){
         
         
-        $courseName = $_GET['courseName'];
-        $category = $_GET['category'];
-        $course_Creator = $_GET['course_Creator'];
+        // $courseName = $_GET['courseName'];
+        // if(isset($_GET['category'])){
+        //     $category = $_GET['category']; 
+        //     echo"$category";
+        //     $categoryList = implode("','", $category);
+
+        // }
+        // else {
+        //     $category = "";
+        // }
+        // $course_Creator = $_GET['course_Creator'];
         $course_fee = $_GET['course_fee'];
 
-        $sql="SELECT * FROM courses
-        
+        $sql = "SELECT DISTINCT  c.* FROM courses c 
+        INNER JOIN courses_fields cf ON c.course_ID = cf.course_ID 
+
         LEFT JOIN company ON company_Name=course_Creator
         LEFT JOIN universities ON university_Name=course_Creator
-         WHERE "; // we join 2 table together 
-        $conditions = array();
+
+        WHERE c.course_Status = 'active'";
+
+
+        // $sql="SELECT * FROM courses
+        
+        // LEFT JOIN company ON company_Name=course_Creator
+        // LEFT JOIN universities ON university_Name=course_Creator
+
+        // INNER JOIN courses_fields ON courses.course_ID = courses_fields.course_ID
+
+        //  WHERE "; // we join 2 table together 
+        // $conditions = array();
 
 
         // if (!empty($search)) {
         //     $conditions[] = "company_name LIKE '%$search%'";
         // }
 
-        if(!empty($courseName)){
-            $conditions[] = "course_Name LIKE '%$courseName%' ";
+        // if(!empty($courseName)){
+        //     $conditions[] = "course_Name LIKE '%$courseName%' ";
             
-        }
-        if(!empty($category)){
-            $conditions[] = "course_Category = '$category' ";
-        }
-        if(!empty($course_Creator)){
-            $conditions[] = "course_Creator = '$course_Creator' ";
-        }
-        if(!empty($course_fee)){
-            $conditions[] = "course_Fees = '$course_fee' ";
-        }
+        // }
+        // if(!empty($category)){
+        //     // $conditions[] = "course_Category = '$category' ";
+        //     $conditions[] =" courses_fields.course_field_Name IN ('$categoryList')";
+        //     ;
+        // }
+        // if(!empty($course_Creator)){
+        //     $conditions[] = "course_Creator = '$course_Creator' ";
+        // }
+        // if(!empty($course_fee)){
+        //     $conditions[] = "course_Fees = '$course_fee' ";
+        // }
+
+
+        // if (!empty($conditions)) {
+        //     $sql .= implode(" AND ", $conditions);
+        // } else {
+        //     $sql .= "1"; // Return all records if no conditions are specified
+        // }
 
 
 
-
-
-        if (!empty($conditions)) {
-            $sql .= implode(" AND ", $conditions);
-        } else {
-            $sql .= "1"; // Return all records if no conditions are specified
+        // Check if course name is provided
+        if(isset($_GET['courseName']) && !empty($_GET['courseName'])){
+            $courseName = $_GET['courseName'];
+            // Add course name condition to the query
+            $sql .= " AND c.course_Name LIKE '%$courseName%'";
         }
+
+        // Check if categories are selected
+        if(isset($_GET['category']) && is_array($_GET['category']) && !empty($_GET['category'])){
+            $categories = $_GET['category'];
+            // Convert the array of categories to a comma-separated string
+            $categoryList = implode("','", $categories);
+            // Add category condition to the query
+            $sql .= " AND cf.course_field_Name IN ('$categoryList')";
+        }
+
+        // Check if creators are selected
+        if(isset($_GET['course_Creator']) && is_array($_GET['course_Creator']) && !empty($_GET['course_Creator'])){
+            $creators = $_GET['course_Creator'];
+            // Convert the array of creators to a comma-separated string
+            $creatorList = implode("','", $creators);
+            // Add creator condition to the query
+            $sql .= " AND c.course_Creator IN ('$creatorList')";
+        }
+
+        // Check if course fees are provided
+        if(isset($_GET['course_fee']) && !empty($_GET['course_fee'])){
+            $course_fee = $_GET['course_fee'];
+            // Add course fees condition to the query
+            $sql .= " AND c.course_Fees <= $course_fee";
+        }
+
 
         // Execute the query
         $select_courses = mysqli_query($conn, $sql);
@@ -207,7 +263,11 @@
                 </div>
                 <img src="../images/courses/<?= $fetch_course['course_Picture']; ?>" class="coursePhoto" alt="">
                 <h3 class="title"><?= $fetch_course['course_Name']; ?></h3>
-                <a href="viewCourse.php?course_id=<?= $course_id; ?> " class="viewCourseBtn">view Course</a>
+                <div style="     display: flex;     align-items: center;     justify-content: space-between;     flex-direction: row; margin-top: 1rem; ">
+                    <a href="viewCourse.php?course_id=<?= $course_id; ?> " class="viewCourseBtn">view Course</a>
+                    <h4 style="font-size: larger;">
+                        <?= $fetch_course['course_Fees']; ?>$</h4>
+                </div>
             
 
                 <?php
@@ -257,7 +317,7 @@
 
 <?php
 }else{
-    echo '<p class="empty">no courses added yet!</p>';
+    echo '<p class="empty" style="margin: -25% -50%;">You must select a filter category to perform the course search.</p>';
 }
 ?>
 <style>
@@ -310,7 +370,7 @@
         border-radius: 0.5rem;
         padding: 1rem 2rem;
         font-size: 1.2rem;
-        margin-top: 1rem;
+        /* margin-top: 1rem; */
         text-transform: capitalize;
         cursor: pointer;
         text-align: center;
