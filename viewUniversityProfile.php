@@ -120,8 +120,7 @@ if(isset($_GET['vcid']) && isset($_GET['cname'])){
 
     <div class="about DIV">
         <h3>About</h3>
-        <p>
-            '. $university_About .' 
+        <p style="white-space: pre-line;">'. $university_About .' 
         </p>
     </div>
 </section>

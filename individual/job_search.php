@@ -22,8 +22,8 @@
 ?>
 
 
+<input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>">          <!-- set job position selected before -->
     <div class="SelectRow">
-        <input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>">          <!-- set job position selected before -->
         <label for="jobType">Job Type:</label>
 
         <select id="select-state" name="jobType">
@@ -36,7 +36,6 @@
 
 
     <div class="SelectRow">
-        <input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>">          <!-- set job position selected before -->
         <label for="jobWorkPlace">Job WorkPlace:</label>
 
         <select id="select-state" name="jobWorkPlace">
