@@ -24,7 +24,7 @@
 
   </a>
 
-  <a href="savedJob.php">
+  <a href="savedCourses.php">
       <div class="card">
 
           <div>
@@ -267,9 +267,7 @@
     .box{
         position: relative;
     }
-    .hide{
-        display: none;
-    }
+    
     .addBookmark, .removeBookmark{
         position: absolute;
         top: 5px;
@@ -277,7 +275,9 @@
         background-color: transparent;
         color: var(--nav-main);
     }
-
+    .hide{
+        display: none;
+    }
 
 </style>
 
