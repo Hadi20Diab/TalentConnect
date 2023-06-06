@@ -19,7 +19,8 @@
 
 
         <div class="SelectRow">
-            <input type="text" name="courseName" id="" placeholder="Course Name" value="<?= $_GET['courseName'] ?>">
+            <input type="text" name="courseName" id="" placeholder="Course Name" value="<?= isset($_GET['courseName']) ? $_GET['courseName'] : '' ?>">
+            
   
         </div>
 

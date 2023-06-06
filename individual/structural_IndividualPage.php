@@ -108,7 +108,8 @@ if(isset($_POST['logout-btn'])){
                     <li>
                         <a href="home.php" id="Dashboard-LeftBar">
                             <span class="icon">
-                                <ion-icon name="home-outline"></ion-icon>
+                                <i class="fa-sharp fa-solid fa-house fa-2xl"></i>
+                                <!-- <ion-icon name="home-outline"></ion-icon> -->
                             </span>
                             <span class="title">Dashboard</span>
                         </a>
@@ -294,6 +295,51 @@ if(isset($_POST['logout-btn'])){
                 popup.classList.add("open-popup");
             } 
         </script>
+
+
+
+<!-- make the icon faded when howver on it -->
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!-- <script>
+  $(document).ready(function() {
+    $("a").hover(
+      function() {
+        $(this).find("i").addClass("fa-fade");
+      },
+      function() {
+        $(this).find("i").removeClass("fa-fade");
+      }
+    );
+  });
+</script> -->
+
+
+<!-- make the icon faded when howver on it -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const links = document.querySelectorAll("a");
+
+    links.forEach(function(link) {
+      link.addEventListener("mouseover", function() {
+        const icons = this.querySelectorAll("i");
+        icons.forEach(function(icon) {
+          icon.classList.add("fa-fade");
+        });
+      });
+
+      link.addEventListener("mouseout", function() {
+        const icons = this.querySelectorAll("i");
+        icons.forEach(function(icon) {
+          icon.classList.remove("fa-fade");
+        });
+      });
+    });
+  });
+</script>
+
+
+
         <!-- ====== ionicons ======= -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

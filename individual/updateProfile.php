@@ -203,7 +203,7 @@ else{
 
 <form action="updateProfile.php" method="POST" enctype="../images/companies_images">
 <h2 style="text-align: center;">Update Your Profile</h2>
-  <label for="individualName">Company Name:</label>
+  <label for="individualName">Name:</label>
   <input type="text" id="individualName" name="individualName" value="<?= $select_individual['individual_Name']; ?>" required>
   
   <label for="aboutIndividual">About You:</label>
