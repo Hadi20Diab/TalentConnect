@@ -227,7 +227,7 @@ if ($courseProgress_result) {
          echo '<a href="watch_video.php?video_id=' . $courseProgress['last_watched_video'] . '">Resume Course</a>';
       }
       else if ($courseProgress['course_Status']=="done") {
-         echo '<a href="">Already Finshied! <br>
+         echo '<a href="courses.php">Already Finshied! <br>
                 Look For New Course</a>';
       }
    }
