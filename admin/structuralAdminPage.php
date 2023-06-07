@@ -380,6 +380,9 @@ if(isset($_POST['logout-btn'])){
   color: var(--nav-main);
   background-color: var(--white);
 }
+input{
+    text-indent: 10px;
+}
 .actived .icon img{
     filter: invert(0);
 }

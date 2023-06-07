@@ -406,6 +406,9 @@ if(isset($_POST['logout-btn'])){
   background-color: var(--white);
 }
 
+input{
+    text-indent: 10px;
+}
 
 
 .actived .icon img{
