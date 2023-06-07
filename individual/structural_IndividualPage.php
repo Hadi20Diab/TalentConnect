@@ -323,20 +323,35 @@ if(isset($_POST['logout-btn'])){
     links.forEach(function(link) {
       link.addEventListener("mouseover", function() {
         const icons = this.querySelectorAll("i");
+        const images = this.querySelectorAll("img");
+
         icons.forEach(function(icon) {
           icon.classList.add("fa-fade");
+        });
+
+        images.forEach(function(image) {
+          image.classList.add("fa-fade");
         });
       });
 
       link.addEventListener("mouseout", function() {
         const icons = this.querySelectorAll("i");
+        const images = this.querySelectorAll("img");
+
         icons.forEach(function(icon) {
           icon.classList.remove("fa-fade");
+        });
+
+        images.forEach(function(image) {
+          image.classList.remove("fa-fade");
         });
       });
     });
   });
 </script>
+
+
+
 
 
 

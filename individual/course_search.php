@@ -258,7 +258,7 @@
                     ?>
                             </a>
                     <div>
-                        <h3><?= $fetch_course['course_Creator'] ?></h3>
+                        <h4><?= $fetch_course['course_Creator'] ?></h4>
                         <span><?= $fetch_course['course_Launch_Date']; ?></span>
                     </div>
                 </div>

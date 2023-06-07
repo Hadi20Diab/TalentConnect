@@ -57,16 +57,18 @@ if( isset($_GET['save_bookmarks'])  ){
 <!-- Course section starts  -->
 
 <section class="playlist">
-   <h1 class="heading">
-      <!-- back button -->
-      <a href="courses.php"> 
-          <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: var(--nav-main);"></i>
-      </a>
-      
-   Course Details</h1>
-
+   
+   <!-- <div class="row"> -->
+      <h1 class="heading">
+         <!-- back button -->
+         <a href="courses.php"> 
+             <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: var(--nav-main);"></i>
+         </a>
+         
+         Course Details
+      </h1>
+   <!-- </div> -->
    <div class="row">
-
 
    <?php
          $select_course =  mysqli_query($conn,"SELECT * FROM `courses`
@@ -76,6 +78,7 @@ if( isset($_GET['save_bookmarks'])  ){
 
          if(mysqli_num_rows($select_course) > 0){
             $fetch_course = mysqli_fetch_assoc($select_course);
+            $role="company";
             $LogoName = $fetch_course['company_Logo'];
          }
 
@@ -92,17 +95,11 @@ if( isset($_GET['save_bookmarks'])  ){
 
             if(mysqli_num_rows($select_course) > 0){
                $fetch_course = mysqli_fetch_assoc($select_course);
+               $role="university";
                $LogoName = $fetch_course['university_Logo'];
             }
          
          }
-
-
-
-
-
-
-
 
          if(mysqli_num_rows($select_course) > 0){
 
@@ -116,48 +113,61 @@ if( isset($_GET['save_bookmarks'])  ){
 
       ?>
 
+<?php
+$bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND course_ID = " . $course_id ;
 
-      <div class="col">
-         <form action="viewCourse.php" method="get" class="save-list" id="prospects_form" >
-            <input type="hidden" name="list_id" value="<?= $course_id; ?>">
-            <?php
+// $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
+$bookmarkResult = mysqli_query($conn, $bookmarkSql);
+$bookmarkCount=mysqli_num_rows($bookmarkResult);
 
-               
-               if(mysqli_num_rows($select_bookmark) > 0){ // saved course
-            ?>
-                  <button 
-                     type="submit" 
-                     name="remove_bookmarks"
-                     value="remove_bookmarks"
-                  >
-                     <i class="fas fa-bookmark"></i>
-                     <span>Saved</span>
-                  </button>
-                 
-            <?php
-               }else{
-            ?>
-                  <button 
-                  type="submit" 
-                  name="save_bookmarks"
-                  value="save_bookmarks"
-                  >
-                     <i class="far fa-bookmark"></i>
-                     <span>Save Course</span>
-                  </button>
-            <?php
-               }
-            ?>
-         </form>
-         <div class="thumb">
-            <span><?= $total_videos; ?> videos</span>
-            <img src="../images/courses/<?= $fetch_course['course_Picture']; ?>" alt="">
-         </div>
-      </div>
+
+    if(!$bookmarkCount>0){ //is not saved before 
+        echo'
+            <a  class="addBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
+
+                <i class="fa-regular fa-bookmark fa-2xl" ></i>
+            </a>
+            <a class="removeBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
+
+                <i class="fas fa-bookmark fa-2xl" ></i>
+            </a>
+        ';
+    }
+    else{ // is saved before 
+        echo'
+        <a  class="addBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
+
+            <i class="fa-regular fa-bookmark fa-2xl" ></i>
+        </a>
+        <a class="removeBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
+
+            <i class="fas fa-bookmark fa-2xl" ></i>
+        </a>
+    ';
+    }
+
+?>
+
 
       <div class="col">
          <div class="tutor">
-            <img src="../images/companies_universities_images/<?= $LogoName ?>" alt="">
+            
+
+         <?php if ($role== "company") {
+                  ?>
+                     <a href="../viewCompanyProfile.php?vcid=<?= $fetch_course['company_id']; ?>&cname=<?= $fetch_course['company_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+                     <img src="../images/companies_universities_images/<?= $fetch_course['company_Logo']; ?>" alt="">
+                     
+            <?php }else {
+                  ?>
+                     <a href="../viewUniversityProfile.php?vcid=<?= $fetch_course['university_ID']; ?>&cname=<?= $fetch_course['university_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+
+                     <img src="../images/companies_universities_images/<?= $fetch_course['university_Logo']; ?>" alt="">
+            <?php
+                  } 
+            ?>
+                     </a>
+
             <div>
                <h3><?= $fetch_course['course_Creator'];  ?></h3>
             </div>
@@ -165,22 +175,82 @@ if( isset($_GET['save_bookmarks'])  ){
          <div class="details">
             <h3><?= $fetch_course['course_Name']; ?></h3>
             <p><?= $fetch_course['course_Description']; ?></p>
-            <div class="date"><i class="fas fa-calendar"></i><span><?= $fetch_course['course_Launch_Date']; ?></span></div>
-            <div><h3><?= $fetch_course['course_Fees']; ?>$</h3></div>
+            <div style="display: flex;     justify-content: space-between;     align-items: center;">
+               <div class="date"><i class="fas fa-calendar"></i><span><?= $fetch_course['course_Launch_Date']; ?></span></div>
+               <div><h3><?= $fetch_course['course_Fees']; ?>$</h3></div>
+            </div>
          </div>
       </div>
 
+      <div class="col">
+         <div class="thumb">
+            <span style="z-index: 1;"><?= $total_videos; ?> videos</span>
+            <!-- for video -->
+            <link rel="stylesheet" href="../css/plyr.css">
+            <script src="../js/plyr.js"></script>
+            <div  class="DIVvideo" style="margin: 20px;">
+               <video id="my-video" class="video" poster="../images/courses/<?= $fetch_course['course_Picture']; ?>" controls>
+                  <source src="../images/courses/<?= $fetch_course['course_overall_Video']; ?>">
+               </video>
+            </div>
+               <!-- script for video -->
+               <script> 
+                  const player = new Plyr('#my-video');
+               </script>
+
+
+            <!-- <img src="../images/courses/   $fetch_course['course_Picture'];  " alt=""> -->
+         </div>
+      </div>
+
+
       <?php
          }else{
-            echo '<p class="empty">this playlist was not found!</p>';
+            echo '<p class="empty">this Course was not found!</p>';
          }  
       ?>
 
+
+<div class="col">
+
+
+<?php
+$courseProgress_sql = "SELECT * FROM course_progress 
+                        WHERE individual_ID = $individual_ID AND course_ID = " . $fetch_course['course_ID'];
+
+$courseProgress_result = mysqli_query($conn, $courseProgress_sql);
+
+if ($courseProgress_result) {
+   $courseProgress = mysqli_fetch_assoc($courseProgress_result);
+   if (mysqli_num_rows($courseProgress_result) > 0) {
+      if ($courseProgress['course_Status']=="under-progress") {
+         echo '<a href="watch_video.php?video_id=' . $courseProgress['last_watched_video'] . '">Resume Course</a>';
+      }
+      else if ($courseProgress['course_Status']=="done") {
+         echo '<a href="">Already Finshied! <br>
+                Look For New Course</a>';
+      }
+   }
+   else {
+      echo '<a href="">Enroll Course</a>';
+   }
+} else {
+    echo mysqli_error($conn); // Print any MySQL errors for debugging purposes
+}
+
+?>
+
+
+
+
+      </div>
+      
    </div>
 
 </section>
 
 <!-- playlist section ends -->
+
 
 <!-- videos container section starts  -->
 
@@ -266,12 +336,11 @@ if( isset($_GET['save_bookmarks'])  ){
 
  
 .playlist{
-    padding: 2rem;
-    background:#eee;
-}
+    margin: 2rem;
 
-.playlist .row .col .thumb{
-    height: 20rem;
+    background-color: #eee;
+      border-radius: 25px;
+      position: relative;
 }
 .playlist .row{
    display: flex;
@@ -279,7 +348,7 @@ if( isset($_GET['save_bookmarks'])  ){
    gap:2.5rem;
    flex-wrap: wrap;
    padding: 2rem;
-   background-color: var(--white);
+   /* background:var(--white); */
 }
 
 .playlist .row .col{
@@ -318,12 +387,12 @@ if( isset($_GET['save_bookmarks'])  ){
 
 .playlist .row .col .thumb{
    position: relative;
-   height: 30rem;
+   height: auto;
 }
 
 .playlist .row .col .thumb span{
    position: absolute;
-   top: 1rem; left: 1rem;
+   top: 1rem; left: 2rem;
    border-radius: .5rem;
    padding: .5rem 1.5rem;
    font-size: 2rem;
@@ -341,7 +410,7 @@ if( isset($_GET['save_bookmarks'])  ){
 .playlist .row .col .tutor{
    display: flex;
    align-items: center;
-   gap: 1.7rem;
+   /* gap: 1.7rem; */
 }
 
 .playlist .row .col .tutor img{
@@ -354,7 +423,7 @@ if( isset($_GET['save_bookmarks'])  ){
 .playlist .row .col .tutor h3{
    font-size: 2rem;
    color: var(--black);
-   margin-bottom: .2rem;
+   /* margin-bottom: .2rem; */
 }
 
 .playlist .row .col .tutor span{
@@ -367,7 +436,7 @@ if( isset($_GET['save_bookmarks'])  ){
 }
 
 .playlist .row .col .details h3{
-   font-size: 2rem;
+   font-size: 1.3rem;
    color: var(--black);
 }
 
@@ -394,9 +463,62 @@ if( isset($_GET['save_bookmarks'])  ){
 
 
 
+.details{
+   display: inherit;
+}
+
+.playlist .row .col .details p {
+   font-size: large;
+   white-space: pre-line;
+
+}
+
+
+.addBookmark, .removeBookmark{
+        position: absolute;
+        top: 5px;
+        right: 5%;
+        background-color: transparent;
+        color: var(--nav-main);
+    }
+    .hide{
+        display: none;
+    }
+
 
 </style>
 
+
+
+ <!-- script for Bookmarks add-remove -->
+ <script>
+
+var addBookmarks = document.querySelectorAll('.addBookmark');
+var removeBookmarks = document.querySelectorAll('.removeBookmark');
+
+// Add event listener for each addBookmark button
+addBookmarks.forEach(function(addBookmark) {
+addBookmark.addEventListener('click', function() {
+    var parent = this.parentElement;
+    var removeBookmark = parent.querySelector('.removeBookmark');
+
+    removeBookmark.style.display = 'block'; // Show the removeBookmark element
+    this.style.display = 'none'; // Hide the addBookmark element
+});
+});
+
+// Add event listener for each removeBookmark button
+removeBookmarks.forEach(function(removeBookmark) {
+removeBookmark.addEventListener('click', function() {
+    var parent = this.parentElement;
+    var addBookmark = parent.querySelector('.addBookmark');
+
+    addBookmark.style.display = 'block'; // Show the addBookmark element
+    this.style.display = 'none'; // Hide the removeBookmark element
+});
+});
+
+</script>
 
 <!-- <script>
    console.log("asd");

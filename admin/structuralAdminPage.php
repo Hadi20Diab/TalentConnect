@@ -298,27 +298,39 @@ if(isset($_POST['logout-btn'])){
 		
 		
 		<!-- make the icon faded when howver on it -->
-		<script>
-		  document.addEventListener("DOMContentLoaded", function() {
-			const links = document.querySelectorAll("a");
+        <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const links = document.querySelectorAll("a");
 
-			links.forEach(function(link) {
-			  link.addEventListener("mouseover", function() {
-				const icons = this.querySelectorAll("i");
-				icons.forEach(function(icon) {
-				  icon.classList.add("fa-fade");
-				});
-			  });
+    links.forEach(function(link) {
+      link.addEventListener("mouseover", function() {
+        const icons = this.querySelectorAll("i");
+        const images = this.querySelectorAll("img");
 
-			  link.addEventListener("mouseout", function() {
-				const icons = this.querySelectorAll("i");
-				icons.forEach(function(icon) {
-				  icon.classList.remove("fa-fade");
-				});
-			  });
-			});
-		  });
-		</script>
+        icons.forEach(function(icon) {
+          icon.classList.add("fa-fade");
+        });
+
+        images.forEach(function(image) {
+          image.classList.add("fa-fade");
+        });
+      });
+
+      link.addEventListener("mouseout", function() {
+        const icons = this.querySelectorAll("i");
+        const images = this.querySelectorAll("img");
+
+        icons.forEach(function(icon) {
+          icon.classList.remove("fa-fade");
+        });
+
+        images.forEach(function(image) {
+          image.classList.remove("fa-fade");
+        });
+      });
+    });
+  });
+</script>
 		
 		
 		

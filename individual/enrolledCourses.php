@@ -12,7 +12,10 @@
         Registered Courses
     </h1>
 
-
+    <div style="    display: flex;     flex-direction: row;     width: 50%;     margin: 0 25%;     border-radius: 20px;     flex-wrap: nowrap;     justify-content: center;     align-items: center;">
+        <i class="fa fa-solid fa-magnifying-glass"></i>
+        <input type="text" name="" id="search-item" placeholder="Search By Course Name" onkeyup="pendingCompanySearch()" style="width: 50%;     height: 30px;     margin-left: 3%;     border: none;     border-radius: 20px;">                            
+    </div>
 
 
         <div class="box-container">
@@ -35,7 +38,11 @@
             if(!mysqli_num_rows($select_courses)>0){
                 echo"<p class='empty'>No Finished Courses Yet!</p>";
             }
-        
+    
+
+
+
+
             while($fetch_course = mysqli_fetch_assoc($select_courses)){
                     $course_id = $fetch_course['course_ID'];
                     $course_Creator = $fetch_course['course_Creator'];
@@ -67,7 +74,7 @@
                 ?>
         
         
-                    <div class="box">
+                    <div class="box" id="box">
                         <div class="course_Creator">
         
                             <?php if ($fetch_company && $fetch_company['company_Logo']) {
@@ -86,7 +93,7 @@
                             ?>
                                     </a>
                             <div>
-                                <h3><?= $fetch_course['course_Creator'] ?></h3>
+                                <h4><?= $fetch_course['course_Creator'] ?></h4>
                                 <span><?= $fetch_course['course_Launch_Date']; ?></span>
                             </div>
                         </div>
@@ -244,6 +251,34 @@
         
             </div>
             <title>Search courses</title>
+
+
+    <!-- Script Search Bar -->
+
+    <script type="text/javascript">
+        function pendingCompanySearch() {
+            let filter = document.getElementById('search-item').value.toUpperCase();
+            let singleROW = document.querySelectorAll('#box');
+            let l = document.getElementsByTagName('h3'); // courseName
+            
+            for(var i = 0; i<=l.length ;i++){
+                let match=singleROW[i].getElementsByTagName('h3')[0];
+                let value=match.innerHTML || match.innerText || match.textContent;
+                
+                
+                if(value.toUpperCase().indexOf(filter) > -1) {
+                    singleROW[i].style.display="";
+                }
+                else
+                {
+                    singleROW[i].style.display="none";
+                }
+            }
+        }
+    </script>
+
+
+
             <script>
                 document.getElementById("Courses-LeftBar").classList.add("actived");
         

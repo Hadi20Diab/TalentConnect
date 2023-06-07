@@ -245,7 +245,7 @@ if(isset($_GET['cid'])){
                                 <td class="companyName">
                                     <p>
                                         <?= $fetch_pending_companies['company_Name']; ?>
-                                </p>
+                                    </p>
                                 </td>
                                 <td><?= $fetch_pending_companies['company_Email']; ?></td>
                                 <td><?= $fetch_pending_companies['company_Country']; ?></td>

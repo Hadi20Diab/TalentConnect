@@ -96,6 +96,42 @@
       <!-- script for video -->
       <script> 
          const player = new Plyr('#my-video');
+      </script> 
+
+
+      <?php
+         $select_video_progress = mysqli_query($conn,"SELECT watched_time	FROM video_progress
+                                             WHERE video_ID = $video_id AND individual_ID=$individual_ID");
+         
+         // If the user have Watched the video before 
+         if(mysqli_num_rows($select_video_progress) > 0){
+            $fetch_video_progress = mysqli_fetch_assoc($select_video_progress);
+            $watchedTime=$fetch_video_progress["watched_time"];
+          ?>
+            <script> 
+               // Get the watched time from the database
+               const watchedTime = <?= $watchedTime ?>;
+
+               // Play the video from the watched time
+               const videos =document.getElementById("my-video");
+               videos.currentTime = watchedTime;
+               // videos.play();
+
+            </script>
+
+          <?php  
+         }
+      ?>
+      <script> //script to update or insert watching time on database 
+         // Update the watching time every 20 seconds
+         setInterval(function() {
+            const currentTime = Math.floor(videos.currentTime);
+
+               // Send the updated time to the server using a PHP script
+               const xhr = new XMLHttpRequest();
+               xhr.open('GET', 'update_watching_time.php?individual_ID=' + <?= $individual_ID ?> + '&videoID=' + <?= $video_id ?> + '&time=' + currentTime);
+               xhr.send();
+         }, 20000); // 20 seconds (in milliseconds)
       </script>
 
 
