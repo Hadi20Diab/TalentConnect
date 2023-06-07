@@ -103,40 +103,48 @@ if( isset($_GET['save_bookmarks'])  ){
 
       ?>
 
-<?php
-$bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND course_ID = " . $course_id ;
+      <title>
+         <?= $fetch_course['course_Name']; ?>
+      </title>
 
-// $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
-$bookmarkResult = mysqli_query($conn, $bookmarkSql);
-$bookmarkCount=mysqli_num_rows($bookmarkResult);
+      <!-- bookmark -->
+      <?php
+      $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND course_ID = " . $course_id ;
+
+      // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
+      $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+      $bookmarkCount=mysqli_num_rows($bookmarkResult);
 
 
-    if(!$bookmarkCount>0){ //is not saved before 
-        echo'
-            <a  class="addBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
+         if(!$bookmarkCount>0){ //is not saved before 
+            echo'
+                  <a  class="addBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
 
-                <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                     <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                  </a>
+                  <a class="removeBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
+
+                     <i class="fas fa-bookmark fa-2xl" ></i>
+                  </a>
+            ';
+         }
+         else{ // is saved before 
+            echo'
+            <a  class="addBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
+
+                  <i class="fa-regular fa-bookmark fa-2xl" ></i>
             </a>
-            <a class="removeBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
+            <a class="removeBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
 
-                <i class="fas fa-bookmark fa-2xl" ></i>
+                  <i class="fas fa-bookmark fa-2xl" ></i>
             </a>
-        ';
-    }
-    else{ // is saved before 
-        echo'
-        <a  class="addBookmark hide" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=add" target="_black">
+         ';
+         }
 
-            <i class="fa-regular fa-bookmark fa-2xl" ></i>
-        </a>
-        <a class="removeBookmark" href="../addRemoveBookmark.php?course_id='. $course_id .'&user_ID='. $individual_ID .'&user_role=individual&status=remove" target="_black">
+      ?>
+      <!-- end bookmark -->
 
-            <i class="fas fa-bookmark fa-2xl" ></i>
-        </a>
-    ';
-    }
-
-?>
+      <!-- course data -->
 
 
       <div class="col">
@@ -219,7 +227,7 @@ $bookmarkCount=mysqli_num_rows($bookmarkResult);
 
       <div class="col">
          <div class="thumb">
-            <a href="#videos-container">
+            <a href="#videos-container" id="scroll-link">
                <span style="z-index: 1;"><?= $total_videos; ?> videos</span>
             </a>
             <!-- for video -->
@@ -274,7 +282,7 @@ $bookmarkCount=mysqli_num_rows($bookmarkResult);
                   <i class="fa fas fa-play"></i>
                   <img src="../images/courses/<?= $fetch_content['video_Picture']; ?>" alt="">
                   <h3>
-                     <?= $fetch_content['video_Name']; ?>
+                     <?= $fetch_content['video_Order']; ?>.  <?= $fetch_content['video_Name']; ?>
                   </h3>
                </a>
             <?php

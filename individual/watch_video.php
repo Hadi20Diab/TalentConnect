@@ -64,8 +64,9 @@
    <?php
       $select_videos = mysqli_query($conn,"SELECT * FROM `course_videos` WHERE video_ID = $video_id");
       if(mysqli_num_rows($select_videos) > 0){
-         while(($fetch_video = mysqli_fetch_assoc($select_videos))){
-
+         // while(($fetch_video = mysqli_fetch_assoc($select_videos))){
+         $fetch_video = mysqli_fetch_assoc($select_videos);
+            
             // $video_id = $fetch_video['video_ID'];
 
             // $select_likes = $conn->prepare("SELECT * FROM `likes` WHERE video_id = ?");
@@ -102,6 +103,10 @@
 
             $fetch_course_Creator = mysqli_fetch_assoc($select_course_Creator)
    ?>
+
+<title>
+   <?= $fetch_video['video_Name']; ?>
+</title>
 
 <!-- style and script for video -->
 <!-- <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css">
@@ -145,6 +150,7 @@
           <?php  
          }
       ?>
+
       <script> //script to update or insert watching time on database 
          // Update the watching time every 20 seconds
          setInterval(function() {
@@ -169,13 +175,13 @@
 
       <form action="" method="post" class="flex">
          <input type="hidden" name="video_id" value="<?= $video_id; ?>">
-         <a href="viewCourse.php?course_id=<?= $fetch_video['course_ID']; ?>&LOGO=<?= $fetch_course_Creator['company_Logo']; ?>" class="inline-btn">View Course</a>
+         <a href="viewCourse.php?course_id=<?= $fetch_video['course_ID']; ?>" class="inline-btn">View Course</a>
 
       </form>
       <div class="description"><p><?= $fetch_video['video_Description']; ?></p></div>
    </div>
    <?php
-         }
+         // }
       }else{
          echo '<p class="empty">no videos added yet!</p>';
       }
