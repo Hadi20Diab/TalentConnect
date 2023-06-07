@@ -8,6 +8,29 @@
         header('location: videos.php');
     }
 
+//course_progress
+// to update or insert the last_watched_video 
+   $select_videos = mysqli_query($conn,"SELECT * FROM `course_videos` WHERE video_ID = $video_id");
+   if(mysqli_num_rows($select_videos) > 0){
+      $fetch_video = mysqli_fetch_assoc($select_videos);
+
+      // check the user if have progress on this course or not (update or insert progress)
+      $select_progress = mysqli_query($conn,"SELECT course_progress_ID  FROM `course_progress` WHERE individual_ID = $individual_ID AND course_ID ={$fetch_video['course_ID']}" );
+
+      if (mysqli_num_rows($select_progress) > 0) {
+         $sql = "UPDATE `course_progress` SET `last_watched_video` ='$video_id'
+                  WHERE individual_ID= $individual_ID AND course_ID= ". $fetch_video['course_ID'];
+         $result = mysqli_query($conn, $sql);
+         mysqli_error($conn);
+      }
+      else{
+         $sql = "INSERT INTO `course_progress`(individual_ID, course_ID, last_watched_video) VALUES('$individual_ID', '{$fetch_video['course_ID']}', '$video_id') ";
+         $result = mysqli_query($conn, $sql);
+      }
+  }
+
+
+
 
     if(isset($_POST['add_comment'])){
 

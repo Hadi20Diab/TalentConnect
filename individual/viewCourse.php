@@ -44,22 +44,12 @@ if( isset($_GET['save_bookmarks'])  ){
 ?>
 
 
-
-
-
-
-
-
-
-
-
-
 <!-- Course section starts  -->
 
 <section class="playlist">
    
    <!-- <div class="row"> -->
-      <h1 class="heading">
+      <h1 class="heading" style="     padding: 45px 45px 0px; ">
          <!-- back button -->
          <a href="courses.php"> 
              <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: var(--nav-main);"></i>
@@ -150,41 +140,88 @@ $bookmarkCount=mysqli_num_rows($bookmarkResult);
 
 
       <div class="col">
-         <div class="tutor">
-            
-
-         <?php if ($role== "company") {
-                  ?>
-                     <a href="../viewCompanyProfile.php?vcid=<?= $fetch_course['company_id']; ?>&cname=<?= $fetch_course['company_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
-                     <img src="../images/companies_universities_images/<?= $fetch_course['company_Logo']; ?>" alt="">
-                     
-            <?php }else {
-                  ?>
-                     <a href="../viewUniversityProfile.php?vcid=<?= $fetch_course['university_ID']; ?>&cname=<?= $fetch_course['university_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
-
-                     <img src="../images/companies_universities_images/<?= $fetch_course['university_Logo']; ?>" alt="">
-            <?php
-                  } 
-            ?>
-                     </a>
-
-            <div>
-               <h3><?= $fetch_course['course_Creator'];  ?></h3>
+         <div style="     display: flex;     align-items: center;     justify-content: space-between;     flex-wrap: wrap; ">
+            <div class="tutor">
+               
+               <?php if ($role== "company") {
+                     ?>
+                        <a href="../viewCompanyProfile.php?vcid=<?= $fetch_course['company_id']; ?>&cname=<?= $fetch_course['company_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+                        <img src="../images/companies_universities_images/<?= $fetch_course['company_Logo']; ?>" alt="">
+                        
+               <?php }else {
+                     ?>
+                        <a href="../viewUniversityProfile.php?vcid=<?= $fetch_course['university_ID']; ?>&cname=<?= $fetch_course['university_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+   
+                        <img src="../images/companies_universities_images/<?= $fetch_course['university_Logo']; ?>" alt="">
+               <?php
+                     } 
+               ?>
+                        </a>
+   
+               <div>
+                  <h3><?= $fetch_course['course_Creator'];  ?></h3>
+               </div>
             </div>
+
+
+
+            <?php
+               $courseProgress_sql = "SELECT * FROM course_progress 
+                                       WHERE individual_ID = $individual_ID AND course_ID = " . $fetch_course['course_ID'];
+
+               $courseProgress_result = mysqli_query($conn, $courseProgress_sql);
+
+               if ($courseProgress_result) {
+                  $courseProgress = mysqli_fetch_assoc($courseProgress_result);
+                  if (mysqli_num_rows($courseProgress_result) > 0) {
+                     if ($courseProgress['course_Status']=="under-progress") {
+                        echo '<a href="watch_video.php?video_id=' . $courseProgress['last_watched_video'] . '"
+                        style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">Resume Course</a>';
+                     }
+                     else if ($courseProgress['course_Status']=="done") {
+                        echo '<a href="courses.php" style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
+                                 Already Finshied! <br>
+                                 Look For New Course
+                              </a>'
+                        ;
+                     }
+                  }
+                  else {
+                     echo '<a href=""style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
+                              Enroll Course
+                           </a>'
+                     ;
+                  }
+               } else {
+                  echo mysqli_error($conn); // Print any MySQL errors for debugging purposes
+               }
+
+            ?>
+
+
+
          </div>
          <div class="details">
-            <h3><?= $fetch_course['course_Name']; ?></h3>
+            <h3>
+               <i class="fas fa-regular fa-book" style="margin-right: 10px; color: var(--nav-main);"></i>
+               <?= $fetch_course['course_Name']; ?>
+            </h3>
             <p><?= $fetch_course['course_Description']; ?></p>
             <div style="display: flex;     justify-content: space-between;     align-items: center;">
-               <div class="date"><i class="fas fa-calendar"></i><span><?= $fetch_course['course_Launch_Date']; ?></span></div>
-               <div><h3><?= $fetch_course['course_Fees']; ?>$</h3></div>
+               <div class="date"><i class="fas fa-calendar" style="color: var(--nav-main);"></i><span><?= $fetch_course['course_Launch_Date']; ?></span></div>
+               <div> <h3>
+                        <i class="fa-solid fa-circle-dollar-to-slot" style="color: var(--nav-main);"></i>
+                        <?= $fetch_course['course_Fees']; ?>$
+                     </h3></div>
+               </div>
             </div>
          </div>
-      </div>
 
       <div class="col">
          <div class="thumb">
-            <span style="z-index: 1;"><?= $total_videos; ?> videos</span>
+            <a href="#videos-container">
+               <span style="z-index: 1;"><?= $total_videos; ?> videos</span>
+            </a>
             <!-- for video -->
             <link rel="stylesheet" href="../css/plyr.css">
             <script src="../js/plyr.js"></script>
@@ -210,41 +247,6 @@ $bookmarkCount=mysqli_num_rows($bookmarkResult);
          }  
       ?>
 
-
-<div class="col">
-
-
-<?php
-$courseProgress_sql = "SELECT * FROM course_progress 
-                        WHERE individual_ID = $individual_ID AND course_ID = " . $fetch_course['course_ID'];
-
-$courseProgress_result = mysqli_query($conn, $courseProgress_sql);
-
-if ($courseProgress_result) {
-   $courseProgress = mysqli_fetch_assoc($courseProgress_result);
-   if (mysqli_num_rows($courseProgress_result) > 0) {
-      if ($courseProgress['course_Status']=="under-progress") {
-         echo '<a href="watch_video.php?video_id=' . $courseProgress['last_watched_video'] . '">Resume Course</a>';
-      }
-      else if ($courseProgress['course_Status']=="done") {
-         echo '<a href="courses.php">Already Finshied! <br>
-                Look For New Course</a>';
-      }
-   }
-   else {
-      echo '<a href="">Enroll Course</a>';
-   }
-} else {
-    echo mysqli_error($conn); // Print any MySQL errors for debugging purposes
-}
-
-?>
-
-
-
-
-      </div>
-      
    </div>
 
 </section>
@@ -254,35 +256,39 @@ if ($courseProgress_result) {
 
 <!-- videos container section starts  -->
 
-<section class="videos-container">
+<section id="videos-container" class="videos-container">
 
-   <h1 class="heading">Course Videos</h1>
+   <h1 class="heading" style="margin: 10px 5px 30px;"> 
+      <i class="fa-solid fa-video" style="color: var(--nav-main);"></i>
+      Course Videos   
+   </h1>
 
    <div class="box-container">
 
-      <?php
-         $select_content = mysqli_query($conn,"SELECT * FROM `course_videos` WHERE course_ID = $course_id");
+      <?php // select video in asending order
+         $select_content = mysqli_query($conn,"SELECT * FROM `course_videos` WHERE course_ID = $course_id ORDER BY `video_Order` ASC");
          if(mysqli_num_rows($select_content) > 0){
             while($fetch_content = mysqli_fetch_assoc($select_content)){
       ?>
-            <a href="watch_video.php?video_id=<?= $fetch_content['video_ID']; ?>" class="box">
-                <i class="fas fa-play"></i>
-                <img src="../images/courses/<?= $fetch_content['video_Picture']; ?>" alt="">
-                <h3><?= $fetch_content['video_Name']; ?></h3>
-            </a>
-
+               <a href="watch_video.php?video_id=<?= $fetch_content['video_ID']; ?>" class="box">
+                  <i class="fa fas fa-play"></i>
+                  <img src="../images/courses/<?= $fetch_content['video_Picture']; ?>" alt="">
+                  <h3>
+                     <?= $fetch_content['video_Name']; ?>
+                  </h3>
+               </a>
+            <?php
+            }
+            ?>
    </div>
 
+         <?php
+         }else{
+            echo '<p class="empty">no videos added yet!</p>';
+         }
+         ?>
 </section>
-<section class="adsf">
 
-            <?php
-                    }
-                }else{
-                    echo '<p class="empty">no videos added yet!</p>';
-                }
-            ?>
-</section>
 
 <!-- videos container section ends -->
 
@@ -298,8 +304,9 @@ if ($courseProgress_result) {
 <style>
 
 .empty{
-   margin: -90px 15%;
-    width: fit-content;
+   margin: -90px 0%;
+   width: fit-content;
+   padding: 3rem 1rem;
 }
     /* .playlist {
         padding: 2rem;
@@ -520,12 +527,200 @@ removeBookmark.addEventListener('click', function() {
 
 </script>
 
-<!-- <script>
-   console.log("asd");
-   var form = document.getElementById("myForm");
-function handleForm(event) { event.preventDefault(); } 
-form.addEventListener('submit', handleForm);
-</script> -->
+
+<!-- style for video  -->
+
+<style>
+section.videos-container {
+    background: #eee;
+    width: 94%;
+    margin: 2% 3%;
+    border-radius: 25px;
+    padding: 25px;
+}
 
 
+   .videos-container .box-container{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, 27rem);
+   gap: 1.5rem;
+   align-items: flex-start;
+   justify-content: center;
+}
 
+.videos-container .box-container .box{
+   position: relative;
+   border-radius: .5rem;
+   padding: 2rem;
+   background-color: var(--white);
+}
+
+.videos-container .box-container .box img{
+   height: 15rem;
+   width: 100%;
+   border-radius: .5rem;
+   object-fit: unset;
+}
+
+.videos-container .box-container .box i{
+   position: absolute;
+   top: 2rem; left: 2rem; right: 2rem;
+   height: 15rem;
+   background-color: rgba(0,0,0,.3);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 4rem;
+   color: #fff;
+   border-radius: .5rem;
+   display: none;
+}
+
+.videos-container .box-container .box:hover i{
+   display: flex;
+}
+
+.videos-container .box-container .box h3{
+   font-size: larger;
+   color: var(--black);
+   margin-top: 1rem;
+}
+
+.videos-container .box-container .box:hover h3{
+   color: var(--main-color);
+}
+
+.watch-video .video-details{
+   background-color: var(--white);
+   padding: 2rem;
+   border-radius: .5rem;
+}
+
+.watch-video .video-details .video{
+   width: 100%;
+   border-radius: .5rem;
+   background: #000;
+   height: 50rem;
+}
+
+.watch-video .video-details .title{
+   font-size: 2rem;
+   color: var(--black);
+   padding: 1.5rem 0;
+}
+
+.watch-video .video-details .info{
+   display: flex;
+   gap: 2rem;
+   padding-bottom: 1.5rem;
+   border-bottom: var(--border);
+}
+
+.watch-video .video-details .info p{
+   font-size:1.6rem;
+}
+
+.watch-video .video-details .info p i{
+   margin-right: 1rem;
+   color: var(--main-color);
+}
+
+.watch-video .video-details .info p span{
+   color: var(--light-color);
+}
+
+.watch-video .video-details .tutor{
+   padding: 2rem 0;
+   display: flex;
+   align-items: center;
+   gap: 2rem;
+}
+
+.watch-video .video-details .tutor img{
+   height: 7rem;
+   width: 7rem;
+   border-radius: 50%;
+   object-fit: cover;
+}
+
+.watch-video .video-details .tutor h3{
+   font-size: 2rem;
+   color: var(--black);
+   margin-bottom: .2rem;
+}
+
+.watch-video .video-details .tutor span{
+   color: var(--light-color);
+   font-size: 1.5rem;
+}
+
+.watch-video .video-details .flex{
+   display: flex;
+   align-items: center;
+   gap: 1.5rem;
+   justify-content: space-between;
+}
+
+.watch-video .video-details .flex a{
+   margin-top: 0;
+}
+
+.watch-video .video-details .flex button{
+   background-color: var(--light-bg);
+   cursor: pointer;
+   padding: 1rem 2.5rem;
+   font-size: 2rem;
+   border-radius: .5rem;
+}
+
+.watch-video .video-details .flex button i{
+   color: var(--black);
+   margin-right: 1rem;
+}
+
+.watch-video .video-details .flex button span{
+   color: var(--light-color);
+}
+
+.watch-video .video-details .flex button:hover{
+   background-color: var(--black);
+}
+
+.watch-video .video-details .flex button:hover i{
+   color: var(--white);
+}
+
+.watch-video .video-details .flex button:hover span{
+   color: var(--white);
+}
+
+.watch-video .video-details .description{
+   padding-top: 2rem;
+}
+
+.watch-video .video-details .description p{
+   line-height: 1.5;
+   font-size: 1.7rem;
+   color: var(--light-color);
+   white-space: pre-line;
+}
+
+</style>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+  var scrollLink = document.getElementById('scroll-link');
+  var videosContainer = document.getElementById('videos-container');
+  
+  scrollLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    var containerTop = videosContainer.offsetTop;
+    
+    window.scrollTo({
+      top: containerTop,
+      behavior: 'smooth'
+    });
+  });
+});
+</script>

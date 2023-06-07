@@ -323,7 +323,7 @@ if(isset($_POST['logout-btn'])){
     links.forEach(function(link) {
       link.addEventListener("mouseover", function() {
         const icons = this.querySelectorAll("i");
-        const images = this.querySelectorAll("img");
+        const images = this.querySelectorAll(".icon img");
 
         icons.forEach(function(icon) {
           icon.classList.add("fa-fade");
@@ -336,7 +336,7 @@ if(isset($_POST['logout-btn'])){
 
       link.addEventListener("mouseout", function() {
         const icons = this.querySelectorAll("i");
-        const images = this.querySelectorAll("img");
+        const images = this.querySelectorAll(".icon img");
 
         icons.forEach(function(icon) {
           icon.classList.remove("fa-fade");
