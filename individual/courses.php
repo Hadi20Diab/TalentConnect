@@ -181,6 +181,7 @@
                     <div style="     display: flex;     align-items: center;     justify-content: space-between;     flex-direction: row; margin-top: 1rem; ">
                         <a href="viewCourse.php?course_id=<?= $course_id; ?> " class="viewCourseBtn">view Course</a>
                         <h4 style="font-size: larger;">
+                            <i class="fa-solid fa-money-bill" style="color: var(--nav-main);"></i>
                             <?= $fetch_course['course_Fees']; ?>$</h4>
                     </div>
 
@@ -225,7 +226,9 @@
 
             }  
       }else{
-         echo '<p class="empty">no courses added yet!</p>';
+         echo '<p class="empty">No courses matched your interests yet.<br>
+                                
+                </p>';
       }
       ?>
 

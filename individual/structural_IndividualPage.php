@@ -149,7 +149,7 @@ if(isset($_POST['logout-btn'])){
                     </li>
 
                     <li>
-                        <a href="food-categories.php" id="ScholarshipManagement-LeftBar">
+                        <a href="scholarships.php" id="Scholarship-LeftBar">
                             <span class="icon">
                                 <img class="imgIcon" src="https://cdn-icons-png.flaticon.com/512/8920/8920733.png" alt="">
                                 <!-- <ion-icon name="grid-outline"></ion-icon> -->

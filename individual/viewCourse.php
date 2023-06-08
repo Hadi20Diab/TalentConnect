@@ -218,7 +218,7 @@ if( isset($_GET['save_bookmarks'])  ){
             <div style="display: flex;     justify-content: space-between;     align-items: center;">
                <div class="date"><i class="fas fa-calendar" style="color: var(--nav-main);"></i><span><?= $fetch_course['course_Launch_Date']; ?></span></div>
                <div> <h3>
-                        <i class="fa-solid fa-circle-dollar-to-slot" style="color: var(--nav-main);"></i>
+                        <i class="fa-solid fa-money-bill" style="color: var(--nav-main);"></i>
                         <?= $fetch_course['course_Fees']; ?>$
                      </h3></div>
                </div>
