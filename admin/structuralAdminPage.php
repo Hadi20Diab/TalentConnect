@@ -98,7 +98,9 @@ if(isset($_POST['logout-btn'])){
                     <li>
                         <a href="index.php" id="Dashboard-LeftBar">
                             <span class="icon">
-                                <ion-icon name="home-outline"></ion-icon>
+							    <i class="fa-sharp fa-solid fa-house fa-2xl"></i>
+
+                                <!-- <ion-icon name="home-outline"></ion-icon> -->
                             </span>
                             <span class="title">Dashboard</span>
                         </a>
@@ -165,8 +167,9 @@ if(isset($_POST['logout-btn'])){
                         <a href="admins.php" id="admins-LeftBar">
                             <span class="icon">
 
-                            <!-- <i class="fa fa-light fa-user-plus fa-xl"></i> -->
-                            <ion-icon name="person-add-outline"></ion-icon>
+							<i class="fa-solid fa-person-circle-plus fa-2xl"></i>
+                            <!-- <ion-icon name="person-add-outline"></ion-icon> -->
+							
                             </span>
                             <span class="title">Admins</span>
                         </a>
@@ -206,7 +209,8 @@ if(isset($_POST['logout-btn'])){
                     <li>
                         <a href="https://www.tidio.com/panel/conversations" target="_blank">
                             <span class="icon">
-                                <ion-icon name="chatbubbles-outline"></ion-icon>
+                                <!-- <ion-icon name="chatbubbles-outline"></ion-icon> --> 
+								<i class="fa-solid fa-comments fa-2xl"></i>
                             </span>
                             <span class="title">Chatbot</span>
                         </a>
@@ -291,6 +295,45 @@ if(isset($_POST['logout-btn'])){
                 popup.classList.add("open-popup");
             } 
         </script>
+		
+		
+		<!-- make the icon faded when howver on it -->
+        <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const links = document.querySelectorAll("a");
+
+    links.forEach(function(link) {
+      link.addEventListener("mouseover", function() {
+        const icons = this.querySelectorAll("i");
+        const images = this.querySelectorAll(".icon img");
+
+        icons.forEach(function(icon) {
+          icon.classList.add("fa-fade");
+        });
+
+        images.forEach(function(image) {
+          image.classList.add("fa-fade");
+        });
+      });
+
+      link.addEventListener("mouseout", function() {
+        const icons = this.querySelectorAll("i");
+        const images = this.querySelectorAll(".icon img");
+
+        icons.forEach(function(icon) {
+          icon.classList.remove("fa-fade");
+        });
+
+        images.forEach(function(image) {
+          image.classList.remove("fa-fade");
+        });
+      });
+    });
+  });
+</script>
+		
+		
+		
         <!-- ====== ionicons ======= -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -336,6 +379,12 @@ if(isset($_POST['logout-btn'])){
 .navigation ul li a.actived {
   color: var(--nav-main);
   background-color: var(--white);
+}
+input{
+    text-indent: 10px;
+}
+.actived .icon img{
+    filter: invert(0);
 }
 
     </style>

@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+*{  font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+:root {
+    --white: #fff;
+    --black: #24292d;
+    --nav-main: #4590ef;
+    --switchers-main: #0b3cc1;
+    --gray: #f5f5f5; 
+    --black2: #999;
+    
+    
+    
+  }
+body{
+    background-image: linear-gradient(to bottom, var(--nav-main), rgb(255, 255, 255));
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.container{
+    max-width: 400px;
+    border-radius: 20px;
+    
+
+}
+.card{
+    
+    border-radius: 20px;
+    height: 600px;
+    
+    /*background-image: linear-gradient(to right, #0084ff, #00f2ff);
+    background-image: linear-gradient(to right, var(--nav-main), #ffffff);  */
+    background-color: var(--nav-main);
+    border: none;
+    overflow: hidden;
+    
+    z-index: 0;
+    box-sizing: border-box;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.8);
+}
+.circle{
+    position: absolute;
+    bottom: -230px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    clip-path: circle(50%);
+    height: 700px;
+    width: 700px;
+    z-index: -1;
+    overflow: hidden;
+}
+.myHed{
+    margin-top: 30px;
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    /*background-image: linear-gradient(to right,var(--nav-main), var(--white) ); */
+    background-color: var(--nav-main);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+.far{
+    font-size: 40px;
+
+}
+.fas{
+    position: relative;
+    display: block;
+    left: -87px;
+    top: 30px;
+    color: rgb(255,255,255);
+}
+/*
+.button{
+    width: 250px;
+    border-radius:25px ;
+    /*background-image: linear-gradient(to right, #0084ff, #00f2ff);
+    background-image: linear-gradient(to right,var(--nav-main), var(--white) ); 
+    background-color: var(--nav-main);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}  */
+.myInput{
+    width:220px;
+    padding: 10px;
+    padding-left: 40px;
+    border-radius: 25px;
+   /* background-image: linear-gradient(to right, #0084ff, #00f2ff);
+    background-image: linear-gradient(to right,var(--nav-main), white ); */
+    background-color: var(--nav-main);
+    color: #fff;
+    border: none;
+    display: block;
+}
+.myInput::placeholder{
+    color: #fff;
+    opacity: 0.6;
+}
+.myInput:focus{
+    border: none;
+    outline: none;
+}
+.check_1{
+    font-weight: 500;
+    color: rgb(85, 85, 85);
+    font-size: 12px;
+    margin: 15px auto;
+    cursor: pointer;
+}
+
+@media (max-width: 768px){
+    .container{
+        max-width: 100%;
+    }
+}
+
+
+
+.button{
+    border-radius:25px ;
+    width: 250px;
+    background:none;
+    border:3px solid var(--nav-main);
+    text-transform: uppercase;
+    padding: 12px 20px ;
+    font-weight: 700;
+    min-width: 200px;
+    cursor: pointer;
+    transition: color 0.4s linear;
+    color: var(--nav-main);
+    position: relative;
+
+}
+.button:hover{
+    color: #fff;
+    background: var(--nav-main);
+
+}
+.button::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--nav-main);
+    z-index: -1;
+    transition: transform 0.5s;
+    transform-origin: 0 0;
+    transition-timing-function: cubic-bezier(0.5, 1.6,0.4, 0.7);
+    transform: scaleX(0);
+
+}
+
+.button:hover::before{
+    transform: scaleX(1);
+   
+
+
+}

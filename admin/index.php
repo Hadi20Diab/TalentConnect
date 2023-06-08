@@ -18,7 +18,7 @@ include "structuralAdminPage.php";
                         ?>
                             <div>
                                 <div class="numbers"><?= $numbers_of_companys ; ?></div>
-                                <div class="cardName">Companys </div>
+                                <div class="cardName">Companies </div>
                             </div>
     
                             <div class="iconBx">
@@ -38,7 +38,7 @@ include "structuralAdminPage.php";
                         
                     ?>
                         <div>
-                            <div class="numbers"><?= $numbers_of_companys ; ?></div>
+                            <div class="numbers"><?= $numbers_of_universities ; ?></div>
                             <div class="cardName">Universities</div>
                         </div>
     
@@ -84,8 +84,15 @@ include "structuralAdminPage.php";
     $numbers_of_underGraduated = $numbers_of_individuals - mysqli_num_rows($select_Graduated);
 
 
+    $totalUser=$numbers_of_Graduated + $numbers_of_underGraduated +$numbers_of_companys +$numbers_of_universities
 ?>
+
+
+
+
+
 <!-- Chart -->
+<h2 style="padding: 30px;">System OverView</h2>
 <div class="ChartDIV">
   <style>
     #chartContainer {
@@ -102,11 +109,13 @@ include "structuralAdminPage.php";
         data: {
           labels: ['Company', 'University', 'Graduated Student', 'Undergraduate Student'],
           datasets: [{
-            label: 'System Percentage',
-            data: [<?= $numbers_of_companys ; ?>,
-            <?= $numbers_of_companys ; ?>,
-            <?= $numbers_of_Graduated ?>,
-            <?= $numbers_of_underGraduated ?>], // Example data (replace with actual percentages)
+            label: 'System Percentage %',
+            data: [
+              <?= $numbers_of_companys/$totalUser*100 ; ?>,
+              <?= $numbers_of_universities/$totalUser*100 ; ?>,
+              <?= $numbers_of_Graduated/$totalUser*100 ?>,
+              <?= $numbers_of_underGraduated/$totalUser*100 ?>
+            ], // Example data (replace with actual percentages)
             backgroundColor: ['rgb(255, 99, 132)', 'rgb(75, 240, 102)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)'],
           }]
         },

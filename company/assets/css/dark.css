@@ -1,0 +1,134 @@
+:root{
+    --white: #fff;
+    --black: #24292d;
+    --nav-main: #4590ef;
+    --switchers-main: #0b3cc1;
+    --gray: #f5f5f5; 
+    --black2: #999;
+  }
+
+.appearance{
+    display: flex;
+    align-items: center;
+    
+  }
+  .appearance .light-dark,
+  .appearance .icons{
+   height: 50px;
+   width: 50px;
+   border-radius: 6px;
+   line-height: 50px;
+   text-align: center;
+   color: white;
+   font-size: 20px;
+   background: var(--switchers-main);
+   cursor: pointer;
+ }
+ .appearance .light-dark i,
+ .appearance .icons i{
+   opacity: 1;
+ }
+ .appearance .light-dark:hover i,
+ .appearance .icons:hover i{
+   opacity: 1;
+ }
+ .appearance .light-dark:hover{
+   box-shadow: 0 5px 10px rgba(0,0,0,0.1)
+ }
+ .appearance .light-dark i{
+   height: 100%;
+   width: 100%;
+ }
+  .appearance .color-icon{
+    position: relative;
+  }
+  .appearance .icons{
+    width: 70px;
+    height: 50px;
+    margin-left: 14px;
+  }
+  .appearance .color-box{
+    position: absolute;
+    bottom: -170px;
+    right: 0;
+    min-height: 150px;
+    background: var(--white);
+    padding: 30px 20px 20px 20px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .color-box::before{
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: var(--white);
+    transform: rotate(45deg);
+  }
+  .color-icon.open .color-box{
+    opacity: 1;
+    pointer-events: auto;
+  }
+   .color-icon.open .arrow{
+     transform: rotate(-180deg);
+   }
+  .appearance .color-box h3{
+    font-size: 20px;
+    font-weight: 600;
+    display: block;
+    color: var(--nav-main);
+    text-align: left;
+    white-space: nowrap;
+    margin-bottom: 15px;
+  }
+ .appearance .color-box .color-switchers{
+    display: flex;
+ }
+ .color-box .color-switchers .btn{
+   display: inline-block;
+   height: 50px;
+   width: 50px;
+   border: none;
+   outline: none;
+   border-radius: 50%;
+   margin: 0 5px;
+   cursor: pointer;
+   background: #4070F4;
+ 
+ }
+ .color-switchers .btn.blue.active{
+   box-shadow: 0 0 0 2px #fff,
+               0 0 0 4px #4070F4;
+ }
+ .color-switchers .btn.orange{
+   background: #F79F1F;
+ }
+ .color-switchers .btn.orange.active{
+   box-shadow: 0 0 0 2px #fff,
+               0 0 0 4px #F79F1F;
+ }
+ .color-switchers .btn.purple{
+   background: #8e44ad;
+ }
+ .color-switchers .btn.purple.active{
+   box-shadow: 0 0 0 2px #fff,
+               0 0 0 4px #8e44Ad;
+ }
+ .color-switchers .btn.green{
+   background: #3A9943;
+ }
+ .color-switchers .btn.green.active{
+   box-shadow: 0 0 0 2px #fff,
+               0 0 0 4px #3A9943;
+ }
+ .container .navigation ul li a  span.darkMode{
+    color: var(--black);
+  }
+
+ 

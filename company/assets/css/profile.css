@@ -1,0 +1,95 @@
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/* =============== Globals ============== */
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+:root {
+  --white: #fff;
+  --black: #24292d;
+  --nav-main: #4590ef;
+  --switchers-main: #0b3cc1;
+  --gray: #f5f5f5; 
+  --black2: #999;
+  
+  
+  
+}
+
+
+.profile{
+    position: absolute;
+    top:5rem; right:2rem;
+    background-color: var(--white);
+    z-index: 1000;
+    border-radius: .5rem;
+    box-shadow: var(--black2);
+    
+    padding:2rem;
+    width: 30rem;
+    padding-top: 1.2rem;
+    display: none;
+    animation:fadeIn .2s linear;
+    /*border: 4px solid var(--nav-main); */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+
+    box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255));
+    
+ }
+ 
+ .profile.active{
+    display: inline-block;
+ }
+ 
+ .profile p{
+    text-align: center;
+    color:var(--nav-main);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+ }
+ .flex-btn{
+    display: flex;
+    gap:1rem;
+ }
+ .update-btn,
+ .home-btn,
+ .logout-btn,
+ .login-btn{
+    display: block;
+    
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    padding:1rem 3rem;
+    font-size: 1.7rem;
+    text-transform: capitalize;
+    color:var(--white);
+    cursor: pointer;
+    text-align: center;
+    transition: 0.5s ease;
+    
+ }
+ .logout-btn{
+     background-color: red;
+ }
+ .login-btn{
+     background-color: green;
+ }
+ .update-btn, .home-btn{
+     background-color: var(--nav-main);
+ }
+ .login-btn:hover,.update-btn:hover,.home-btn:hover,.logout-btn:hover{
+   
+   transform: scale(1.06);
+   text-decoration: none;
+   color: #fff;
+   font-weight: 500;
+   box-shadow: 0 5px 25px rgba(1,1,1, 15%);
+ }
+

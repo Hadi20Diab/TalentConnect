@@ -7,10 +7,10 @@ include "structuralAdminPage.php";
 
  //alert window for confirm the deletion of a company
 //  if(isset($_GET['rid'])){
-//     $rid= $_GET['rid'];
+//     $company_id= $_GET['rid'];
  
     
-//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$rid'");
+//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$company_id'");
  
 //  header("location:pendingCompany_Mangment.php");
 
@@ -236,14 +236,14 @@ if(isset($_GET['cid'])){
                              
                                 while ($fetch_pending_companies = mysqli_fetch_assoc($select_pending_companies)) {
                                     $number +=1; 
-                                    $rid = $fetch_pending_companies['company_id'];
+                                    $company_id = $fetch_pending_companies['company_id'];
 
                                     
                         ?>
                             <tr id="singleROW">
                                 <td><?= $number ?></td>
                                 <td width="60px">
-                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;"><img src="../uploaded_img/<?= $fetch_pending_companies['company_Logo']; ?>" alt=""></div>
+                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;"><img src="../images/companies_universities_images/<?= $fetch_pending_companies['company_Logo']; ?>" alt=""></div>
                                 </td>
                                 <td class="companyName">
                                     <p>
@@ -253,7 +253,7 @@ if(isset($_GET['cid'])){
                                 <td><?= $fetch_pending_companies['company_Email']; ?></td>
                                 <td><?= $fetch_pending_companies['company_Country']; ?></td>
 
-                                <td><a href="viewCompanyProfile.php?vcid=<?= $rid; ?>&cname=<?= $fetch_pending_companies['company_Name']; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td><a href="viewCompanyProfile.php?company_id=<?= $company_id; ?>&companyName=<?= $fetch_pending_companies['company_Name']; ?>" class="foods-btn" target="_blank">View</a></td>
                                 <!--   <td><input type="submit" class="delete-btn"  name="delete-btn"  value="Block"></td> -->
                                 <td style="display: flex; flex-wrap: wrap; margin-top: 30%; ">
                                     <a href="pendingCompany_Mangment.php?companypendingid=<?= $fetch_pending_companies['company_id']; ?>&name=<?= $fetch_pending_companies['company_Name']; ?>"  class="delete-btn" style="background-color: #39ff14;">Approved</a>
