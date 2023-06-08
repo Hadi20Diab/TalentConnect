@@ -32,7 +32,7 @@
           </div>
 
           <div class="iconBx">
-            <i class="fa fa-duotone fa-bookmark"></i>
+            <i class="fa fa-bookmark"></i>
             <!-- <ion-icon name="storefront-outline"></ion-icon> -->
           </div>
       </div>
@@ -79,8 +79,10 @@
 
 <section class="courses">
 
-   <h1 class="heading">All Courses</h1>
-
+   <div style="     display: flex;     align-items: center;     margin: 0 1rem; ">
+                <i class="fa fa-book fa-xl" style="     color: var(--nav-main);  margin-right: 10px;"></i>
+                <h2>Discover Courses Suited to Your Interests</h2>
+    </div>
 
 
     <div style="    display: flex;     flex-direction: row;     width: 50%;     margin: 0 25%;     border-radius: 20px;     flex-wrap: nowrap;     justify-content: center;     align-items: center;">

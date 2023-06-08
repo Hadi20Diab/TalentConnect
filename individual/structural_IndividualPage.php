@@ -42,7 +42,7 @@ if(isset($_POST['logout-btn'])){
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- ======= Styles ====== -->
 
-        <link rel= "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" >
+        <!-- <link rel= "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" > -->
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/empty.css">
         <link rel="stylesheet" href="assets/css/profile.css">
@@ -53,10 +53,19 @@ if(isset($_POST['logout-btn'])){
         <link rel="stylesheet" href="assets/css/navbar.css">
 
         
+        
+
         <!-- Common Style -->
         <link rel="stylesheet" href="assets/css/commonStyle.css">
-        <link rel="stylesheet" href="../css/all_icon.css" />
+        <!-- <link rel="stylesheet" href="../css/all_icon.css" /> -->
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
+        
+        <!-- <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css"> -->
+        <link rel="stylesheet" href="../css/all-icon.css" />
+        
+        
+        
         <style>
 
             .delete-btn{
@@ -83,7 +92,8 @@ if(isset($_POST['logout-btn'])){
         
 <!-- up button to return the user @ start page -->
 <link rel="stylesheet" href="../css/scrolbtn.css">
-    <button id="scrolbtn" class="fa-solid fa-arrow-up-from-arc">Up</button>
+    <button id="scrolbtn">Up</button>
+    <!-- <button id="scrolbtn" class="fa-solid fa-arrow-up-from-arc">Up</button> -->
 <script src="../js/scrolbtn.js"></script>
 
 
@@ -108,7 +118,9 @@ if(isset($_POST['logout-btn'])){
                     <li>
                         <a href="home.php" id="Dashboard-LeftBar">
                             <span class="icon">
-                                <i class="fa-sharp fa-solid fa-house fa-2xl"></i>
+                                <!-- <i class="fa-sharp fa-solid fa-house fa-2xl"></i> -->
+                                <i class="fa-solid fa-house fa-2xl"></i>
+                                
                                 <!-- <ion-icon name="home-outline"></ion-icon> -->
                             </span>
                             <span class="title">Dashboard</span>

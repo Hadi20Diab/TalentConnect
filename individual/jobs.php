@@ -31,7 +31,8 @@
           </div>
 
           <div class="iconBx">
-            <i class="fa fa-duotone fa-bookmark"></i>
+          <i class="fa fa-bookmark"></i>
+
             <!-- <ion-icon name="storefront-outline"></ion-icon> -->
           </div>
       </div>
@@ -56,13 +57,16 @@ $select_jobs = mysqli_query($conn, $sql);
 
 $jobs_count = mysqli_num_rows($select_jobs);
     
-
-   
-
     if ($jobs_count >0) {
 
         echo'
+        
+            <div style="     display: flex;     align-items: center;     margin: 0 2rem; ">
+                <i class="fa-solid fa-briefcase fa-xl" style="     color: var(--nav-main);  margin-right: 10px;"></i>
+                <h2>Handpicked Jobs Just for You</h2>
+            </div>
             <section class="PostContainer">
+ 
         ';
 
         while ($fetch_job = mysqli_fetch_assoc($select_jobs)) {
