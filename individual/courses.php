@@ -80,7 +80,8 @@
 <section class="courses">
 
    <div style="     display: flex;     align-items: center;     margin: 0 1rem; ">
-                <i class="fa fa-book fa-xl" style="     color: var(--nav-main);  margin-right: 10px;"></i>
+                <!-- <i class="fa fa-book fa-xl" style="     color: var(--nav-main);  margin-right: 10px;"></i> -->
+                <i class="fa fa-book-copy fa-xl" style="     color: var(--nav-main);  margin-right: 10px;"></i>
                 <h2>Discover Courses Suited to Your Interests</h2>
     </div>
 
