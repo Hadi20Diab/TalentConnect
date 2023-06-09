@@ -60,8 +60,8 @@
 
 <div class="container">
     <h1>
-        <i class="fa-solid fa-hand-holding-dollar fa-lg" style="     color: var(--switchers-main); "></i>
-        Scholarships
+      <i class="fa-solid fa-hand-holding-dollar fa-lg" style="     color: var(--switchers-main); "></i>
+      Personalized Scholarship Suggestions
     </h1>
     <div class="scholarships-list">
       <?php
