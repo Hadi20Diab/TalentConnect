@@ -195,7 +195,7 @@ if( isset($_GET['save_bookmarks'])  ){
                      }
                   }
                   else {
-                     echo '<a href=""style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
+                     echo '<a href="payment.php?course_ID='. $fetch_course['course_ID'] . '" style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
                               Enroll Course
                            </a>'
                      ;
