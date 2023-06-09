@@ -169,6 +169,7 @@ if( isset($_GET['save_bookmarks'])  ){
                <div>
                   <h3><?= $fetch_course['course_Creator'];  ?></h3>
                </div>
+
             </div>
 
 
@@ -194,7 +195,20 @@ if( isset($_GET['save_bookmarks'])  ){
                         ;
                      }
                   }
-                  else {
+                  else if($fetch_course['course_Fees']==0){//if course is free so redircting to first video
+                     $select_content = mysqli_query($conn,"SELECT * FROM `course_videos` WHERE course_ID = $course_id ORDER BY `video_Order` ASC");
+                     if(mysqli_num_rows($select_content) > 0){
+                        $fetch_content = mysqli_fetch_assoc($select_content);
+
+                        echo '<a href="watch_video.php?video_id='. $fetch_content['last_watched_video'] . '" style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
+                                 Enroll Course
+                              </a>'
+                        ;
+                     }
+
+                     
+                  }
+                  else{
                      echo '<a href="payment.php?course_ID='. $fetch_course['course_ID'] . '" style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
                               Enroll Course
                            </a>'
@@ -211,8 +225,15 @@ if( isset($_GET['save_bookmarks'])  ){
          </div>
          <div class="details">
             <h3>
-               <i class="fas fa-regular fa-book" style="margin-right: 10px; color: var(--nav-main);"></i>
-               <?= $fetch_course['course_Name']; ?>
+               <div>
+                  <i class="fas fa-regular fa-book" style="margin-right: 10px; color: var(--nav-main);"></i>
+                  <?= $fetch_course['course_Name']; ?>
+               </div>
+
+               <a href="#videos-container" id="scroll-link" style="    background-color: var(--nav-main);     padding: 10px;     border-radius: 25px;     color: var(--black);">
+                  <i class="fa-solid fa-video" style="color: var(--gray);"></i>
+                  <span style="z-index: 1;"><?= $total_videos; ?> Videos</span>
+               </a>
             </h3>
             <p><?= $fetch_course['course_Description']; ?></p>
             <div style="display: flex;     justify-content: space-between;     align-items: center;">
@@ -227,9 +248,11 @@ if( isset($_GET['save_bookmarks'])  ){
 
       <div class="col">
          <div class="thumb">
-            <a href="#videos-container" id="scroll-link">
-               <span style="z-index: 1;"><?= $total_videos; ?> videos</span>
-            </a>
+            
+            <h3 style="     margin-left: 2%; ">
+               <i class="fa fa-duotone fa-globe fa-lg" style="    margin-right: 10px; color: var(--nav-main);"></i>
+               Course OverView:</h3>
+
             <!-- for video -->
             <link rel="stylesheet" href="../css/plyr.css">
             <script src="../js/plyr.js"></script>
@@ -271,14 +294,33 @@ if( isset($_GET['save_bookmarks'])  ){
       Course Videos   
    </h1>
 
+   
    <div class="box-container">
 
       <?php // select video in asending order
          $select_content = mysqli_query($conn,"SELECT * FROM `course_videos` WHERE course_ID = $course_id ORDER BY `video_Order` ASC");
          if(mysqli_num_rows($select_content) > 0){
             while($fetch_content = mysqli_fetch_assoc($select_content)){
+               if (!empty($courseProgress) && ($courseProgress['course_Status']=="under-progress" || $courseProgress['course_Status']=="done") ) {
+
       ?>
-               <a href="watch_video.php?video_id=<?= $fetch_content['video_ID']; ?>" class="box">
+                  <a href="watch_video.php?video_id=<?= $fetch_content['video_ID']; ?>" class="box">
+      <?php
+               }
+               else if($fetch_course['course_Fees']==0){//if course is free so insert into database that individual enrollment on this course 
+      ?>
+                  <a href="watch_video.php?video_id=<?= $fetch_content['video_ID']; ?>" class="box">
+      <?php
+               }
+               else{// individual not regestered yet ==> redirect to payment
+      ?>
+                  <a href="payment.php?course_ID=<?= $fetch_course['course_ID'] ?>" class="box">
+      <?php
+               }
+               
+      ?>
+               
+               
                   <i class="fa fas fa-play"></i>
                   <img src="../images/courses/<?= $fetch_content['video_Picture']; ?>" alt="">
                   <h3>
@@ -453,6 +495,10 @@ if( isset($_GET['save_bookmarks'])  ){
 .playlist .row .col .details h3{
    font-size: 1.3rem;
    color: var(--black);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: -20px;
 }
 
 .playlist .row .col .details p{

@@ -23,8 +23,8 @@
          $result = mysqli_query($conn, $sql);
          mysqli_error($conn);
       }
-      else{
-         $sql = "INSERT INTO `course_progress`(individual_ID, course_ID, last_watched_video) VALUES('$individual_ID', '{$fetch_video['course_ID']}', '$video_id') ";
+      else{ // course is free 
+         $sql = "INSERT INTO `course_progress`(individual_ID, course_ID, last_watched_video, course_Status) VALUES('$individual_ID', '{$fetch_video['course_ID']}', '$video_id', 'under-progress') ";
          $result = mysqli_query($conn, $sql);
       }
   }
