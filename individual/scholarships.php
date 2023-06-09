@@ -39,35 +39,6 @@
 
   </a>
 
-  <a href="enrolledCourses.php">
-      <div class="card">
-
-          <div>
-              <div class="cardName">Registered </div>
-          </div>
-
-          <div class="iconBx">
-              <i class="fa-solid fa-registered"></i>
-          </div>
-      </div>
-
-  </a>
-
-  <a href="finishedCourses.php">
-      <div class="card">
-
-          <div>
-              <div class="cardName">Finished </div>
-          </div>
-          
-          <div class="iconBx">
-            <i class="fa-solid fa-flag-checkered"></i>
-          </div>
-      </div>
-
-  </a>
-
-
 </div>
 
 
