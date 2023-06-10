@@ -119,6 +119,38 @@
 
 
    <div class="video-details">
+      <!-- check if it's company or unviersity to put the image for it and redrection to company/ unviersty  -->
+      <div class="tutor">
+            <?php if ($role== "company") {
+                  ?>
+                  <a href="../viewCompanyProfile.php?company_id=<?= $fetch_course_Creator['company_id']; ?>" style="text-decoration: none; display: flex;     align-items: center;" target="_blank">
+                     <img src="../images/companies_universities_images/<?= $fetch_course_Creator['company_Logo']; ?>" alt="">
+                     <h3><?= $fetch_course_Creator['course_Creator']; ?></h3>   
+                  </a>
+            <?php }else {
+                  ?>
+                  <a href="../viewUniversityProfile.php?university_id=<?= $fetch_course_Creator['university_ID']; ?>" style="text-decoration: none; display: flex;     align-items: center;  " target="_blank">
+
+                     <img src="../images/companies_universities_images/<?= $fetch_course_Creator['university_Logo']; ?>" alt="">
+                     <h3><?= $fetch_course_Creator['course_Creator']; ?></h3>
+                  </a>
+            <?php
+                  } 
+            ?>
+
+         
+         <a href="viewCourse.php?course_id=<?= $fetch_video['course_ID']; ?>" class="inline-btn" style="    background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white);"> <i class="fa-solid fa-book"></i>View Course</a>
+           
+      </div>
+
+      <h3 class="title" style="margin: 0 2rem;">
+         <i class="fa-solid fa-video" style="color: var(--nav-main);"></i>
+         <?= $fetch_video['video_Name']; ?>
+      </h3>
+
+
+
+
       <div  class="DIVvideo" style="margin: 20px;">
          <video id="my-video" class="video" poster="../images/courses/<?= $fetch_video['video_Picture']; ?>" controls>
             <source src="../images/courses/<?= $fetch_video['video_Position_Name']; ?>">
@@ -130,6 +162,7 @@
       </script> 
 
 
+<!-- check if the indivdual have a progress on this video to coutinue watching from the leaving time-->
       <?php
          $select_video_progress = mysqli_query($conn,"SELECT watched_time	FROM video_progress
                                              WHERE video_ID = $video_id AND individual_ID=$individual_ID");
@@ -167,33 +200,16 @@
       </script>
 
 
-      <h3 class="title"><?= $fetch_video['video_Name']; ?></h3>
-      <!-- check if it's company or unviersity to put the image for it and redrection to company/ unviersty  -->
-      <div class="tutor">
-            <?php if ($role== "company") {
-                  ?>
-                  <a href="../viewCompanyProfile.php?company_id=<?= $fetch_course_Creator['company_id']; ?>" style="text-decoration: none;" target="_blank">
-                     <img src="../images/companies_universities_images/<?= $fetch_course_Creator['company_Logo']; ?>" alt="">
-                     <h3><?= $fetch_course_Creator['course_Creator']; ?></h3>   
-                  </a>
-            <?php }else {
-                  ?>
-                  <a href="../viewUniversityProfile.php?university_id=<?= $fetch_course_Creator['university_ID']; ?>" style="text-decoration: none;" target="_blank">
+ 
 
-                     <img src="../images/companies_universities_images/<?= $fetch_course_Creator['university_Logo']; ?>" alt="">
-                     <h3><?= $fetch_course_Creator['course_Creator']; ?></h3>
-                  </a>
-            <?php
-                  } 
-            ?>
 
-         
-           
+      <div class="description">
+         <h3 class="title">
+         <i class="fa fa-thin fa-memo-circle-info" style="    color: var(--nav-main);"></i>
+         Description
+         </h3>
+         <p><?= $fetch_video['video_Description']; ?></p>
       </div>
-
-         <a href="viewCourse.php?course_id=<?= $fetch_video['course_ID']; ?>" class="inline-btn">View Course</a>
-
-      <div class="description"><p><?= $fetch_video['video_Description']; ?></p></div>
    </div>
    <?php
       }else{
@@ -203,7 +219,7 @@
 
 
    <div class="comments">
-      <h3>Comments<i class="fa-regular fa-comments-question-check fa-lg" style="    color: var(--nav-main);     margin-left: 10px;"></i></h3>
+      <h3 class="title">Comments<i class="fa-regular fa-comments-question-check fa-lg" style="    color: var(--nav-main);     margin-left: 10px;"></i></h3>
       <div class="addComment">
          <form action="" method="post" class="add-comment">
             <input type="hidden" name="video_id" value="<?= $video_id; ?>">
@@ -262,7 +278,7 @@ else{
 <style>
    
 .watch-video .video-details .title{
-   font-size: 2rem;
+   font-size: 1.7rem;
    color: var(--black);
    padding: 1.5rem 0;
 }
@@ -275,7 +291,7 @@ else{
 }
 
 .watch-video .video-details .info p{
-   font-size:1.6rem;
+   font-size:1.4rem;
 }
 
 .watch-video .video-details .info p i{
@@ -291,7 +307,9 @@ else{
    padding: 2rem 0;
    display: flex;
    align-items: center;
+   justify-content: space-between;
    gap: 2rem;
+   margin: 0 2rem;
 }
 
 .watch-video .video-details .tutor img{
@@ -353,20 +371,24 @@ else{
 }
 
 .watch-video .video-details .description{
-   padding-top: 2rem;
+   padding: 2rem;
 }
 
 .watch-video .video-details .description p{
    line-height: 1.5;
-   font-size: 1.7rem;
+   font-size: 1.4rem;
    color: var(--light-color);
    white-space: pre-line;
+}
+
+.comments{
+   margin:0 2rem;
 }
 
 .comments .add-comment{
    background-color: var(--white);
    border-radius: .5rem;
-   margin-bottom: 3rem;
+   margin-bottom: 1rem;
    padding: 2rem;
 }
 
@@ -374,12 +396,12 @@ else{
    border-radius: .5rem;
    padding: 1rem;
    width: 100%;
-   height: 10rem;
+   height: 8rem;
    background-color: var(--light-bg);
    resize: vertical;
-   font-size: 1.8rem;
+   font-size: 1.5rem;
    color: var(--black);
-   min-height: 71px;
+   min-height: 70px;
 }
 
 .comments .show-comments{
