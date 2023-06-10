@@ -245,12 +245,12 @@
                     <?php if ($fetch_company && $fetch_company['company_Logo']) {
                             $LogoName=$fetch_company['company_Logo'];
                         ?>
-                            <a href="../viewCompanyProfile.php?vcid=<?= $fetch_company['company_id']; ?>&cname=<?= $fetch_company['company_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+                            <a href="../viewCompanyProfile.php?company_id=<?= $fetch_company['company_id']; ?>" class="row" style="text-decoration: none;" target="_blank">
                             <img src="../images/companies_universities_images/<?= $fetch_company['company_Logo']; ?>" alt="">
                             
                     <?php }else {
                         ?>
-                            <a href="../viewUniversityProfile.php?vcid=<?= $fetch_university['university_ID']; ?>&cname=<?= $fetch_university['university_Name'] ?>" class="row" style="text-decoration: none;" target="_blank">
+                            <a href="../viewUniversityProfile.php?university_id=<?= $fetch_university['university_ID']; ?>" class="row" style="text-decoration: none;" target="_blank">
 
                             <img src="../images/companies_universities_images/<?= $fetch_university['university_Logo']; ?>" alt="">
                     <?php

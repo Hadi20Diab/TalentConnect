@@ -89,6 +89,7 @@
             );
 
             $count = mysqli_num_rows($select_course_Creator);
+            $role="company";
    
             if (!$count >0) {
                $select_course_Creator = mysqli_query($conn,
@@ -98,10 +99,12 @@
                WHERE video_ID = $video_id"
                );
 
+               $role="university";
+
             }
 
 
-            $fetch_course_Creator = mysqli_fetch_assoc($select_course_Creator)
+            $fetch_course_Creator = mysqli_fetch_assoc($select_course_Creator);
    ?>
 
 <title>
@@ -165,23 +168,34 @@
 
 
       <h3 class="title"><?= $fetch_video['video_Name']; ?></h3>
-
+      <!-- check if it's company or unviersity to put the image for it and redrection to company/ unviersty  -->
       <div class="tutor">
-         <img src="../images/companies_universities_images/<?= $fetch_course_Creator['company_Logo']; ?>" alt="">
-         <div>
-            <h3><?= $fetch_course_Creator['course_Creator']; ?></h3>
-         </div>
+            <?php if ($role== "company") {
+                  ?>
+                  <a href="../viewCompanyProfile.php?company_id=<?= $fetch_course_Creator['company_id']; ?>" style="text-decoration: none;" target="_blank">
+                     <img src="../images/companies_universities_images/<?= $fetch_course_Creator['company_Logo']; ?>" alt="">
+                     <h3><?= $fetch_course_Creator['course_Creator']; ?></h3>   
+                  </a>
+            <?php }else {
+                  ?>
+                  <a href="../viewUniversityProfile.php?university_id=<?= $fetch_course_Creator['university_ID']; ?>" style="text-decoration: none;" target="_blank">
+
+                     <img src="../images/companies_universities_images/<?= $fetch_course_Creator['university_Logo']; ?>" alt="">
+                     <h3><?= $fetch_course_Creator['course_Creator']; ?></h3>
+                  </a>
+            <?php
+                  } 
+            ?>
+
+         
+           
       </div>
 
-      <form action="" method="post" class="flex">
-         <input type="hidden" name="video_id" value="<?= $video_id; ?>">
          <a href="viewCourse.php?course_id=<?= $fetch_video['course_ID']; ?>" class="inline-btn">View Course</a>
 
-      </form>
       <div class="description"><p><?= $fetch_video['video_Description']; ?></p></div>
    </div>
    <?php
-         // }
       }else{
          echo '<p class="empty">no videos added yet!</p>';
       }
@@ -189,7 +203,7 @@
 
 
    <div class="comments">
-      <h3>Comments</h3>
+      <h3>Comments<i class="fa-regular fa-comments-question-check fa-lg" style="    color: var(--nav-main);     margin-left: 10px;"></i></h3>
       <div class="addComment">
          <form action="" method="post" class="add-comment">
             <input type="hidden" name="video_id" value="<?= $video_id; ?>">
@@ -242,3 +256,227 @@ else{
 </section>
 
 <!-- watch video section ends -->
+
+
+
+<style>
+   
+.watch-video .video-details .title{
+   font-size: 2rem;
+   color: var(--black);
+   padding: 1.5rem 0;
+}
+
+.watch-video .video-details .info{
+   display: flex;
+   gap: 2rem;
+   padding-bottom: 1.5rem;
+   border-bottom: var(--border);
+}
+
+.watch-video .video-details .info p{
+   font-size:1.6rem;
+}
+
+.watch-video .video-details .info p i{
+   margin-right: 1rem;
+   color: var(--main-color);
+}
+
+.watch-video .video-details .info p span{
+   color: var(--light-color);
+}
+
+.watch-video .video-details .tutor{
+   padding: 2rem 0;
+   display: flex;
+   align-items: center;
+   gap: 2rem;
+}
+
+.watch-video .video-details .tutor img{
+   height: 7rem;
+   width: 7rem;
+   border-radius: 50%;
+   object-fit: cover;
+}
+
+.watch-video .video-details .tutor h3{
+   font-size: 2rem;
+   color: var(--black);
+   margin-bottom: .2rem;
+}
+
+.watch-video .video-details .tutor span{
+   color: var(--light-color);
+   font-size: 1.5rem;
+}
+
+.watch-video .video-details .flex{
+   display: flex;
+   align-items: center;
+   gap: 1.5rem;
+   justify-content: space-between;
+}
+
+.watch-video .video-details .flex a{
+   margin-top: 0;
+}
+
+.watch-video .video-details .flex button{
+   background-color: var(--light-bg);
+   cursor: pointer;
+   padding: 1rem 2.5rem;
+   font-size: 2rem;
+   border-radius: .5rem;
+}
+
+.watch-video .video-details .flex button i{
+   color: var(--black);
+   margin-right: 1rem;
+}
+
+.watch-video .video-details .flex button span{
+   color: var(--light-color);
+}
+
+.watch-video .video-details .flex button:hover{
+   background-color: var(--black);
+}
+
+.watch-video .video-details .flex button:hover i{
+   color: var(--white);
+}
+
+.watch-video .video-details .flex button:hover span{
+   color: var(--white);
+}
+
+.watch-video .video-details .description{
+   padding-top: 2rem;
+}
+
+.watch-video .video-details .description p{
+   line-height: 1.5;
+   font-size: 1.7rem;
+   color: var(--light-color);
+   white-space: pre-line;
+}
+
+.comments .add-comment{
+   background-color: var(--white);
+   border-radius: .5rem;
+   margin-bottom: 3rem;
+   padding: 2rem;
+}
+
+.comments .add-comment textarea{
+   border-radius: .5rem;
+   padding: 1rem;
+   width: 100%;
+   height: 10rem;
+   background-color: var(--light-bg);
+   resize: vertical;
+   font-size: 1.8rem;
+   color: var(--black);
+   min-height: 71px;
+}
+
+.comments .show-comments{
+   background-color: var(--white);
+   border-radius: .5rem;
+   padding: 2rem;
+   display: grid;
+   gap: 2.5rem;
+}
+
+.comments .show-comments .user{
+   display: flex;
+   align-items: center;
+   gap: 1.5rem;
+   margin-bottom: 2rem;
+}
+
+.comments .show-comments .user img{
+   height: 5rem;
+   width: 5rem;
+   border-radius: 50%;
+   object-fit: cover;
+}
+
+.comments .show-comments .user h3{
+   font-size: 2rem;
+   color: var(--black);
+   margin-bottom: .2rem;
+}
+
+.comments .show-comments .user span{
+   color: var(--light-color);
+   font-size: 1.5rem;
+}
+
+.comments .show-comments .content{
+   margin-bottom: 2rem;
+}
+
+.comments .show-comments .content p{
+   font-size: 2rem;
+   color: var(--black);
+   padding: 0 1rem;
+   display: inline-block;
+}
+
+.comments .show-comments .content span{
+   font-size: 1.7rem;
+   color: var(--light-color);
+}
+
+.comments .show-comments .content a{
+   color: var(--main-color);
+   font-size: 1.8rem;
+}
+
+.comments .show-comments .content a:hover{
+   text-decoration: underline;
+}
+
+.comments .show-comments .text{
+   border-radius: .5rem;
+   background-color: var(--light-bg);
+   padding: 1rem 1.5rem;
+   color: var(--black);
+   margin: .5rem 0;
+   position: relative;
+   z-index: 0;
+   white-space: pre-line;
+   font-size: 1.8rem;
+}
+
+.comments .show-comments .text::before{
+   content: '';
+   position: absolute;
+   top: -1rem; left: 1.5rem;
+   height: 1.2rem;
+   width: 2rem;
+   background-color: var(--light-bg);
+   clip-path: polygon(50% 0%, 0% 100%, 100% 100%); 
+}
+
+.edit-comment form{
+   background-color: var(--white);
+   border-radius: .5rem;
+   padding: 2rem;
+}
+
+.edit-comment form .box{
+   width: 100%;
+   border-radius: .5rem;
+   padding: 1.4rem;
+   font-size: 1.8rem;
+   color: var(--black);
+   background-color: var(--light-bg);
+   resize: none;
+   height: 20rem;
+}
+
+</style>

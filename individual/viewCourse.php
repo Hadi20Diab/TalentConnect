@@ -153,12 +153,12 @@ if( isset($_GET['save_bookmarks'])  ){
                
                <?php if ($role== "company") {
                      ?>
-                        <a href="../viewCompanyProfile.php?vcid=<?= $fetch_course['company_id']; ?>&cname=<?= $fetch_course['company_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+                        <a href="../viewCompanyProfile.php?company_id=<?= $fetch_course['company_id']; ?>" class="row" style="text-decoration: none;" target="_blank">
                         <img src="../images/companies_universities_images/<?= $fetch_course['company_Logo']; ?>" alt="">
                         
                <?php }else {
                      ?>
-                        <a href="../viewUniversityProfile.php?vcid=<?= $fetch_course['university_ID']; ?>&cname=<?= $fetch_course['university_Name']; ?>" class="row" style="text-decoration: none;" target="_blank">
+                        <a href="../viewUniversityProfile.php?university_id=<?= $fetch_course['university_ID']; ?>" class="row" style="text-decoration: none;" target="_blank">
    
                         <img src="../images/companies_universities_images/<?= $fetch_course['university_Logo']; ?>" alt="">
                <?php

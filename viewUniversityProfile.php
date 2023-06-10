@@ -3,11 +3,10 @@
 require_once 'connection.php';
 
 
-if(isset($_GET['vcid']) && isset($_GET['cname'])){
-    $vcid = $_GET['vcid'];
-    $cname = $_GET['cname'];
+if(isset($_GET['university_id']) ){
+    $university_id = $_GET['university_id'];
 
-    $selectuniversity = mysqli_query($conn,"SELECT * FROM universities WHERE university_id='$vcid' ");
+    $selectuniversity = mysqli_query($conn,"SELECT * FROM universities WHERE university_id='$university_id' ");
 
     $fetch_university = mysqli_fetch_assoc($selectuniversity);
 

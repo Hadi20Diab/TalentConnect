@@ -3,11 +3,10 @@
 require_once 'connection.php';
 
 
-if(isset($_GET['vcid']) && isset($_GET['cname']) ){
-    $vcid = $_GET['vcid'];
-    $cname = $_GET['cname'];
+if(isset($_GET['company_id']) ){
+    $company_id = $_GET['company_id'];
 
-    $selectCompany = mysqli_query($conn,"SELECT * FROM company WHERE company_id='$vcid' ");
+    $selectCompany = mysqli_query($conn,"SELECT * FROM company WHERE company_id='$company_id' ");
 
     $fetch_company = mysqli_fetch_assoc($selectCompany);
 
@@ -44,7 +43,7 @@ if(isset($_GET['vcid']) && isset($_GET['cname']) ){
     
     
     <link rel="stylesheet" href="css/CompanyProfileStyle.css">
-    <link rel="stylesheet" href="css/all_icon.css">
+    <link rel="stylesheet" href="css/all-icon.css">
     
     
     <section class="companyProfileContainer">
