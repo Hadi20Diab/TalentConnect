@@ -27,12 +27,35 @@ if (isset($_GET['individual_ID']) && isset($_GET['videoID']) && isset($_GET['tim
             mysqli_query($conn, $sql);
         }
     } else { // If the user is watching the video for the first time
-        echo"adfsdf";
         $sql = "INSERT INTO video_progress (individual_ID, video_ID, watched_time) VALUES ('$individualID','$videoID','$time')";
         // Apply the query
         mysqli_query($conn, $sql);
     }
 }
+
+
+
+
+if ($_GET['individual_ID'] && $_GET['course_ID'] && $_GET['video_ID']) {
+    $individualID = $_GET['individual_ID'];
+    $courseID = $_GET['course_ID'];
+    $videoID = $_GET['video_ID'];
+ 
+ 
+    // Query the course_videos table to get the next video ID
+    $select_next_video = mysqli_query($conn, "SELECT video_ID FROM course_videos WHERE course_ID = $courseID AND video_Order > (SELECT video_Order FROM course_videos WHERE video_ID = $videoID) ORDER BY video_Order ASC LIMIT 1");
+    $fetch_next_video = mysqli_fetch_assoc($select_next_video);
+ 
+    if ($fetch_next_video) {
+       $nextVideoID = $fetch_next_video['video_ID'];
+    } else {
+       $nextVideoID = $videoID; // If it's the last video, set nextVideoID to current video ID
+    }
+ 
+    $sql = "UPDATE `course_progress` SET `last_watched_video` = $nextVideoID WHERE individual_ID = $individualID AND course_ID = $courseID";
+    $result = mysqli_query($conn, $sql);
+ }
+
 
 // Close the database connection
 mysqli_close($conn);

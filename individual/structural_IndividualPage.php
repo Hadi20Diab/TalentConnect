@@ -4,7 +4,9 @@ session_start();
 
 if(!isset($_SESSION['individual_ID'])){  //if individual id is not  set in the session, this means the admin  is not logged in and there's a one that's want to access the admin page and we should prevent it in order to allow only the admin that's login correct and save it's id in the session to go to admin page , then we redirect it to the adminLogin page and when he logged in gthen it will store the admin_id in the session and he will be able to go to admin page when he logged in
     header('location:../userRegistration.php');  //only the individual will acces the individual page when he logged in correclty, otherwise it will be redirected to adminLogin.php
-  }
+    exit(); // Add an exit() statement after the header() function to stop further execution
+
+}
 else{
     $individual_ID = $_SESSION['individual_ID'];
     }  
@@ -364,7 +366,9 @@ if(isset($_POST['logout-btn'])){
 
 
 
-
+        <!-- jQuery library -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+        <script src="../js/ajax.googleapis.com_ajax_libs_jquery_3.5.1_jquery.min.js"></script>
 
 
         <!-- ====== ionicons ======= -->

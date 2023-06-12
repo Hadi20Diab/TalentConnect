@@ -24,9 +24,9 @@
 
 
 .empty{
-   transform: translate(60%, 100%);
- width: 60%;
- padding: 7rem;
+ transform: translate(0%, 10%);
+ width: 50%;
+ padding: 4rem;
 
  height: 10rem;
  border-radius: 15px;
@@ -45,8 +45,8 @@
   .empty{
       
 
-      width: 500px;
- padding: 7rem;
+    width: 500px;
+	padding: 4rem;
 
  
   }
@@ -55,8 +55,8 @@
    .empty{
       
 
-      width: 80%;
- padding: 4rem;
+    width: 80%;
+	padding: 4rem;
  
 
 
@@ -67,10 +67,10 @@
    .empty{
       
 
-      width: 400px;
-      margin-left: -100px;
+		width: 400px;
+		margin-left: -100px;
       
- padding: 3rem;
+	padding: 3rem;
 
  
 }
