@@ -99,7 +99,7 @@
 
 
 
-   <div class="box-container">
+   <div id="coursesList" class="box-container">
 
     <?php
 
@@ -113,7 +113,7 @@
         LEFT JOIN courses_fields cf ON c.course_ID = cf.course_ID
         LEFT JOIN individual_intrested_field ii ON i.individual_ID = ii.individual_ID 
         WHERE c.course_Status = 'active' AND cf.course_field_Name = ii.field_Name AND i.individual_ID = " . $individual_ID . " 
-        ORDER BY c.course_Launch_Date DESC"; // order by post date to dispaly the new post first
+        ORDER BY c.course_Launch_Date DESC LIMIT 6"; // order by post date to dispaly the 6 post first
 
         $select_courses = mysqli_query($conn, $sql);
 
@@ -223,10 +223,9 @@
                     echo'</div>';
 
 
-
-            }  
-      }else{
-         echo '<p class="empty">No courses matched your interests yet.<br>
+                }
+        }else{
+            echo '<p class="empty">No courses matched your interests yet.<br>
                                 
                 </p>';
       }
@@ -234,14 +233,62 @@
 
    </div>
 
+   <div id="loadMoreButton" style="    text-align: center;">
+        <button class="loadMoreButton a-btn">Load More</button>
+    </div>
+   <!-- <button id="loadMoreButton" class="loadMoreButton">Load More</button> -->
 </section>
 
 <!-- courses section ends -->
 
 
+<!-- script for load more button -->
 
+<script>
+$(document).ready(function() {
+        var offset = 6;
+        var limit = 6;
 
+        // Function to load more courses
+        function loadMoreCourses() {
+            $.ajax({
+                url: "load_more.php",
+                type: "POST",
+                data: {
+                    offset: offset,
+                    limit: limit,
+                    individual_ID: <?= $individual_ID ?>,
+                    contentType: 'courses',
+                },
+                success: function(response) {
+                    // Append the newly loaded courses to the courses list
+                    $("#coursesList").append(response);
 
+                    // Check if the response contains any new courses
+                    if ($.trim(response) === "") {
+                        // Hide the "Load More" button if there are no more courses to load
+                        $("#loadMoreButton").remove();
+                    } else {
+                        // Increment the offset by the limit for the next load more request
+                        offset += limit;
+                    }
+                },
+                error: function() {
+                    // Handle the error case
+                    alert("Error occurred while loading more courses.");
+                }
+            });
+        }
+
+        // Load more courses when the "Load More" button is clicked
+        $("#loadMoreButton").on("click", function() {
+            loadMoreCourses();
+        });
+
+        // Initial load more on page load
+        // loadMoreCourses();
+    });
+</script>
 
 
 
@@ -262,7 +309,14 @@
 
 
 <style>
-
+.a-btn{
+   background-color: var(--nav-main);
+   padding: 1rem;
+   border-radius: 25px;
+   color: var(--white);
+   width: 20%;
+   font-size:1rem;
+}
     .courses{
         padding: 25px;
     }

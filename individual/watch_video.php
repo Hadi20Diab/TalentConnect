@@ -437,15 +437,19 @@ if (mysqli_num_rows($select_comments) > 0) {
          </div>
         <?php
     }
+    echo'
+    <!-- Load More button -->
+   <div id="loadMoreComments" style="    text-align: center;">
+      <button class="loadMoreButton a-btn">Load More</button>
+   </div>
+    ';
+
 } else {
     echo '<p class="empty">No comments Yet</p>';
 }
 ?>
 
-<!-- Load More button -->
-<div id="loadMoreComments" style="    text-align: center;">
-    <button class="loadMoreButton a-btn">Load More</button>
-</div>
+
 
 <!-- Script to handle Load More button -->
 <script>
@@ -777,6 +781,7 @@ if (isset($_POST['deleteCommentID'])) {
    padding: 1rem;
    border-radius: 25px;
    color: var(--white);
+   
 }
 .commentHeader{
    display: flex;
