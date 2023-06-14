@@ -828,6 +828,8 @@ if (isset($_POST['deleteCommentID'])) {
 }
 .commentText{
    margin-left: 6rem;
+   margin-top: -1.5rem;
+   white-space: pre-line;
 }
 
 
