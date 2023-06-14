@@ -45,17 +45,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     elseif ($contentType === 'courses') {
+
         // Get the number of courses to load per request
         $limit = $_POST['limit'];
         // Query to retrieve courses based on user interests and limit the result
+            // select Courses according to the user interest and excluded under-progress and done courses
+
         $sql = "SELECT DISTINCT c.*
                 FROM courses c
                 INNER JOIN individuals i
                 LEFT JOIN courses_fields cf ON c.course_ID = cf.course_ID
                 LEFT JOIN individual_intrested_field ii ON i.individual_ID = ii.individual_ID 
+                LEFT JOIN course_progress cp ON c.course_ID = cp.course_ID AND i.individual_ID = cp.individual_ID
                 WHERE c.course_Status = 'active'
-                AND cf.course_field_Name = ii.field_Name
-                AND i.individual_ID = $individual_ID
+                    AND cf.course_field_Name = ii.field_Name
+                    AND i.individual_ID = $individual_ID
+                    AND (cp.course_Status IS NULL OR cp.course_Status NOT IN ('under-progress', 'done'))
                 ORDER BY c.course_Launch_Date DESC
                 LIMIT $limit OFFSET $offset";
 

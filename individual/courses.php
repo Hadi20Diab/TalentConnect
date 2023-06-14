@@ -104,21 +104,24 @@
     <?php
 
 
-        // $select_courses = mysqli_query($conn, "SELECT * FROM `courses` WHERE course_Status = 'active' ORDER BY course_Launch_Date DESC");
-        
-        
-        // select Courses according to the user interest
-        $sql = "SELECT DISTINCT c.* FROM courses c
+        // select Courses according to the user interest and excluded under-progress and done courses
+
+        $sql = "SELECT DISTINCT c.*FROM courses c
         INNER JOIN individuals i
         LEFT JOIN courses_fields cf ON c.course_ID = cf.course_ID
         LEFT JOIN individual_intrested_field ii ON i.individual_ID = ii.individual_ID 
-        WHERE c.course_Status = 'active' AND cf.course_field_Name = ii.field_Name AND i.individual_ID = " . $individual_ID . " 
-        ORDER BY c.course_Launch_Date DESC LIMIT 6"; // order by post date to dispaly the 6 post first
+        LEFT JOIN course_progress cp ON c.course_ID = cp.course_ID AND i.individual_ID = cp.individual_ID
+        WHERE c.course_Status = 'active'
+            AND cf.course_field_Name = ii.field_Name
+            AND i.individual_ID = $individual_ID
+            AND (cp.course_Status IS NULL OR cp.course_Status NOT IN ('under-progress', 'done'))
+        ORDER BY c.course_Launch_Date DESC
+        LIMIT 6";// order by post date to dispaly the 6 post first
 
         $select_courses = mysqli_query($conn, $sql);
 
-        
-        
+      
+
         if(mysqli_num_rows($select_courses) > 0){ 
 
             while($fetch_course = mysqli_fetch_assoc($select_courses)){
