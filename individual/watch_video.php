@@ -15,22 +15,11 @@
       $fetch_video = mysqli_fetch_assoc($select_videos);
       $course_ID=$fetch_video['course_ID'];
 
-      $select_course = mysqli_query($conn,"SELECT course_Fees FROM `courses` WHERE course_ID = $course_ID");
+      $select_course = mysqli_query($conn,"SELECT course_Fees, course_Name FROM `courses` WHERE course_ID = $course_ID");
       $fetch_course = mysqli_fetch_assoc($select_course);
 
       $course_Fees=$fetch_course['course_Fees'];
 
-
-
-      // // check the user if have progress on this course or not (update or insert progress)
-      // $select_progress = mysqli_query($conn,"SELECT course_progress_ID, last_watched_video  FROM `course_progress` WHERE individual_ID = $individual_ID AND course_ID ={$fetch_video['course_ID']}" );
-
-      // if (mysqli_num_rows($select_progress) > 0) {
-      //    $sql = "UPDATE `course_progress` SET `last_watched_video` ='$video_id'
-      //             WHERE individual_ID= $individual_ID AND course_ID= ". $fetch_video['course_ID'];
-      //    $result = mysqli_query($conn, $sql);
-      //    mysqli_error($conn);
-      // }
   }
 ?>
 
@@ -58,11 +47,13 @@ if (!empty($lastWatchedVideoID) && $lastWatchedVideoID != $video_id) {
 
     // Check if the last watched video order is less than the current video order
     if ($lastWatchedVideoOrder < $currentVideoOrder) {
-        // Get the video order of the last watched video
-        $lastVideoOrder = $lastWatchedVideoOrder;
+      // Get the video order of the last watched video
+      
+      //   $lastVideoOrder = $lastWatchedVideoOrder;
+      //   echo $lastVideoOrder;
 
         // Query the course_videos table to get the video ID of the last watched video
-        $select_last_video = mysqli_query($conn, "SELECT video_ID FROM course_videos WHERE course_ID = $course_ID AND video_Order = $lastVideoOrder");
+        $select_last_video = mysqli_query($conn, "SELECT video_ID FROM course_videos WHERE course_ID = $course_ID AND video_Order = $lastWatchedVideoOrder");
         $fetch_last_video = mysqli_fetch_assoc($select_last_video);
 
         // Check if the last watched video exists
@@ -70,15 +61,16 @@ if (!empty($lastWatchedVideoID) && $lastWatchedVideoID != $video_id) {
             $lastVideoID = $fetch_last_video['video_ID'];
 
             // Redirecting to the last watched video
-            echo '<div class="popup " id="popup" style="     background-color: #c2ffd4;">
-                     <img src="assets/imgs/pending.png" >
-                     <h2>Continue from Last Watched Video</h2>
-                     <p>You can resume watching from where you left off.</p>
-                     <button>
-                        <a href="watch_video.php?video_id=' . $lastVideoID . '">OK</a>
-                     </button>
-                  </div>
-             ';
+            echo '
+               <div class="popup " id="popup" style="     background-color: #c2ffd4;">
+                  <img src="assets/imgs/pending.png" >
+                  <h2>Continue from Last Watched Video</h2>
+                  <p>You can resume watching from where you left off.</p>
+                  <button>
+                     <a href="watch_video.php?video_id=' . $lastVideoID . '">OK</a>
+                  </button>
+               </div>
+            ';
              exit();  // to stop loading  the page 
         }
     }
@@ -369,7 +361,7 @@ else{
             }
             else{
                echo'
-                  <a href="generateCertificate.php?course_ID'. $course_ID .'&indvidual_ID='. $individual_ID.'"  class="a-btn"><i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Downlead Certificate</a>
+                  <a id="downleadCertificate" class="a-btn"><i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Downlead Certificate</a>
                ';
             }
             
@@ -399,9 +391,10 @@ else{
          </form>
       </div>
 
+</form>
 
 
-      </form>
+
 
 <!-- comment's part -->
       <?php
@@ -447,52 +440,52 @@ if (mysqli_num_rows($select_comments) > 0) {
 } else {
     echo '<p class="empty">No comments Yet</p>';
 }
+
+
+$certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_Name']."_Certificate";
 ?>
 
 
+<!-- Script to Downlead Certificate button -->
+   <!-- Include the library to  Downlead Certificate-->
+   <script src="assets/js/cdnjs.cloudflare.com_ajax_libs_html2pdf.js_0.9.2_html2pdf.bundle.js"></script>
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script> -->
 
-<!-- Script to handle Load More button -->
 <script>
-    $(document).ready(function() {
-        var offset = 10; // Starting offset for loading more comments
-        
-        $('.loadMoreButton').on('click', function() {
-            var button = $(this); // Store the button reference
-            
-            // Send an AJAX request to fetch additional comments
-            $.ajax({
-                url: 'load_more.php',
-                type: 'POST',
-                data: {
-                    videoID: <?= $video_id; ?>,
-                    individual_ID: <?= $individual_ID; ?>,
-                    contentType: 'comment',
-                    offset: offset
-                },
-                beforeSend: function() {
-                    // Disable the Load More button temporarily
-                    button.attr('disabled', 'disabled').html('<i class="fa-duotone fa-loader fa-spin-pulse"></i> Loading...');
-                },
-                success: function(response) {
-                    // Append the new comments to the comment section
-                    $('.SingleComment:last').after(response);
-                    
-                    // Increment the offset for the next load
-                    offset += 10;
-                    
-                    // Re-enable the Load More button
-                    button.removeAttr('disabled').text('Load More');
-                    
-                    // Hide the Load More button if there are no more comments
-                    if ($.trim(response) === '') {
-                        $('#loadMoreComments').hide();
-                    }
-                }
-            });
-        });
-    });
-</script>
+   $(document).ready(function() {
+      
+      $('#downleadCertificate').on('click', function() {
+         var button = $(this); // Store the button reference
+         
+         // Send an AJAX request to downleadCertificate
+         $.ajax({
+               url: 'generateCertificate.php',
+               type: 'POST',
+               data: {
+                  individual_ID: <?= $individual_ID; ?>,
+                  course_ID: <?= $course_ID; ?>
+               },
+               beforeSend: function() {
+                  // Disable the  Downlead Certificate button temporarily
+                  button.attr('disabled', 'disabled').html('<i class="fa-duotone fa-loader fa-spin-pulse"></i> Loading...');
+               },
+               success: function(response) {
+               var option = {
+                  filename: '<?= $certificate_Name; ?>.pdf',
+                  // margin: 1,
+                  // image: { type: 'jpeg', quality: 0.98 },
+                  // html2canvas: { scale: 2 },
+                  // jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+               };
+               html2pdf().from(response).set(option).save();
 
+                  // Re-enable the Downlead Certificate button
+               button.removeAttr('disabled').html('<i class="fa-regular fa-file-certificate" style="margin-right:5px"></i> Downlead Certificate');
+               }
+         });
+      });
+   });
+</script>
 
 </section>
 
@@ -526,6 +519,8 @@ $(document).ready(function() {
 
 </script>
 
+
+<!-- Delete comment -->
 <?php
 if (isset($_POST['deleteCommentID'])) {
    $commentID = $_POST['deleteCommentID'];
@@ -540,6 +535,48 @@ if (isset($_POST['deleteCommentID'])) {
    // }
 }
 ?>
+
+
+
+<!--course progress-line -->
+
+
+<div class="progress-line-container">
+  <div class="progress-line"></div>
+</div>
+<style>
+   .progress-line-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--nav-main);;
+   }
+
+   .progress-line {
+      height: 100%;
+      width: 0;
+      background-color: #ff0000;  
+      transition: width 0.5s ease-in-out;
+   }
+
+</style>
+<?php
+   $select_videos = mysqli_query($conn,"SELECT video_ID FROM `course_videos` WHERE course_ID = $course_ID");
+   // progress =>  this video order / course videos count 
+   $progress =  $currentVideoOrder / mysqli_num_rows($select_videos)  ;
+?>
+<script>
+   window.onload = function() {
+      var progress= <?= $progress ?>; 
+      // Get the progress line element
+      var progressLine = document.querySelector('.progress-line');
+
+      // Update the width of the progress line based on the video progress
+      progressLine.style.width = (progress * 100) + '%';
+   }
+</script>
 
 
 <style>
@@ -781,6 +818,7 @@ if (isset($_POST['deleteCommentID'])) {
    padding: 1rem;
    border-radius: 25px;
    color: var(--white);
+   cursor: pointer;
    
 }
 .commentHeader{

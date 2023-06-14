@@ -35,7 +35,7 @@ if (isset($_GET['individual_ID']) && isset($_GET['videoID']) && isset($_GET['tim
 
 
 
-
+// if the video finshed 
 if ($_GET['individual_ID'] && $_GET['course_ID'] && $_GET['video_ID']) {
     $individualID = $_GET['individual_ID'];
     $courseID = $_GET['course_ID'];
@@ -46,17 +46,22 @@ if ($_GET['individual_ID'] && $_GET['course_ID'] && $_GET['video_ID']) {
     $select_next_video = mysqli_query($conn, "SELECT video_ID FROM course_videos WHERE course_ID = $courseID AND video_Order > (SELECT video_Order FROM course_videos WHERE video_ID = $videoID) ORDER BY video_Order ASC LIMIT 1");
     $fetch_next_video = mysqli_fetch_assoc($select_next_video);
  
-    if ($fetch_next_video) {
+    if ($fetch_next_video) {//update last watch video to next order
        $nextVideoID = $fetch_next_video['video_ID'];
+       
+       $sql = "UPDATE `course_progress` SET `last_watched_video` = $nextVideoID, `progress_date`=CURRENT_DATE() WHERE individual_ID = $individualID AND course_ID = $courseID";
+       $result = mysqli_query($conn, $sql);
     } else {
-       $nextVideoID = $videoID; // If it's the last video, set nextVideoID to current video ID
+    // If it's the last video
+    //update the course to done
+       $sql = "UPDATE `course_progress` SET `course_Status` = 'done' , `progress_date`=CURRENT_DATE() WHERE individual_ID = $individualID AND course_ID = $courseID";
+       $result = mysqli_query($conn, $sql);
     }
  
-    $sql = "UPDATE `course_progress` SET `last_watched_video` = $nextVideoID WHERE individual_ID = $individualID AND course_ID = $courseID";
-    $result = mysqli_query($conn, $sql);
+   
  }
 
 
 // Close the database connection
-mysqli_close($conn);
+// mysqli_close($conn);
 ?>

@@ -188,11 +188,9 @@ if( isset($_GET['save_bookmarks'])  ){
                         style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">Resume Course</a>';
                      }
                      else if ($courseProgress['course_Status']=="done") {
-                        echo '<a href="courses.php" style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
-                                 Already Finshied! <br>
-                                 Look For New Course
-                              </a>'
-                        ;
+                        echo'
+                           <a id="downleadCertificate" class="a-btn"><i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Downlead Certificate</a>
+                        ';
                      }
                   }
                   else if($fetch_course['course_Fees']==0){//if course is free so redircting to first video
@@ -347,6 +345,51 @@ if( isset($_GET['save_bookmarks'])  ){
 
 
 
+<!-- Script to Downlead Certificate button -->
+   <!-- Include the library to  Downlead Certificate-->
+   <script src="assets/js/cdnjs.cloudflare.com_ajax_libs_html2pdf.js_0.9.2_html2pdf.bundle.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+<?php
+$certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_Name']."_Certificate";
+?>
+<script>
+   $(document).ready(function() {
+      
+      $('#downleadCertificate').on('click', function() {
+         var button = $(this); // Store the button reference
+         
+         // Send an AJAX request to downleadCertificate
+         $.ajax({
+               url: 'generateCertificate.php',
+               type: 'POST',
+               data: {
+                  individual_ID: <?= $individual_ID; ?>,
+                  course_ID: <?= $course_id; ?>
+               },
+               beforeSend: function() {
+                  // Disable the  Downlead Certificate button temporarily
+                  button.attr('disabled', 'disabled').html('<i class="fa-duotone fa-loader fa-spin-pulse"></i> Loading...');
+               },
+               success: function(response) {
+               var option = {
+                  filename: '<?= $certificate_Name; ?>.pdf',
+                  // margin: 1,
+                  // image: { type: 'jpeg', quality: 0.98 },
+                  // html2canvas: { scale: 2 },
+                  // jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+               };
+               html2pdf().from(response).set(option).save();
+
+                  // Re-enable the Downlead Certificate button
+               button.removeAttr('disabled').html('<i class="fa-regular fa-file-certificate" style="margin-right:5px"></i> Downlead Certificate');
+               }
+         });
+      });
+   });
+</script>
+
+
+
 
 
 
@@ -354,7 +397,7 @@ if( isset($_GET['save_bookmarks'])  ){
 <style>
 
 .empty{
-   margin: -90px 0%;
+   margin: 0px 20%;
    width: fit-content;
    padding: 3rem 1rem;
 }
@@ -757,6 +800,15 @@ section.videos-container {
    font-size: 1.7rem;
    color: var(--light-color);
    white-space: pre-line;
+}
+
+.a-btn{
+   background-color: var(--nav-main);
+   padding: 1rem;
+   border-radius: 25px;
+   color: var(--white);
+   cursor: pointer;
+   
 }
 
 </style>

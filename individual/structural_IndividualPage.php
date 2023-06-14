@@ -261,19 +261,32 @@ if(isset($_POST['logout-btn'])){
                         </div>
                     </div>
 
+                    <?php
+                                $select_profile = mysqli_query($conn, "SELECT individual_Name, individual_photo FROM `individuals` WHERE  individual_ID = '$individual_ID'");
+                                
+                                $fetch_profile = mysqli_fetch_assoc($select_profile);
+                            ?>
+
                     <div class="user" style="border-radius:50%; margin-right:2rem; width:3rem; height:3rem; ">
-                        <ion-icon name="person-outline" id="user-btn" style=" margin:.5rem; font-size:40px; font-weight:500;margin-left:.3rem;margin-right:5rem;  border-radius:50%;"></ion-icon>
+                    <?php
+                        if(empty($fetch_profile['individual_photo'])){ // if the user doesn't set photo 
+
+                            ?>
+                            <ion-icon name="person-outline" id="user-btn" style=" margin:.5rem; font-size:40px; font-weight:500;margin-left:.3rem;margin-right:5rem;  border-radius:50%;"></ion-icon>
+                    <?php
+                        }else{
+                            ?>
+                            <img id="user-btn" src="../images/individuals_images/<?= $fetch_profile['individual_photo']; ?>" alt="<?= $fetch_profile['individual_Name']; ?>" srcset="">
+                    <?php
+                        }
+                    ?>
                     </div>
                     
 
                     <div class="profile"  style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255));">
                 
                         <form action="" method="post">
-                            <?php
-                                $select_profile = mysqli_query($conn, "SELECT individual_Name FROM `individuals` WHERE  individual_ID = '$individual_ID'");
-                                
-                                $fetch_profile = mysqli_fetch_assoc($select_profile);
-                            ?>
+
                             <h2 style="text-align: center">
                                 <?= $fetch_profile['individual_Name']; ?>
                             </h2>
