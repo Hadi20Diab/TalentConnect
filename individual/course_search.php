@@ -144,7 +144,7 @@
         }
 
         // Check if course fees are provided
-        if(isset(($_GET['course_fee'])) && !empty($_GET['course_fee']) || $_GET['course_fee'] ==0){
+        if(isset(($_GET['course_fee'])) && !empty($_GET['course_fee']) || ($_GET['course_fee'] ==0 && $_GET['course_fee'] !="" )){
             $course_fee = $_GET['course_fee'];
             // Add course fees condition to the query
             $sql .= " AND c.course_Fees <= $course_fee";
