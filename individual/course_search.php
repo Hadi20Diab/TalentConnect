@@ -6,8 +6,11 @@
     <!-- Search Select javascript -->
     <script src="../js/jquery.min.js"></script>
     <script src="../js/selectize.min.js"></script>
+    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" /> -->
     <link rel="stylesheet" href="../js/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-
 </head>
 
 
@@ -104,66 +107,15 @@
     if(isset($_GET['courseName'])){
         
         
-        // $courseName = $_GET['courseName'];
-        // if(isset($_GET['category'])){
-        //     $category = $_GET['category']; 
-        //     echo"$category";
-        //     $categoryList = implode("','", $category);
-
-        // }
-        // else {
-        //     $category = "";
-        // }
-        // $course_Creator = $_GET['course_Creator'];
-        $course_fee = $_GET['course_fee'];
-
         $sql = "SELECT DISTINCT  c.* FROM courses c 
         INNER JOIN courses_fields cf ON c.course_ID = cf.course_ID 
 
         LEFT JOIN company ON company_Name=course_Creator
         LEFT JOIN universities ON university_Name=course_Creator
 
-        WHERE c.course_Status = 'active'";
+        WHERE c.course_Status = 'active'
 
-
-        // $sql="SELECT * FROM courses
-        
-        // LEFT JOIN company ON company_Name=course_Creator
-        // LEFT JOIN universities ON university_Name=course_Creator
-
-        // INNER JOIN courses_fields ON courses.course_ID = courses_fields.course_ID
-
-        //  WHERE "; // we join 2 table together 
-        // $conditions = array();
-
-
-        // if (!empty($search)) {
-        //     $conditions[] = "company_name LIKE '%$search%'";
-        // }
-
-        // if(!empty($courseName)){
-        //     $conditions[] = "course_Name LIKE '%$courseName%' ";
-            
-        // }
-        // if(!empty($category)){
-        //     // $conditions[] = "course_Category = '$category' ";
-        //     $conditions[] =" courses_fields.course_field_Name IN ('$categoryList')";
-        //     ;
-        // }
-        // if(!empty($course_Creator)){
-        //     $conditions[] = "course_Creator = '$course_Creator' ";
-        // }
-        // if(!empty($course_fee)){
-        //     $conditions[] = "course_Fees = '$course_fee' ";
-        // }
-
-
-        // if (!empty($conditions)) {
-        //     $sql .= implode(" AND ", $conditions);
-        // } else {
-        //     $sql .= "1"; // Return all records if no conditions are specified
-        // }
-
+        ";
 
 
         // Check if course name is provided
@@ -192,7 +144,7 @@
         }
 
         // Check if course fees are provided
-        if(isset($_GET['course_fee']) && !empty($_GET['course_fee'])){
+        if(isset(($_GET['course_fee'])) && !empty($_GET['course_fee']) || $_GET['course_fee'] ==0){
             $course_fee = $_GET['course_fee'];
             // Add course fees condition to the query
             $sql .= " AND c.course_Fees <= $course_fee";
