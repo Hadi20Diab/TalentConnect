@@ -147,7 +147,7 @@ else{
 
         $pass="21232f297a57a5a743894a0e4a801fc3";//admin
 
-        $updateProfileQuery = mysqli_query($conn, "UPDATE `individuals` SET individual_Name = '$individualName', individual_Email = '$Email', individual_Password = '$pass', individual_PhoneNumber = '$PhoneNumber', individual_Country = '$country', individual_Linkedin = '$linkedinProfile', individual_About = '$about',  individual_Major = '$Major'  WHERE individual_ID = '$individual_ID'");
+        $updateProfileQuery = mysqli_query($conn, "UPDATE `individuals` SET individual_Name = '$individualName', individual_Email = '$Email', individual_PhoneNumber = '$PhoneNumber', individual_Country = '$country', individual_Linkedin = '$linkedinProfile', individual_About = '$about',  individual_Major = '$Major'  WHERE individual_ID = '$individual_ID'");
 
 
         // check if pending or not, if he pending so the admin will review his infromation
@@ -178,6 +178,10 @@ else{
     <!-- for alert -->
   <link rel="stylesheet" href="../css/alert.css">
 
+  <!-- Icon Style -->
+  <!-- <link rel="stylesheet" href="../css/all-icon.css" /> -->
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+
   <title>Update Profile</title>
 
 
@@ -203,6 +207,30 @@ else{
 
 <form action="updateProfile.php" method="POST" enctype="../images/companies_images">
 <h2 style="text-align: center;">Update Your Profile</h2>
+
+
+<input type="hidden" name="old_image" value="<?php echo $old_image; ?>">
+<div class="profile-photo">
+    <label for="profilePhoto" class="edit-icon">
+      <i class="fa-regular fa-pen-to-square"></i>
+    </label>
+
+    
+    <input type="file" id="profilePhoto" name="image" accept="image/jpg, image/jpeg, image/png" onchange="previewImage(event)">
+    <?php
+    if ($select_individual['individual_photo']) {
+      echo'
+        <img id="preview" src="../images/individuals_images/'. $select_individual['individual_photo'] .'" alt="Profile Photo">
+      ';
+    }
+    else{
+      echo'
+        <img id="preview" src="../images/individuals_images/default_Image.png" alt="Profile Photo">
+      ';
+      
+    }
+    ?>
+</div>
   <label for="individualName">Name:</label>
   <input type="text" id="individualName" name="individualName" value="<?= $select_individual['individual_Name']; ?>" required>
   
@@ -218,13 +246,9 @@ else{
 
 <!-- Major -->
   <?php
-// Step 1: Retrieve the student's major from the database
-$query = "SELECT individual_Major FROM individuals WHERE individual_ID = $individual_ID";
-$result = mysqli_query($conn, $query);
-
-if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $studentMajor = $row['individual_Major'];
+// Step 1: Retrieve the individual's major from the database
+if ($select_individual['individual_Major']) {
+    $studentMajor = $select_individual['individual_Major'];
 } else {
     $studentMajor = ''; // Set default value if no data found
 }
@@ -234,7 +258,7 @@ $queryMajors = "SELECT major_name FROM majors";
 $resultMajors = mysqli_query($conn, $queryMajors);
 
 $majorOptions = '';
-
+// select the user major
 if ($resultMajors && mysqli_num_rows($resultMajors) > 0) {
     while ($rowMajors = mysqli_fetch_assoc($resultMajors)) {
         $majorName = $rowMajors['major_name'];
@@ -253,21 +277,17 @@ if ($resultMajors && mysqli_num_rows($resultMajors) > 0) {
 
 
 
-<!-- student's graduation -->
-
+<!-- individual's graduation -->
 
 <?php
-// Step 1: Retrieve the student's graduation status from the database
-$query = "SELECT Is_Graduated FROM individuals WHERE individual_ID = $individual_ID";
-$result = mysqli_query($conn, $query);
-
-if ($result && mysqli_num_rows($result) > 0) {
-  $row = mysqli_fetch_assoc($result);
-  $graduated = $row['Is_Graduated'];
+// Step 1: Retrieve the individual's graduation status from the database
+if (isset( $select_individual['Is_Graduated']) ){
+  $graduated = $select_individual['Is_Graduated'];
   $graduated = $graduated ? 'yes' : 'no'; // Convert boolean to string value
 } else {
   $graduated = ''; // Set default value if no data found
 }
+
 ?>
 
 <label for="IndividualGraduated">Are you Graduated?</label>
@@ -278,17 +298,12 @@ if ($result && mysqli_num_rows($result) > 0) {
 </select>
   
 
+  
+<!-- individual's Interested Fields -->
 
-
-
-
-
-
-      
   <!-- <form method="POST" action="<?php // echo $_SERVER['PHP_SELF']; ?>"> -->
   <label for="interestedFields">Select Interested Fields:</label>
 
-  <!-- <select name="interestedFields[]" multiple> -->
   <select name="interestedFields[]" multiple>
     <option value="">Fields:</option>
     <!-- Retrieve and display available categories from the 'categories' table -->
@@ -308,7 +323,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
   
 
-
+<!-- individual's Country -->
   
 
   <label for="IndividualCountry">Country:</label>
@@ -348,11 +363,10 @@ if ($result && mysqli_num_rows($result) > 0) {
     </select>
   </div> -->
 
-  <label for="companyPhotos">Your Photo:</label>
-  <input type="file" id="companyPhotos" name="image" value="Upload" accept="image/jpg, image/jpeg, image/png">
 
-  <input type="hidden" name="old_image" value="<?php echo $old_image; ?>">
 
+  <!-- <label for="companyPhotos">Your Photo:</label>
+  <input type="file" id="companyPhotos" name="image" value="Upload" accept="image/jpg, image/jpeg, image/png"> -->
 
   <label for="linkedinProfile">LinkedIn Profile:</label>
   <input type="url" id="linkedinProfile" name="linkedinProfile" value="<?= $select_individual['individual_Linkedin']; ?>" >
@@ -379,16 +393,78 @@ if ($result && mysqli_num_rows($result) > 0) {
 
     
       <button type="submit" name="submit">Update Profile</button>
-      <a href="home.php">
     
-        <button type="submit" name="submit">Cancle</button>
-      </a>
+      <button type="button" onclick="window.location.href=document.referrer;">Cancel</button>
+      <!-- back to the previous page -->
     </form>
   </div>
 
 
 
 
+
+<!-- for image -->
+  <style>
+  .profile-photo {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+    text-align-last: center;
+}
+
+.profile-photo #profilePhoto {
+  display: none;
+}
+
+.profile-photo img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile-photo .edit-icon {
+  position: absolute;
+  bottom: 0;
+  right: 37%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  width: 130px;
+  height: 30%;
+  text-align-last: center;
+  filter: invert(1);
+}
+
+.profile-photo .edit-icon i {
+  font-size: 16px;
+}
+
+.profile-photo .edit-icon:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+</style>
+
+<script>
+  function previewImage(event) {
+  var input = event.target;
+  var reader = new FileReader();
+
+  reader.onload = function () {
+    var preview = document.getElementById('preview');
+    preview.src = reader.result;
+  };
+
+  reader.readAsDataURL(input.files[0]);
+}
+
+</script>
+<!-- END -->
 
 
 
