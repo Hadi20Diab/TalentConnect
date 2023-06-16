@@ -661,5 +661,10 @@ elseif($type === 'individuals'){
 
     <script src="js/regDynamic.js"></script>
     <script src="js/dark.js"></script>
+
+
+    <!-- script for login chatbot -->
+    <script src="//code.tidio.co/venffcc1urcyn1ttmknvxxonqm0gukpw.js" async></script>
+
   </body>
 </html>

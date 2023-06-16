@@ -179,15 +179,15 @@ if(isset($_POST['logout-btn'])){
                             <span class="title">Jobs</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="feedback.php" id="Feedback-LeftBar">
                             <span class="icon">
                                 <img class="imgIcon" src="https://cdn-icons-png.flaticon.com/512/2450/2450969.png" alt="">
-                                <!-- <ion-icon name="cart-outline"></ion-icon> -->
+                                <ion-icon name="cart-outline"></ion-icon> 
                             </span>
                             <span class="title">Feedback</span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <!-- <li>
                         <a href="messages.php">
