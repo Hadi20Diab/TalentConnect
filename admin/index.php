@@ -120,7 +120,10 @@ include "structuralAdminPage.php";
 
 
 <!-- Chart -->
-<h2 style="padding: 30px;">System OverView</h2>
+<h2 style="padding: 30px;">
+  <i class="fa-solid fa-square-poll-vertical fa-xl" style="     color: var(--nav-main); "></i>  
+  System OverView 
+</h2>
 <div class="ChartsDIV">
   <div class="OverViewCHART">
 
@@ -131,7 +134,7 @@ include "structuralAdminPage.php";
         height: auto;
       }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
     <!-- <script src="../js/chart.js"></script> -->
 
     <script>

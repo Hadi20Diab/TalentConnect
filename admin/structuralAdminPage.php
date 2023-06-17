@@ -38,21 +38,24 @@ if(isset($_POST['logout-btn'])){
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- ======= Styles ====== -->
-
+        
         <link rel= "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" >
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/empty.css">
         <link rel="stylesheet" href="assets/css/profile.css">
         <link rel="stylesheet" href="assets/css/dark.css">
         <link rel="stylesheet" href="assets/css/alert.css">
-
+        
         <link rel="stylesheet" href="assets/css/customers.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
-
+        
         
         <!-- Common Style -->
         <link rel="stylesheet" href="assets/css/commonStyle.css">
-        <link rel="stylesheet" href="../css/all_icon.css" />
+        <!-- <link rel="stylesheet" href="../css/all_icon.css" /> -->
+        
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+        <script src="../js/chart.js"></script>
 
         <style>
 
@@ -274,12 +277,19 @@ if(isset($_POST['logout-btn'])){
                             <p>
                                 <?= $fetch_profile['admin_Name']; ?>
                             </p>
-                            <a href="update_profile.php" class="update-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">update profile</a>
+                            <a href="update_profile.php" class="update-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                                <i class="fa-solid fa-user-pen"></i>
+                                update profile
+                            </a>
                             <div class="flex-btn">
                             
                                 </div>
                                 <!-- <a href="../home.php" class="home-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">Home page</a>  -->
-                                <input type="submit" onclick ="" class="logout-btn" name="logout-btn" value="Logout" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                                <!-- <input type="submit" onclick ="" class="logout-btn" name="logout-btn" value="Logout" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);"> -->
+                                <button type="submit" onclick="" class="logout-btn" name="logout-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                                    Logout <i class="fa-solid fa-right-from-bracket"></i>
+                                </button>
+
                             </form>
 
                     

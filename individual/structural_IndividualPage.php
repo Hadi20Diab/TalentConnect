@@ -290,10 +290,17 @@ if(isset($_POST['logout-btn'])){
                             <h2 style="text-align: center">
                                 <?= $fetch_profile['individual_Name']; ?>
                             </h2>
-                            <a href="updateProfile.php" class="update-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">update profile</a>
-                            <div class="flex-btn">
+                            <a href="updateProfile.php" class="update-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                                <i class="fa-solid fa-user-pen"></i>
+                                update profile
+                            </a>
                             
-                                <input type="submit" class="logout-btn" name="logout-btn" value="Logout" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                            <div class="flex-btn">
+                                <!-- <input type="submit" class="logout-btn" name="logout-btn" value="Logout" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);"> -->
+                                <button type="submit" class="logout-btn" name="logout-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                                     Logout <i class='fa-solid fa-right-from-bracket'></i>
+                                </button>
+
                             </div>
                             <!-- <a href="../home.php" class="home-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">Home page</a>  -->
                         </form>
