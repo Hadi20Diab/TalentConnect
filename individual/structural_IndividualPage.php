@@ -455,3 +455,25 @@ input{
 
 <!-- script for chatbot -->
 <script src="//code.tidio.co/0rtwvzyzlzjyo5awazb83sx96g2s4w4i.js" async></script>
+
+
+<?php
+
+// function to encrypt data to send it to store it to database and decrypt it when we need it 
+    //Initialization Vector (IV). The IV is a random value used to initialize the encryption algorithm and add randomness to the encrypted data.
+    function encryptIt($q) {
+        $cryptKey = 'qJB0rGtIn5UB1xG03efyCp';
+        $iv = openssl_random_pseudo_bytes(16); // Generate a 16-byte IV
+        $qEncoded = base64_encode(openssl_encrypt($q, 'AES-256-CBC', $cryptKey, OPENSSL_RAW_DATA, $iv));
+        return base64_encode($iv . $qEncoded);
+    }
+    
+    function decryptIt($q) {
+        $cryptKey = 'qJB0rGtIn5UB1xG03efyCp';
+        $q = base64_decode($q);
+        $iv = substr($q, 0, 16); // Extract the IV from the input
+        $q = substr($q, 16); // Remove the IV from the input
+        $qDecoded = openssl_decrypt(base64_decode($q), 'AES-256-CBC', $cryptKey, OPENSSL_RAW_DATA, $iv);
+        return $qDecoded;
+    }
+?>

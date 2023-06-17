@@ -10,6 +10,7 @@
       header('location:courses.php');
    }
 
+
 ?>
 <!-- save data after submition form part -->
 <?php
@@ -38,6 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if(isset($_GET['card_number']) && isset($_GET['card_holder']) && isset($_GET['expiration_month']) && isset($_GET['expiration_year']) && isset($_GET['cvv'])){
         // add payment to database
+            // secure data before add it on database using encryptIt
+            $card_number = encryptIt($card_number);
+            $card_holder = encryptIt($card_holder);
+            $expiration_month = encryptIt($expiration_month);
+            $expiration_year = encryptIt($expiration_year);
+            $cvv = encryptIt($cvv);
+
         $query = "INSERT INTO payments (course_ID, individual_ID, amount, card_number, card_holder, expiration_month, expiration_year, cvv)
                                 VALUES ('$course_ID', '$individual_ID', '$amount', '$card_number', '$card_holder', '$expiration_month', '$expiration_year', '$cvv')";
         $result = mysqli_query($conn, $query);
@@ -76,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 <?php
 
 // Query to retrieve payment information
-$query = "SELECT card_number, card_holder, expiration_month, expiration_year, cvv FROM payments WHERE individual_ID = $individual_ID";
+$query = "SELECT DISTINCT card_number, card_holder, expiration_month, expiration_year, cvv FROM payments WHERE individual_ID = $individual_ID";
 $result = mysqli_query($conn, $query);
 
 if ($result) {
@@ -85,25 +93,27 @@ if ($result) {
         // Fetch the row as an associative array
         $row = mysqli_fetch_assoc($result);
 
-        // Store the values in variables
-        $card_number = $row['card_number'];
-        $card_holder = $row['card_holder'];
-        $expiration_month = $row['expiration_month'];
-        $expiration_year = $row['expiration_year'];
-        $cvv = $row['cvv'];
+        //decrypt data and Store the values in variables
+            $card_number = decryptIt($row['card_number']);
+            $card_holder = decryptIt($row['card_holder']);
+            $expiration_month = decryptIt($row['expiration_month']);
+            $expiration_year = decryptIt($row['expiration_year']);
+            $cvv = decryptIt($row['cvv']);
 
         // Perform further processing with the retrieved values
-        // ...
-    } else {
-        // No matching payment found
+
+        
+        
+        // $input = "123";
+        // $encrypted = encryptIt($input);
+        // $decrypted = decryptIt($encrypted);
+        
+        // echo $encrypted . '<br />' . $decrypted;
+
+        // $card_number = decryptIt($card_number);
     }
-} else {
-    // Query execution failed
-    echo "Error: " . mysqli_error($conn);
 }
 
-// Close the database connection
-mysqli_close($conn);
 ?>
 
 
@@ -147,14 +157,18 @@ mysqli_close($conn);
 
     </div>
 
-    <form action="payment.php" method="GET">
+<form action="payment.php" method="GET">
+    <div style="text-align: center;font-size: 1.3rem;font-weight: bold;    margin-top: 10px;">
+        <span>Amount</span>
+        <span><?= $amount ?> $</span>
+    </div>
     <div class="inputBox">
         <span>card number</span>
-        <input type="text" name="card_number" maxlength="19" class="card-number-input" placeholder="0000 0000 0000 0000" onkeyup="formatCardNumber(this)" oninput="this.value = this.value.replace(/\D/g, '')" required value="<?php echo isset($_GET['card_number']) ? $_GET['card_number'] : ''; ?>">
+        <input type="text" name="card_number" maxlength="19" class="card-number-input" placeholder="0000 0000 0000 0000" onkeyup="formatCardNumber(this)" oninput="this.value = this.value.replace(/\D/g, '')" required value="<?= $card_number?>">
     </div>
     <div class="inputBox">
         <span>card holder</span>
-        <input type="text" name="card_holder" class="card-holder-input" placeholder="Enter the name on your Visa card" required value="<?php echo isset($_GET['card_holder']) ? $_GET['card_holder'] : ''; ?>">
+        <input type="text" name="card_holder" class="card-holder-input" placeholder="Enter the name on your Visa card" required value="<?= $card_holder ?>">
     </div>
     <div class="flexbox">
         <div class="inputBox">
@@ -162,7 +176,7 @@ mysqli_close($conn);
             <select name="expiration_month" class="month-input" required>
                 <option value="">month</option>
                 <?php
-                $selectedMonth = isset($_GET['expiration_month']) ? $_GET['expiration_month'] : '';
+                $selectedMonth = isset($expiration_month) ? $expiration_month  : '';
                 for ($month = 1; $month <= 12; $month++) {
                     $value = str_pad($month, 2, '0', STR_PAD_LEFT);
                     $selected = $selectedMonth === $value ? ' selected' : '';
@@ -176,7 +190,7 @@ mysqli_close($conn);
             <select name="expiration_year" class="year-input" required>
                 <option value="">year</option>
                 <?php
-                $selectedYear = isset($_GET['expiration_year']) ? $_GET['expiration_year'] : '';
+                $selectedYear = isset($expiration_year) ? $expiration_year : '';
                 for ($year = 2023; $year <= 2033; $year++) {
                     $selected = $selectedYear === (string)$year ? ' selected' : '';
                     echo "<option value=\"$year\"$selected>$year</option>";
@@ -186,7 +200,7 @@ mysqli_close($conn);
         </div>
         <div class="inputBox">
             <span>cvv</span>
-            <input type="text" name="cvv" maxlength="3" class="cvv-input" placeholder="3-Digit Code" required value="<?php echo isset($_GET['cvv']) ? $_GET['cvv'] : ''; ?>">
+            <input type="text" name="cvv" maxlength="3" class="cvv-input" placeholder="3-Digit Code" required value="<?= $cvv ?>">
         </div>
     </div>
     <input type="submit" value="submit" class="submit-btn"/>
@@ -401,6 +415,15 @@ function formatCardNumber(input) {
 
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.card-number-box').innerText = document.querySelector('.card-number-input').value;
+    document.querySelector('.card-holder-name').innerText = document.querySelector('.card-holder-input').value;
+    document.querySelector('.exp-month').innerText = document.querySelector('.month-input').value;
+    document.querySelector('.exp-year').innerText = document.querySelector('.year-input').value;
+    document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
+
+});
+
 
 document.querySelector('.card-number-input').oninput = () =>{
     document.querySelector('.card-number-box').innerText = document.querySelector('.card-number-input').value;

@@ -236,10 +236,12 @@
 
    </div>
 
-   <div id="loadMoreButton" style="    text-align: center;">
-        <button class="loadMoreButton a-btn">Load More</button>
+    <div id="loadMoreButton" style="    text-align: center;">
+        <button class="loadMoreButton a-btn">
+            <i class="fa-solid fa-download" style="margin-right: 5px;"></i>
+            Load More
+        </button>
     </div>
-   <!-- <button id="loadMoreButton" class="loadMoreButton">Load More</button> -->
 </section>
 
 <!-- courses section ends -->
@@ -249,48 +251,48 @@
 
 <script>
 $(document).ready(function() {
-        var offset = 6;
-        var limit = 6;
+    var offset = 6;
+    var limit = 6;
 
-        // Function to load more courses
-        function loadMoreCourses() {
-            $.ajax({
-                url: "load_more.php",
-                type: "POST",
-                data: {
-                    offset: offset,
-                    limit: limit,
-                    individual_ID: <?= $individual_ID ?>,
-                    contentType: 'courses',
-                },
-                success: function(response) {
-                    // Append the newly loaded courses to the courses list
-                    $("#coursesList").append(response);
+    // Function to load more courses
+    function loadMoreCourses() {
+        $.ajax({
+            url: "load_more.php",
+            type: "POST",
+            data: {
+                offset: offset,
+                limit: limit,
+                individual_ID: <?= $individual_ID ?>,
+                contentType: 'courses',
+            },
+            success: function(response) {
+                // Append the newly loaded courses to the courses list
+                $("#coursesList").append(response);
 
-                    // Check if the response contains any new courses
-                    if ($.trim(response) === "") {
-                        // Hide the "Load More" button if there are no more courses to load
-                        $("#loadMoreButton").remove();
-                    } else {
-                        // Increment the offset by the limit for the next load more request
-                        offset += limit;
-                    }
-                },
-                error: function() {
-                    // Handle the error case
-                    alert("Error occurred while loading more courses.");
+                // Check if the response contains any new courses
+                if ($.trim(response) === "") {
+                    // Hide the "Load More" button if there are no more courses to load
+                    $("#loadMoreButton").remove();
+                } else {
+                    // Increment the offset by the limit for the next load more request
+                    offset += limit;
                 }
-            });
-        }
-
-        // Load more courses when the "Load More" button is clicked
-        $("#loadMoreButton").on("click", function() {
-            loadMoreCourses();
+            },
+            error: function() {
+                // Handle the error case
+                alert("Error occurred while loading more courses.");
+            }
         });
+    }
 
-        // Initial load more on page load
-        // loadMoreCourses();
+    // Load more courses when the "Load More" button is clicked
+    $("#loadMoreButton").on("click", function() {
+        loadMoreCourses();
     });
+
+    // Initial load more on page load
+    // loadMoreCourses();
+});
 </script>
 
 

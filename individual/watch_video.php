@@ -433,13 +433,63 @@ if (mysqli_num_rows($select_comments) > 0) {
     echo'
     <!-- Load More button -->
    <div id="loadMoreComments" style="    text-align: center;">
-      <button class="loadMoreButton a-btn">Load More</button>
+      <button class="loadMoreButton a-btn"><i class="fa-solid fa-download" style="margin-right: 5px;"></i>Load More</button>
    </div>
     ';
+    ?>
+
+
+      
+<!-- Script to handle Load More button -->
+<script>
+    $(document).ready(function() {
+        var offset = 10; // Starting offset for loading more comments
+        
+        $('.loadMoreButton').on('click', function() {
+            var button = $(this); // Store the button reference
+            
+            // Send an AJAX request to fetch additional comments
+            $.ajax({
+                url: 'load_more.php',
+                type: 'POST',
+                data: {
+                  individual_ID: <?php echo $individual_ID; ?>,
+                  videoID: <?php echo $video_id; ?>,
+                  contentType: 'comment',
+                  offset: offset
+                },
+                beforeSend: function() {
+                    // Disable the Load More button temporarily
+                    button.attr('disabled', 'disabled').html('<i class="fa-solid fa-loader"></i>Loading...');
+                },
+                success: function(response) {
+                    // Append the new comments to the comment section
+                    $('.SingleComment:last').after(response);
+                    
+                    // Increment the offset for the next load
+                    offset += 10;
+                    
+                    // Re-enable the Load More button
+                    button.removeAttr('disabled').html('<i class="fa-solid fa-download" style="margin-right: 5px;"></i>Load More');
+                    
+                    // Hide the Load More button if there are no more comments
+                    if ($.trim(response) === '') {
+                        $('#loadMoreComments').hide();
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<?php
 
 } else {
     echo '<p class="empty">No comments Yet</p>';
 }
+
+
+
 
 
 $certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_Name']."_Certificate";
@@ -551,7 +601,7 @@ if (isset($_POST['deleteCommentID'])) {
       left: 0;
       width: 100%;
       height: 3px;
-      background-color: var(--nav-main);;
+      background-color: var(--nav-main);
    }
 
    .progress-line {
@@ -577,7 +627,7 @@ if (isset($_POST['deleteCommentID'])) {
       progressLine.style.width = (progress * 100) + '%';
    }
 </script>
-
+<!--END course progress-line -->
 
 <style>
    

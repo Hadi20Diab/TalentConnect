@@ -185,7 +185,10 @@ if( isset($_GET['save_bookmarks'])  ){
                   if (mysqli_num_rows($courseProgress_result) > 0) {
                      if ($courseProgress['course_Status']=="under-progress") {
                         echo '<a href="watch_video.php?video_id=' . $courseProgress['last_watched_video'] . '"
-                        style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">Resume Course</a>';
+                                 style="     background-color: var(--nav-main);     padding: 1rem;     border-radius: 25px;     color: var(--white); ">
+                           <i class="fa-solid fa-play"></i>
+                           Resume Course
+                        </a>';
                      }
                      else if ($courseProgress['course_Status']=="done") {
                         echo'
@@ -339,9 +342,6 @@ if( isset($_GET['save_bookmarks'])  ){
 
 
 <!-- videos container section ends -->
-
-
-
 
 
 
