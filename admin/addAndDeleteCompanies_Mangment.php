@@ -253,7 +253,7 @@ if(isset($_POST['logout-btn'])){
                                 $fetch_profile = mysqli_fetch_assoc($select_profile);
                             ?>
                             <p>
-                                <? $fetch_profile['username']; ?>
+                                <? $fetch_profile['admin_Name']; ?>
                             </p>
                             <a href="update_profile.php" class="update-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">update profile</a>
                             <div class="flex-btn">
@@ -322,7 +322,7 @@ if(isset($_POST['logout-btn'])){
              if(isset($_POST['submit'])){
    
 
-                $name = mysqli_real_escape_string($conn,$_POST['name']);
+                $name = mysqli_real_escape_string($conn,$_POST['companyName']);
                 $email = mysqli_real_escape_string($conn,$_POST['email'] );
                 $pass =mysqli_real_escape_string($conn, $_POST['pass'] );     
                 $cpass = mysqli_real_escape_string($conn, $_POST['cpass'] );
@@ -357,7 +357,8 @@ if(isset($_POST['logout-btn'])){
                         
                          ';
                     }else{
-                        $insert_company = mysqli_query($conn, "INSERT INTO `company`(company_Name,company_Email	, company_Password , company_Status) VALUES('$name', '$email', '$cpass', 'approved')");
+                        $securePass=md5($cpass);
+                        $insert_company = mysqli_query($conn, "INSERT INTO `company`(company_Name,company_Email	, company_Password , company_Status) VALUES('$name', '$email', '$securePass', 'approved')");
                         
                         echo '
                                 <div class="popup" id="popup" style="background: rgb(226, 252, 214);">
@@ -429,13 +430,14 @@ if(isset($_POST['logout-btn'])){
 
                  <section class="addAdminSection" id="addAdminSection">
                      <form action="" method="post">
-                         <h3 class="titleHeader">register new admin</h3>
-                         <input type="text" style="color: black;" name="name" required placeholder="enter your  username" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">                   
+                         <h3 class="titleHeader">register new Company</h3>
+                           
+                            <input type="text" style="color: black;" name="companyName" required placeholder="enter company name" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">                   
                          
-                         <input type="email" style="color: black;"  pattern="/^[a-zA-Z0-9.!#$%&"*+-/=?\^_"{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" required placeholder="enter your  email" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
+                         <input type="email" style="color: black;"  pattern="/^[a-zA-Z0-9.!#$%&"*+-/=?\^_"{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" required placeholder="enter email" maxlength="25"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
                          
-                         <input type="password" style="color: black;" name="pass" required placeholder="enter your password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
-                         <input type="password" style="color: black;" name="cpass" required placeholder="confirm your password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
+                         <input type="password" style="color: black;" name="pass" required placeholder="enter password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
+                         <input type="password" style="color: black;" name="cpass" required placeholder="confirm  password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
                          <div class="button">
                              <input type="submit" value="register now" id="addADMINbtn" name="submit">
                          </div>

@@ -153,27 +153,42 @@ if(isset($_POST['logout-btn'])){
                             <span class="title">Job Management</span>
                         </a>
                     </li>
-                    <li>
+
+                    <!-- <li>
                         <a href="feedback.php" id="Feedback-LeftBar">
                             <span class="icon">
                                 <img class="imgIcon" src="https://cdn-icons-png.flaticon.com/512/2450/2450969.png" alt="">
-                                <!-- <ion-icon name="cart-outline"></ion-icon> -->
+                                 <ion-icon name="cart-outline"></ion-icon> 
                             </span>
                             <span class="title">Feedback and Suggestions</span>
                         </a>
-                    </li>
+                    </li> -->
                     
-                    <li>
-                        <a href="admins.php" id="admins-LeftBar">
-                            <span class="icon">
 
-							<i class="fa-solid fa-person-circle-plus fa-2xl"></i>
-                            <!-- <ion-icon name="person-add-outline"></ion-icon> -->
-							
-                            </span>
-                            <span class="title">Admins</span>
-                        </a>
-                    </li>
+                    <?php
+                        $select_profile = mysqli_query($conn, "SELECT admin_Name,`role` FROM `admin` WHERE admin_id = '$admin_id'");
+                        
+                        $fetch_profile = mysqli_fetch_assoc($select_profile);
+
+                    // only host can add and remove admin
+                    if($fetch_profile['role']=='host'){
+                     
+                        ?>
+                        <li>
+                            <a href="admins.php" id="admins-LeftBar">
+                                <span class="icon">
+
+                                <i class="fa-solid fa-person-circle-plus fa-2xl"></i>
+                                <!-- <ion-icon name="person-add-outline"></ion-icon> -->
+                                
+                                </span>
+                                <span class="title">Admins</span>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    
+                    ?>
                     <!-- <li>
                         <a href="messages.php">
                             <span class="icon">
@@ -255,22 +270,20 @@ if(isset($_POST['logout-btn'])){
                     <div class="profile"  style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255));">
                 
                         <form action="" method="post">
-                            <?php
-                                $select_profile = mysqli_query($conn, "SELECT username FROM `admin` WHERE admin_id = '$admin_id'");
-                                
-                                $fetch_profile = mysqli_fetch_assoc($select_profile);
-                            ?>
+
                             <p>
-                                <?= $fetch_profile['username']; ?>
+                                <?= $fetch_profile['admin_Name']; ?>
                             </p>
                             <a href="update_profile.php" class="update-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">update profile</a>
                             <div class="flex-btn">
                             
-                                <input type="submit" class="logout-btn" name="logout-btn" value="Logout" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
-                            </div>
-                            <!-- <a href="../home.php" class="home-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">Home page</a>  -->
-                        </form>
-                    </div>
+                                </div>
+                                <!-- <a href="../home.php" class="home-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">Home page</a>  -->
+                                <input type="submit" onclick ="" class="logout-btn" name="logout-btn" value="Logout" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                            </form>
+
+                    
+                        </div>
                 </div>
 
 

@@ -250,7 +250,7 @@
         
         
             </div>
-            <title>Search courses</title>
+            <title>Registered Courses</title>
 
 
     <!-- Script Search Bar -->

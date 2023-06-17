@@ -16,7 +16,7 @@ if(isset($_POST['login-btn'])){
   
 
   
-  $result = mysqli_query($conn, "SELECT admin_id FROM admin WHERE (userName='$email' or email='$email') AND password= '$password'");
+  $result = mysqli_query($conn, "SELECT admin_id FROM admin WHERE email='$email' AND password= '$password'");
   $check_admin = mysqli_num_rows($result);
 
   if($check_admin > 0){    //it means he is the admin 

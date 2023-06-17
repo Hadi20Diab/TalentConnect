@@ -250,7 +250,7 @@ if(isset($_GET['cid'])){
                                 <td><?= $fetch_pending_companies['company_Email']; ?></td>
                                 <td><?= $fetch_pending_companies['company_Country']; ?></td>
 
-                                <td><a href="viewCompanyProfile.php?company_id=<?= $company_id; ?>&companyName=<?= $fetch_pending_companies['company_Name']; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td><a href="../viewCompanyProfile.php?company_id=<?= $company_id; ?>" class="foods-btn" target="_blank">View</a></td>
                             </tr>
 
                             <!-- Script Search Bar -->

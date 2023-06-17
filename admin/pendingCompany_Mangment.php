@@ -253,9 +253,9 @@ if(isset($_GET['cid'])){
                                 <td><?= $fetch_pending_companies['company_Email']; ?></td>
                                 <td><?= $fetch_pending_companies['company_Country']; ?></td>
 
-                                <td><a href="viewCompanyProfile.php?company_id=<?= $company_id; ?>&companyName=<?= $fetch_pending_companies['company_Name']; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td><a href="../viewCompanyProfile.php?company_id=<?= $company_id; ?>" class="foods-btn" target="_blank">View</a></td>
                                 <!--   <td><input type="submit" class="delete-btn"  name="delete-btn"  value="Block"></td> -->
-                                <td style="display: flex; flex-wrap: wrap; margin-top: 30%; ">
+                                <td style="display: flex; ">
                                     <a href="pendingCompany_Mangment.php?companypendingid=<?= $fetch_pending_companies['company_id']; ?>&name=<?= $fetch_pending_companies['company_Name']; ?>"  class="delete-btn" style="background-color: #39ff14;">Approved</a>
                                 
                                     <a href="pendingCompany_Mangment.php?companyblockid=<?= $fetch_pending_companies['company_id']; ?>&name=<?= $fetch_pending_companies['company_Name']; ?>"  class="delete-btn">Block</a>

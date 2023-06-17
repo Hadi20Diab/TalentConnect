@@ -42,7 +42,7 @@ if(isset($_POST['submit'])){
      ';
        
     }else{
-        // $update_profile_name = mysqli_query($conn, "UPDATE `admin` SET username = '$name' WHERE admin_id  = '$admin_id'");
+        // $update_profile_name = mysqli_query($conn, "UPDATE `admin` SET admin_Name = '$name' WHERE admin_id  = '$admin_id'");
         $update_profile_email = mysqli_query($conn, "UPDATE `admin` SET email = '$email' WHERE admin_id  = '$admin_id'");
         $update_admin_pass = mysqli_query($conn, "UPDATE `admin` SET password = '$confirm_pass' WHERE admin_id  = '$admin_id'");
           
@@ -71,7 +71,7 @@ if(isset($_POST['submit'])){
                 <form action="" method="post">
                     <h3>update profile</h3>
                     <input type="hidden" name="prev_pass_database" value="<?= $fetch_profile['password']; ?>">
-                    <h3 style="color:black ;" name="name" class="box">--> <?= $fetch_profile['username']; ?> <--</h2>
+                    <h3 style="color:black ;" name="name" class="box">--> <?= $fetch_profile['admin_Name']; ?> <--</h2>
                     <input type="email" required pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' style="color:black ;" name="email"  value="<?= $fetch_profile['email']; ?>" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
                     <input type="password" required style="color:black ;" name="old_pass" placeholder="enter old password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
                     <input type="password" required style="color:black ;" name="new_pass" placeholder="enter new password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">

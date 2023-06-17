@@ -84,7 +84,7 @@ if(isset($_GET['aid']) && isset($_GET['aname'])){
                          ';
                     }else{
                         $encrypt_password=md5($pass);//we use md5 to encrypt the password
-                        $insert_admin = mysqli_query($conn, "INSERT INTO `admin`(username,email, password) VALUES('$name', '$email', '$encrypt_password')");
+                        $insert_admin = mysqli_query($conn, "INSERT INTO `admin`(admin_Name,email, password) VALUES('$name', '$email', '$encrypt_password')");
                         
                         echo '
                       <div class="popup" id="popup" style="background: rgb(226, 252, 214);">
@@ -160,12 +160,12 @@ if(isset($_GET['aid']) && isset($_GET['aname'])){
                  <section class="addAdminSection" id="addAdminSection">
                      <form action="" method="post">
                          <h3 class="titleHeader">register new admin</h3>
-                         <input type="text" style="color: black;" name="name" required placeholder="enter your  username" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">                   
+                         <input type="text" style="color: black;" name="name" required placeholder="Enter Name" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">                   
                          
-                         <input type="email" style="color: black;"  pattern="/^[a-zA-Z0-9.!#$%&"*+-/=?\^_"{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" required placeholder="enter your  email" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
+                         <input type="email" style="color: black;"  pattern="/^[a-zA-Z0-9.!#$%&"*+-/=?\^_"{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" required placeholder="enter email" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
                          
-                         <input type="password" style="color: black;" name="pass" required placeholder="enter your password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
-                         <input type="password" style="color: black;" name="cpass" required placeholder="confirm your password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
+                         <input type="password" style="color: black;" name="pass" required placeholder="enter password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
+                         <input type="password" style="color: black;" name="cpass" required placeholder="confirm password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">
                          <div class="button">
                              <input type="submit" value="register now" id="addADMINbtn" name="submit">
                          </div>
@@ -201,13 +201,13 @@ if(isset($_GET['aid']) && isset($_GET['aname'])){
                                ?>
                             <tr >
                                    <input type="hidden" name="aid" value="<?= $fetch_admins['admin_id']; ?>">
-                                   <input type="hidden" name="aname" value="<?= $fetch_admins['username']; ?>">
+                                   <input type="hidden" name="aname" value="<?= $fetch_admins['admin_Name']; ?>">
                                     <td><?= $fetch_admins['admin_id']; ?></td>
-                                    <td><?= $fetch_admins['username']; ?></td>
+                                    <td><?= $fetch_admins['admin_Name']; ?></td>
                                     <td><?= $fetch_admins['email']; ?></td>
                                     
                                     <!--<td><input type="submit" class="delete-btn" name="delete-btn"  value="Delete"></td> -->
-                                    <td><a href="admins.php?aid=<?= $fetch_admins['admin_id']; ?>&aname=<?= $fetch_admins['username']; ?>"  class="delete-btn">Delete</a></td>
+                                    <td><a href="admins.php?aid=<?= $fetch_admins['admin_id']; ?>&aname=<?= $fetch_admins['admin_Name']; ?>"  class="delete-btn">Delete</a></td>
                                 </tr>
                                 <?php
                            }

@@ -246,7 +246,7 @@
         
         
             </div>
-            <title>Search courses</title>
+            <title> Finished Courses</title>
 
 
                 <!-- Script Search Bar -->
