@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2023 at 11:42 AM
+-- Generation Time: Jun 18, 2023 at 09:52 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -29,20 +29,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `admin_id` int(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `admin_Name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(50) NOT NULL,
+  `role` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`) VALUES
-(1, 'admin1', 'admin1@gmail.com', '21232f297a57a5a743894a0e4a801fc3'),
-(15, 'admin2', 'admin2@gmail.com', '21232f297a57a5a743894a0e4a801fc3'),
-(16, 'admin3', 'admin3@gmail.com', '21232f297a57a5a743894a0e4a801fc3'),
-(19, 'admin4', 'admin4@gmail.com', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `admin` (`admin_id`, `admin_Name`, `email`, `password`, `role`) VALUES
+(1, 'admin1', 'admin1@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'modeditor'),
+(15, 'admin2', 'admin2@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'host'),
+(16, 'admin3', 'admin3@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'host'),
+(19, 'admin4', 'admin4@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'modeditor'),
+(20, 'admin5', 'admin5@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'modeditor');
 
 -- --------------------------------------------------------
 
@@ -67,7 +69,11 @@ CREATE TABLE `bookmarks` (
 INSERT INTO `bookmarks` (`bookmark_ID`, `user_ID`, `user_role`, `course_ID`, `job_ID`, `internship_ID`, `scholarships_ID`) VALUES
 (5, 1, 'individual', 6, 0, 0, 0),
 (9, 1, 'individual', 12, 0, 0, 0),
-(13, 1, 'individual', 1, 0, 0, 0);
+(13, 1, 'individual', 1, 0, 0, 0),
+(17, 12, 'individual', 13, 0, 0, 0),
+(18, 12, 'individual', 3, 0, 0, 0),
+(20, 12, 'individual', 0, 5, 0, 0),
+(21, 12, 'individual', 0, 4, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -457,7 +463,7 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`course_ID`, `course_Name`, `course_Description`, `course_Creator`, `course_Category`, `course_Picture`, `course_overall_Video`, `course_Fees`, `course_Status`, `course_Launch_Date`) VALUES
 (1, 'Introduction to Computer Science', 'This course will introduce you to the foundational concepts of computer science by teaching you how to think algorithmically and solve problems using programming. You will learn what algorithms are, how to design them to solve problems, and how to analyze their efficiency. You will also learn the basics of a computer programming language like Python or JavaScript covering functions, conditionals, loops, variables, objects and classes.\n\nIn addition, you will study common data structures like arrays, lists, stacks, queues, trees and hash tables and how to implement and utilize them efficiently. You will be introduced to approaches for designing large software programs and gain an understanding of how computers work at a fundamental level.\n\nThroughout the course you will develop computational thinking skills like abstraction, decomposition, algorithm design and evaluation. This introductory course aims to prepare you with a solid foundation in computer science that you can build upon in your future studies and the thinking skills you develop will be applicable across engineering, science and many other disciplines.', 'XYZ University', 'Programming', 'whatisComputerScience.jpg', 'Introduction to Computer Science _ CS for Beginners.mp4', 100, 'active', '2023-05-25'),
-(2, 'Data Science and Analytics', 'Data Science and Analytics is a comprehensive course designed to equip students with the skills and knowledge necessary to excel in the rapidly evolving field of data analysis. This course delves into the fundamentals of data science, exploring various techniques and tools used to extract insights from large and complex datasets. Students will learn how to collect, clean, and organize data, as well as apply statistical and mathematical models to uncover patterns, trends, and correlations.\n\nThroughout the course, students will be introduced to programming languages commonly used in data science, such as Python and R, and gain hands-on experience in manipulating data and implementing algorithms. They will also be exposed to machine learning algorithms, which enable them to build predictive models and make data-driven decisions.\n\nIn addition to technical skills, the course emphasizes the importance of critical thinking and problem-solving abilities. Students will learn how to interpret and communicate their findings effectively, transforming raw data into actionable insights that drive business strategies and decision-making. Ethical considerations surrounding data privacy, security, and bias will also be addressed, ensuring that students develop a responsible and ethical approach to data analysis.\n\nBy the end of the course, students will have a solid foundation in data science and analytics, enabling them to tackle real-world challenges in various domains, such as finance, healthcare, marketing, and more. They will possess the skills to extract valuable information from complex datasets, make data-driven decisions, and contribute to the growing field of data science, where their expertise is in high demand.', 'ABC Corporation', 'Data Science', 'Data Science and Analytics.jpg', '', 150, 'active', '2023-05-25'),
+(2, 'Data Science and Analytics', 'Data Science and Analytics is a comprehensive course designed to equip students with the skills and knowledge necessary to excel in the rapidly evolving field of data analysis. This course delves into the fundamentals of data science, exploring various techniques and tools used to extract insights from large and complex datasets. Students will learn how to collect, clean, and organize data, as well as apply statistical and mathematical models to uncover patterns, trends, and correlations.\n\nThroughout the course, students will be introduced to programming languages commonly used in data science, such as Python and R, and gain hands-on experience in manipulating data and implementing algorithms. They will also be exposed to machine learning algorithms, which enable them to build predictive models and make data-driven decisions.\n\nIn addition to technical skills, the course emphasizes the importance of critical thinking and problem-solving abilities. Students will learn how to interpret and communicate their findings effectively, transforming raw data into actionable insights that drive business strategies and decision-making. Ethical considerations surrounding data privacy, security, and bias will also be addressed, ensuring that students develop a responsible and ethical approach to data analysis.\n\nBy the end of the course, students will have a solid foundation in data science and analytics, enabling them to tackle real-world challenges in various domains, such as finance, healthcare, marketing, and more. They will possess the skills to extract valuable information from complex datasets, make data-driven decisions, and contribute to the growing field of data science, where their expertise is in high demand.', 'ABC Corporation', 'Data Science', 'Data Science and Analytics.jpg', 'Intro to Data Science Overview.mp4', 150, 'active', '2023-05-25'),
 (3, 'Web Development Bootcamp', 'The Web Development Bootcamp is an intensive and immersive training program designed to equip individuals with the skills and knowledge needed to become proficient web developers. This comprehensive course covers all aspects of web development, from the basics of HTML, CSS, and JavaScript to more advanced topics such as front-end and back-end frameworks, databases, and server management.\n\nThroughout the bootcamp, students will engage in hands-on exercises and projects that simulate real-world scenarios, allowing them to apply their newly acquired skills in a practical manner. They will learn how to design and build visually appealing and responsive websites, incorporating interactive elements and user-friendly interfaces. Students will also gain an understanding of web development best practices, including optimization techniques for performance and search engine optimization (SEO).\n\nThe curriculum typically includes training on popular front-end frameworks such as React or Angular, enabling students to create dynamic and interactive web applications. Additionally, students will dive into back-end development, learning how to build server-side applications and interact with databases using technologies such as Node.js and MongoDB. They will also explore topics related to version control, deployment strategies, and security considerations.\n\nIn addition to technical skills, the bootcamp may also emphasize collaboration, problem-solving, and critical thinking abilities. Students often work in teams to complete projects, mirroring real-world development environments. They will learn how to effectively communicate and collaborate with other developers, as well as understand the iterative and agile nature of web development.\n\nUpon completion of the Web Development Bootcamp, students will have a strong foundation in web development and be well-equipped to pursue careers as front-end or back-end developers, full-stack developers, or even freelance web developers. The program aims to provide individuals with the necessary skills to thrive in the rapidly evolving field of web development, where demand for talented professionals continues to grow.', 'Tech Solutions', 'Web Development', 'Web Development Bootcamp.jpg', '', 200, 'active', '2023-05-25'),
 (4, 'Introduction to Artificial Intelligence', 'Introduction to Artificial Intelligence is a comprehensive course that introduces students to the fundamental concepts, techniques, and applications of AI. In this course, students explore the exciting field of AI, which focuses on the development of intelligent systems that can perceive, reason, learn, and make decisions similar to human intelligence.\n\nThroughout the course, students delve into various topics, starting with the basics of AI and its historical background. They learn about different AI approaches, including symbolic AI, machine learning, and deep learning, and gain an understanding of the algorithms and methodologies used in each approach. Students also explore key concepts such as problem-solving, knowledge representation, natural language processing, computer vision, and robotics.\n\nThe course often involves hands-on programming exercises and projects that allow students to apply AI concepts and techniques in practical scenarios. They learn how to implement AI algorithms using programming languages such as Python and utilize popular libraries and frameworks. Students also gain insights into data collection, preprocessing, and feature engineering, which are essential for training AI models.\n\nEthical considerations and societal impacts of AI are also addressed in the course. Students examine topics such as bias in AI algorithms, privacy concerns, and the responsible use of AI in different domains. They learn to think critically about the implications of AI on society, including its potential benefits and challenges.\n\nBy the end of the course, students will have a solid foundation in the principles and techniques of AI. They will understand how AI algorithms work and how they can be applied to solve real-world problems. This knowledge opens up a wide range of career opportunities in fields such as machine learning, data science, natural language processing, computer vision, robotics, and AI research. Additionally, students will be equipped to navigate the ethical considerations and challenges associated with the development and deployment of AI technologies.', 'Stellar Solutions', 'Artificial Intelligence', 'Introduction to Artificial Intelligence.jpg', '', 130, 'active', '2023-05-25'),
 (5, 'Business Management Essentials', 'Business Management Essentials is a comprehensive course designed to provide students with a foundational understanding of the key principles and practices involved in managing a business effectively. This course covers a wide range of topics essential for aspiring managers and entrepreneurs, enabling them to make informed decisions and lead teams to success.\n\nThroughout the course, students are introduced to various aspects of business management, including strategic planning, organizational behavior, marketing, finance, operations, and human resources. They gain insights into how businesses operate in different environments, learn to analyze market trends, identify opportunities, and develop strategies to achieve competitive advantage.\n\nThe course emphasizes the importance of effective leadership and communication skills in managing teams and driving organizational success. Students learn how to motivate employees, foster teamwork, and resolve conflicts. They also explore the principles of organizational structure and culture, as well as the dynamics of decision-making and problem-solving within a business context.\n\nFurthermore, students gain an understanding of financial management, including budgeting, financial analysis, and forecasting. They learn how to interpret financial statements, assess business performance, and make data-driven decisions to maximize profitability and sustainability.\n\nEthical considerations in business management are also addressed throughout the course. Students explore topics such as corporate social responsibility, ethical decision-making, and sustainability. They develop a broader perspective on the role of businesses in society and learn to integrate ethical principles into their managerial practices.\n\nBy the end of the course, students will have a solid foundation in business management essentials, equipping them with the skills and knowledge necessary to navigate the complexities of the business world. They will be prepared to take on managerial roles, start their own ventures, or pursue further studies in business-related fields. This course sets the stage for lifelong learning and growth as business professionals, empowering individuals to contribute to the success and sustainability of organizations in diverse industries.', 'Global Enterprises', 'Business', 'Business Management Essentials.png', '', 80, 'active', '2023-05-25'),
@@ -502,7 +508,33 @@ INSERT INTO `courses_fields` (`courses_field_ID`, `course_ID`, `course_field_Nam
 (16, 4, 'Artificial Intelligence'),
 (17, 6, 'Programming'),
 (18, 12, 'Data Science'),
-(19, 12, 'Programming');
+(19, 12, 'Programming'),
+(20, 1, 'Algorithms'),
+(21, 1, 'Data Structures'),
+(22, 1, 'Computer Architecture'),
+(23, 1, 'Operating Systems'),
+(24, 1, 'Database Management'),
+(25, 1, 'Software Engineering'),
+(26, 2, 'Analytics'),
+(27, 2, 'Statistics'),
+(28, 2, 'Python Programming'),
+(29, 2, 'Data Visualization'),
+(30, 2, 'Data Mining'),
+(31, 2, 'Big Data'),
+(32, 2, 'Predictive Modeling'),
+(33, 2, 'Hadoop'),
+(34, 2, 'R Programming'),
+(35, 3, 'Web Development'),
+(36, 3, 'Frontend Development'),
+(37, 3, 'Backend Development'),
+(38, 6, 'Mobile Development'),
+(39, 12, 'Web Development'),
+(40, 12, 'Software Engineering'),
+(41, 13, 'Programming'),
+(42, 13, 'Web Development'),
+(43, 13, 'Frontend Development'),
+(44, 14, 'Database Management'),
+(45, 14, 'Database Administration');
 
 -- --------------------------------------------------------
 
@@ -515,16 +547,19 @@ CREATE TABLE `course_progress` (
   `individual_ID` int(11) NOT NULL,
   `course_ID` int(11) NOT NULL,
   `last_watched_video` int(11) NOT NULL,
-  `course_Status` varchar(20) NOT NULL
+  `course_Status` varchar(20) NOT NULL,
+  `progress_date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `course_progress`
 --
 
-INSERT INTO `course_progress` (`course_progress_ID`, `individual_ID`, `course_ID`, `last_watched_video`, `course_Status`) VALUES
-(2, 1, 3, 2, 'done'),
-(3, 1, 1, 1, 'under-progress');
+INSERT INTO `course_progress` (`course_progress_ID`, `individual_ID`, `course_ID`, `last_watched_video`, `course_Status`, `progress_date`) VALUES
+(1, 1, 3, 2, 'done', '2023-06-12'),
+(2, 1, 1, 1, 'under-progress', '2023-06-12'),
+(3, 12, 2, 7, 'done', '2023-06-14'),
+(4, 12, 1, 1, 'under-progress', '2023-06-12');
 
 -- --------------------------------------------------------
 
@@ -547,8 +582,13 @@ CREATE TABLE `course_videos` (
 --
 
 INSERT INTO `course_videos` (`video_ID`, `course_ID`, `video_Name`, `video_Description`, `video_Position_Name`, `video_Picture`, `video_Order`) VALUES
-(1, 1, 'What is Computer Science?', 'Computer science is the study of the theoretical foundations of information and computation. This video provides an overview of what computer science is, the main subfields within it, and some of the jobs and careers associated with it.', 'Computer Science Basics Hardware and Software.mp4', 'whatisComputerScience.jpg', 1),
-(2, 1, 'Algorithms and Problem Solving', 'Algorithms are the heart of computer science. This video discusses what algorithms are, how to design efficient algorithms to solve problems, and some examples of common algorithmic approaches.', 'Computer Science Basics_ Algorithms.mp4', 'computer-algorithm-science-problem-solving-process-with-programming-GD97BB.jpg', 2);
+(1, 1, 'What is Computer Science?', '\"What is Computer Science?\" is an informative video that provides an introduction to the field of computer science. In this video, you will gain a clear understanding of what computer science is, its core principles, and its applications in various industries.\n\nThe video begins by defining computer science as the study of computers and computational systems, including their design, development, and use. It explores the fundamental concepts and principles of computer science, such as algorithms, data structures, programming languages, and computer architecture.\n\nFurthermore, the video discusses the diverse areas of specialization within computer science, such as artificial intelligence, software engineering, computer graphics, and database systems. It highlights the wide range of career opportunities available to computer science professionals.\n\nThe video also covers the practical applications of computer science in different industries and domains. It showcases real-world examples of how computer science is used to solve complex problems, develop innovative software applications, and drive technological advancements.', 'Computer Science Basics Hardware and Software.mp4', 'whatisComputerScience.jpg', 1),
+(2, 1, 'Algorithms and Problem Solving', '\"Algorithms and Problem Solving\" is an educational video that explores the fundamentals of algorithms and their role in problem solving. In this video, you will learn about the importance of algorithms, how they are designed, and how they can be applied to solve various types of problems.\n\nThe video starts by defining algorithms as step-by-step instructions for solving a specific problem. It highlights the significance of algorithms in computer science and various other fields, as they provide efficient and systematic approaches to problem solving.\n\nFurthermore, the video explains the process of designing algorithms, including problem analysis, identifying key steps, and considering factors like efficiency and correctness. It covers essential algorithmic concepts such as sequencing, iteration, selection, and recursion.\n\nThe video also explores different problem-solving strategies and approaches, such as divide and conquer, dynamic programming, and greedy algorithms. It showcases examples and illustrations to demonstrate how these strategies can be applied to tackle real-world problems.\n\nAdditionally, the video discusses the importance of algorithmic efficiency and introduces the concept of time and space complexity. It explains how analyzing and optimizing algorithms can lead to more efficient and scalable solutions.', 'Computer Science Basics_ Algorithms.mp4', 'computer-algorithm-science-problem-solving-process-with-programming-GD97BB.jpg', 2),
+(3, 2, 'Historical Context', '\"Historical Context\" is a video that provides a comprehensive overview of the historical background and development of a particular subject or field. In this video, we delve into the historical context of data science, tracing its origins and evolution over time.\n\nThe video begins by exploring the early foundations of data science, which can be traced back to the emergence of statistics and mathematics as disciplines. It highlights key historical figures and milestones that contributed to the development of data science, such as the work of statisticians like Florence Nightingale and Karl Pearson.\n\nFurthermore, the video examines the impact of technological advancements on the growth of data science. It explores the role of computers and the advent of big data in shaping the field and opening new possibilities for data analysis.\n\nThe video also discusses the emergence of data science as a distinct discipline in the late 20th century. It covers the influence of fields like machine learning, artificial intelligence, and data mining on the development of data science as we know it today.', 'Intro to Data Science Historical Context.mp4', 'History-of-Data-Science.jpeg', 1),
+(4, 2, 'What is Data Science?', 'Is an informative video that provides an overview of the field of data science. In this video, you will learn about the definition, scope, and applications of data science in various industries.\n\nThe video begins by explaining the concept of data science, which involves extracting insights and knowledge from large and complex datasets using various techniques, tools, and methodologies. It explores the interdisciplinary nature of data science, combining elements of statistics, mathematics, computer science, and domain expertise.\n\nFurthermore, the video discusses the key components of data science, including data acquisition, data cleaning and preprocessing, exploratory data analysis, modeling, and communication of results. It highlights the importance of data visualization and storytelling in conveying meaningful insights to stakeholders.\n\nThe video also covers the applications of data science across different domains, such as business, healthcare, finance, marketing, and social sciences. It showcases real-world examples of how data science has been used to solve complex problems, optimize processes, and make data-driven decisions.', 'Intro to Data Science What is Data Science.mp4', 'Data-Science.png', 2),
+(5, 2, 'Answering Questions with Data', 'Answering Questions with Data is a video that demonstrates the process of using data to derive insights and provide answers to various questions. In this video, you will learn how data analysis techniques and tools can be applied to address real-world problems and make informed decisions.\n\nThe video covers the fundamentals of working with data, including data collection, cleaning, and preparation. It showcases different analysis methods, such as statistical analysis, data visualization, and data modeling, that enable you to explore, interpret, and draw meaningful conclusions from the data.\n\nFurthermore, the video highlights the importance of formulating relevant questions and hypotheses before diving into the data analysis process. It emphasizes the iterative nature of data analysis, where insights gained from initial analyses may lead to refined questions and further exploration.\n\nBy the end of the video, you will have a better understanding of how data can be leveraged to uncover patterns, trends, and correlations, enabling you to answer questions and derive actionable insights for better decision-making in various domains.', 'Intro to Data Science Answering Questions with Data.mp4', 'fotor-ai-20230609172038.jpg', 3),
+(6, 2, 'The Nature of Data', '\n\"The Nature of Data\" is a video that explores the fundamental characteristics and properties of data. In this video, you will gain a deeper understanding of what data is and its significance in various fields, such as business, science, and technology.\n\nThe video starts by introducing the concept of data and its role as a representation of information. It discusses the different types of data, including numerical, categorical, and textual data, and highlights the importance of data quality and accuracy.\n\nNext, the video delves into the key characteristics of data, such as volume, variety, velocity, and veracity. It explains how the exponential growth of data, its diverse formats and sources, the speed at which it is generated, and the need to ensure its reliability and trustworthiness pose both challenges and opportunities for data management and analysis.\n\nThe video also touches upon data storage and organization techniques, such as databases and data structures, as well as the concept of data lifecycle, from data collection and processing to analysis and decision-making.\n\nAdditionally, the video explores the concept of big data and its implications in terms of data handling, analytics, and extracting valuable insights. It emphasizes the importance of data-driven decision-making and the potential benefits that can be derived from effectively leveraging data resources.\n\nBy the end of the video, you will have a clearer understanding of the nature of data, its characteristics, and its role in shaping our modern world. Whether you are a data scientist, analyst, business professional, or simply interested in understanding the power of data, this video will provide you with valuable insights into the nature and significance of data in today\'s information-driven society.', 'Intro to Data Science The Nature of Data.mp4', 'fotor-ai-20230609171816.jpg', 4),
+(7, 2, 'Machine Learning Overview', '\"Machine Learning Overview\" is a comprehensive video that provides an introduction to the field of machine learning. In this video, you will gain a solid understanding of what machine learning is, how it works, and its applications in various industries.\n\nThe video begins by explaining the core concepts of machine learning, including supervised learning, unsupervised learning, and reinforcement learning. It explores the role of algorithms in machine learning and how they enable computers to learn from data and make predictions or decisions.\n\nFurthermore, the video discusses the process of training a machine learning model, starting from data preparation and feature engineering to model selection and evaluation. It highlights common algorithms used in machine learning, such as decision trees, support vector machines, and neural networks.\n\nThe video also covers important topics in machine learning, including model evaluation metrics, overfitting, and bias-variance tradeoff. It provides insights into strategies for improving model performance and addressing common challenges in machine learning projects.', 'Machine Learning Overview.mp4', 'fotor-ai-20230609172624.jpg', 5);
 
 -- --------------------------------------------------------
 
@@ -587,7 +627,7 @@ CREATE TABLE `individuals` (
   `individual_Major` varchar(50) NOT NULL,
   `Is_Graduated` tinyint(1) NOT NULL,
   `individual_Country` varchar(50) NOT NULL,
-  `individual_photo` int(11) NOT NULL,
+  `individual_photo` text NOT NULL,
   `individual_Status` varchar(10) NOT NULL,
   `individual_JoinDate` date NOT NULL DEFAULT current_timestamp(),
   `individual_Linkedin` varchar(255) NOT NULL,
@@ -599,14 +639,14 @@ CREATE TABLE `individuals` (
 --
 
 INSERT INTO `individuals` (`individual_ID`, `individual_Name`, `individual_Password`, `individual_Email`, `individual_PhoneNumber`, `individual_Major`, `Is_Graduated`, `individual_Country`, `individual_photo`, `individual_Status`, `individual_JoinDate`, `individual_Linkedin`, `individual_About`) VALUES
-(1, 'John Doe', '21232f297a57a5a743894a0e4a801fc3', 'johndoe@example.com', 1234567890, 'Computer Engineering', 1, 'Lebanon', 0, 'approved', '2023-05-15', 'https://www.linkedin.com/', 'John Doe is a Computer Engineering graduate with a strong interest in the fields of Artificial Intelligence, Internet of Things, Machine Learning, and IT Support. With a solid educational background and expertise in computer engineering, John is well-equipped to tackle complex challenges in these areas. He possesses a deep understanding of cutting-edge technologies and is passionate about leveraging them to drive innovation and solve real-world problems. John\'s enthusiasm for continuous learning and his ability to adapt to new technologies make him a valuable asset in the ever-evolving tech industry.'),
-(2, 'Jane Smith', '21232f297a57a5a743894a0e4a801fc3', 'janesmith@example.com', 2147483647, 'Business Administration', 0, 'United States', 0, 'blocked', '2023-05-15', '', ''),
-(3, 'Mike Johnson', '21232f297a57a5a743894a0e4a801fc3', 'mikejohnson@example.com', 2147483647, 'Electrical Engineering', 1, 'Qatar', 0, 'blocked', '2023-05-15', '', ''),
-(4, 'Sarah Williams', '21232f297a57a5a743894a0e4a801fc3', 'sarahwilliams@example.com', 2147483647, 'Psychology', 0, 'United Arab Emirates', 0, 'pending', '2023-05-15', '', ''),
-(5, 'Emily Johnson', '21232f297a57a5a743894a0e4a801fc3', 'emily@example.com', 1111111111, 'Mathematics', 0, 'Lebanon', 0, 'approved', '2023-05-15', '', ''),
-(6, 'Robert Davis', '21232f297a57a5a743894a0e4a801fc3', 'robert@example.com', 2147483647, 'Chemistry', 1, 'Lebanon', 0, 'blocked', '2023-05-15', '', ''),
-(7, 'Lisa Thompson', '21232f297a57a5a743894a0e4a801fc3', 'lisa@example.com', 21232, 'English Literature', 0, 'Turkey', 0, 'approved', '2023-05-15', '', ''),
-(12, '', '21232f297a57a5a743894a0e4a801fc3', 'individual1@gmail.com', 0, '', 0, 'Lebanon', 0, 'approved', '2023-05-21', '', '');
+(1, 'John Doe', '21232f297a57a5a743894a0e4a801fc3', 'johndoe@example.com', 1234567890, 'Computer Engineering', 1, 'Lebanon', 'pexels-simon-robben-614810.jpg', 'approved', '2023-05-15', 'https://www.linkedin.com/', 'John Doe is a Computer Engineering graduate with a strong interest in the fields of Artificial Intelligence, Internet of Things, Machine Learning, and IT Support. With a solid educational background and expertise in computer engineering, John is well-equipped to tackle complex challenges in these areas. He possesses a deep understanding of cutting-edge technologies and is passionate about leveraging them to drive innovation and solve real-world problems. John\'s enthusiasm for continuous learning and his ability to adapt to new technologies make him a valuable asset in the ever-evolving tech industry.'),
+(2, 'Jane Smith', '21232f297a57a5a743894a0e4a801fc3', 'janesmith@example.com', 2147483647, 'Business Administration', 0, 'United States', '360_F_325735908_TkxHU7okor9CTWHBhkGfdRumONWfIDEb.jpg', 'blocked', '2023-05-15', '', ''),
+(3, 'Mike Johnson', '21232f297a57a5a743894a0e4a801fc3', 'mikejohnson@example.com', 2147483647, 'Electrical Engineering', 1, 'Qatar', '360_F_197117055_WC3XWtirsfhXnefmX2jka3C254XPGGic.jpg', 'blocked', '2023-05-15', '', ''),
+(4, 'Sarah Williams', '21232f297a57a5a743894a0e4a801fc3', 'sarahwilliams@example.com', 2147483647, 'Psychology', 0, 'United Arab Emirates', 'istockphoto-1141394561-612x612.jpg', 'pending', '2023-05-15', '', ''),
+(5, 'Emily Johnson', '21232f297a57a5a743894a0e4a801fc3', 'emily@example.com', 1111111111, 'Mathematics', 0, 'Lebanon', 'Mona_Portrait.jpg', 'approved', '2023-05-15', '', ''),
+(6, 'Robert Davis', '21232f297a57a5a743894a0e4a801fc3', 'robert@example.com', 2147483647, 'Chemistry', 1, 'Lebanon', 'Professional-Headshot-Poses-Blog-Post.jpg', 'blocked', '2023-05-15', '', ''),
+(7, 'Lisa Thompson', '21232f297a57a5a743894a0e4a801fc3', 'lisa@example.com', 21232, 'English Literature', 0, 'Turkey', 'istockphoto-1194745993-612x612.jpg', 'approved', '2023-05-15', '', ''),
+(12, 'Hadi Diab', '21232f297a57a5a743894a0e4a801fc3', 'hadi.diab@gmail.com', 789456123, 'Computer Engineering', 0, 'Lebanon', 'proffesinal photo .jpeg', 'approved', '2023-05-21', 'https://www.linkedin.com/in/hadi-diab-view/', 'As a soon-to-be Computer Engineering graduate and Coding Teacher at BrightChamps Academy, I am enthusiastic about leveraging my technical skills and knowledge in a professional setting within my domain of expertise. Seeking new opportunities to further develop and apply my proficiency, I am driven to contribute to a team\'s success and make a meaningful impact.');
 
 -- --------------------------------------------------------
 
@@ -630,7 +670,16 @@ INSERT INTO `individual_intrested_field` (`Intrested_Field_ID`, `individual_ID`,
 (172, 1, 'Cybersecurity'),
 (173, 1, 'Internet of Things'),
 (174, 1, 'Machine Learning'),
-(175, 1, 'IT Support');
+(175, 1, 'IT Support'),
+(257, 12, 'Web Development'),
+(258, 12, 'Artificial Intelligence'),
+(259, 12, 'Mobile Development'),
+(260, 12, 'Network Security'),
+(261, 12, 'Cybersecurity'),
+(262, 12, 'Internet of Things'),
+(263, 12, 'AR/VR Development'),
+(264, 12, 'Backend Development'),
+(265, 12, 'Frontend Development');
 
 -- --------------------------------------------------------
 
@@ -788,6 +837,33 @@ INSERT INTO `majors` (`major_id`, `major_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `payment_ID` int(11) NOT NULL,
+  `course_ID` int(11) DEFAULT NULL,
+  `individual_ID` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `card_number` text DEFAULT NULL,
+  `card_holder` text DEFAULT NULL,
+  `expiration_month` text DEFAULT NULL,
+  `expiration_year` text DEFAULT NULL,
+  `cvv` text DEFAULT NULL,
+  `payment_date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_ID`, `course_ID`, `individual_ID`, `amount`, `card_number`, `card_holder`, `expiration_month`, `expiration_year`, `cvv`, `payment_date`) VALUES
+(2, 2, 12, '150.00', 'IBzURTC0Mxk5zNqTsowiky95WkRvbjAzdDVQTis3QjJxL202aFdqT2JNNjRZbElNSU9NRkhxb1FNRmM9', 'wkFh7TlcyXQXqYJA6QMWZTJvYllHaTJJNjkvWldleEFITklydlE9PQ==', 'jvv0pmGPywwsK4Ioo6F0GXJLVkRkQ0ZpVFR2MlFtMmpudVB2WGc9PQ==', 'YZMQuc4Syn2cXKLqL+55j05MWlJzdWx4cTFKMnZNakRPb1NjVmc9PQ==\n', 'eKqSfiHD/4VPONvYksl8GUd3TzJmVGZ3VGROck5lWEhwcFFsNWc9PQ==', '2023-05-09'),
+(3, 1, 12, '100.00', 'IBzURTC0Mxk5zNqTsowiky95WkRvbjAzdDVQTis3QjJxL202aFdqT2JNNjRZbElNSU9NRkhxb1FNRmM9', 'wkFh7TlcyXQXqYJA6QMWZTJvYllHaTJJNjkvWldleEFITklydlE9PQ==', 'jvv0pmGPywwsK4Ioo6F0GXJLVkRkQ0ZpVFR2MlFtMmpudVB2WGc9PQ==', 'YZMQuc4Syn2cXKLqL+55j05MWlJzdWx4cTFKMnZNakRPb1NjVmc9PQ==\n', 'eKqSfiHD/4VPONvYksl8GUd3TzJmVGZ3VGROck5lWEhwcFFsNWc9PQ==', '2023-06-09');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `save_jobs_for_individuals`
 --
 
@@ -804,11 +880,30 @@ CREATE TABLE `save_jobs_for_individuals` (
 --
 
 CREATE TABLE `scholarships` (
-  `scholarships_ID` int(50) NOT NULL,
-  `unversityName` varchar(100) NOT NULL,
-  `degree` varchar(200) NOT NULL,
-  `major` varchar(200) NOT NULL
+  `scholarship_id` int(11) NOT NULL,
+  `scholarship_title` varchar(255) DEFAULT NULL,
+  `scholarship_description` text DEFAULT NULL,
+  `provider_name` varchar(255) DEFAULT NULL,
+  `eligibility_criteria` text DEFAULT NULL,
+  `application_deadline` date DEFAULT NULL,
+  `award_amount` decimal(10,2) DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `contact_email` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `application_link` varchar(255) DEFAULT NULL,
+  `additional_requirements` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `scholarships`
+--
+
+INSERT INTO `scholarships` (`scholarship_id`, `scholarship_title`, `scholarship_description`, `provider_name`, `eligibility_criteria`, `application_deadline`, `award_amount`, `duration`, `contact_email`, `website`, `application_link`, `additional_requirements`) VALUES
+(1, 'Full Scholarship Program', 'Scholarship for outstanding students pursuing higher education in STEM fields.', 'ABC Foundation', 'Applicants must have a minimum GPA of 3.5 and demonstrate strong academic achievements.', '2023-12-31', '10000.00', 4, 'scholarship@abcfoundation.org', 'https://www.abcfoundation.org', 'https://www.abcfoundation.org/application', 'Submission of academic transcripts and recommendation letters is required.'),
+(2, 'Women in Engineering Scholarship', 'Scholarship aimed at empowering and supporting women pursuing engineering degrees.', 'XYZ Corporation', 'Female students who are enrolled in an accredited engineering program and show exceptional leadership skills.', '2023-11-15', '5000.00', 1, 'scholarship@xyzcorp.com', 'https://www.xyzcorp.com', 'https://www.xyzcorp.com/application', 'Applicants must submit a personal statement highlighting their passion for engineering and career goals.'),
+(3, 'Community Service Scholarship', 'Scholarship for students who have demonstrated outstanding commitment to community service.', 'Community Service Organization', 'Applicants must have a minimum of 100 hours of documented community service and provide a letter of recommendation from a community organization.', '2023-10-30', '2500.00', 6, 'scholarship@communityservice.org', 'https://www.communityservice.org', 'https://www.communityservice.org/application', 'Submission of a detailed community service log is required.'),
+(4, 'Entrepreneurship Scholarship', 'Scholarship for aspiring entrepreneurs with innovative business ideas.', 'Startup Incubator', 'Applicants must submit a business plan showcasing their innovative idea and demonstrate entrepreneurial potential.', '2023-09-15', '5000.00', 1, 'scholarship@startupincubator.com', 'https://www.startupincubator.com', 'https://www.startupincubator.com/application', 'Applicants may be required to participate in an interview or pitch their business idea to a panel of judges.'),
+(5, 'Diversity in Education Scholarship', 'Scholarship aimed at promoting diversity and inclusion in higher education.', 'Diversity Education Foundation', 'Applicants from underrepresented backgrounds who have demonstrated academic excellence and leadership skills.', '2023-08-31', '3000.00', 1, 'scholarship@diversityfoundation.org', 'https://www.diversityfoundation.org', 'https://www.diversityfoundation.org/application', 'Applicants must provide a personal statement highlighting the importance of diversity in education and its impact on society.');
 
 -- --------------------------------------------------------
 
@@ -846,19 +941,29 @@ CREATE TABLE `videos_comments` (
   `comment_ID` int(11) NOT NULL,
   `video_ID` int(11) NOT NULL,
   `course_ID` int(11) NOT NULL,
-  `Commented_by` varchar(50) NOT NULL,
+  `individual_ID` int(10) NOT NULL,
   `comment` text NOT NULL,
-  `comment_Data` date NOT NULL DEFAULT current_timestamp()
+  `comment_Date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `videos_comments`
 --
 
-INSERT INTO `videos_comments` (`comment_ID`, `video_ID`, `course_ID`, `Commented_by`, `comment`, `comment_Data`) VALUES
-(1, 1, 1, 'Lisa Thompson', 'Comment TEST', '2023-05-26'),
-(2, 1, 1, 'John Doe', 'Comment2', '2023-05-26'),
-(3, 1, 0, 'John Doe', 'Comment 3', '2023-05-27');
+INSERT INTO `videos_comments` (`comment_ID`, `video_ID`, `course_ID`, `individual_ID`, `comment`, `comment_Date`) VALUES
+(1, 1, 1, 7, 'This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-05-26'),
+(2, 1, 1, 1, 'I found this video to be a great introduction to computer science! It provided a clear and concise explanation of what computer science is and its core principles. It helped me understand the breadth of the field and the diverse career opportunities it offers. Highly recommended for anyone interested in learning about computer science!', '2023-05-26'),
+(3, 1, 1, 5, 'As someone new to computer science, I found this video incredibly helpful. It provided a comprehensive overview of the subject, covering everything from the fundamental concepts to the different areas of specialization. The real-world examples helped me grasp the relevance of computer science in today\'s world. I\'m excited to embark on my journey into computer science after watching this video!', '2023-05-27'),
+(38, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(39, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(40, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(41, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(42, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(43, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(44, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(45, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(46, 1, 1, 12, ' This video did a fantastic job of explaining computer science in a way that was easy to understand. I appreciated how it covered not only the theoretical aspects but also the practical applications of computer science. It left me feeling inspired and motivated to explore this fascinating field further. Kudos to the creators of this video!', '2023-06-12'),
+(47, 6, 2, 12, 'I really enjoyed watching this video on &#34;The Nature of Data.&#34; It provided a comprehensive overview of the fundamental characteristics and properties of data. The video effectively explained the different types of data, ranging from numerical and categorical to textual data, and highlighted the importance of data quality and accuracy. The discussion on the key characteristics of data, such as volume, variety, velocity, and veracity, was particularly enlightening. It shed light on the challenges and opportunities that arise from the exponential growth of data and its diverse formats and sources.\r\n\r\nFurthermore, the video delved into data storage and organization techniques, such as databases and data structures, and introduced the concept of data lifecycle. It was fascinating to learn about the journey of data from collection and processing to analysis and decision-making. The inclusion of the concept of big data and its implications added another layer of complexity to the discussion, emp', '2023-06-14');
 
 -- --------------------------------------------------------
 
@@ -879,7 +984,12 @@ CREATE TABLE `video_progress` (
 
 INSERT INTO `video_progress` (`video_progress_id`, `video_ID`, `individual_ID`, `watched_time`) VALUES
 (1, 1, 1, 75),
-(2, 2, 1, 107);
+(2, 2, 1, 107),
+(4, 4, 12, 494),
+(5, 1, 12, 0),
+(6, 5, 12, 0),
+(7, 7, 12, 478),
+(8, 6, 12, 0);
 
 --
 -- Indexes for dumped tables
@@ -989,6 +1099,13 @@ ALTER TABLE `majors`
   ADD PRIMARY KEY (`major_id`);
 
 --
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`payment_ID`),
+  ADD KEY `course_ID` (`course_ID`);
+
+--
 -- Indexes for table `save_jobs_for_individuals`
 --
 ALTER TABLE `save_jobs_for_individuals`
@@ -998,7 +1115,7 @@ ALTER TABLE `save_jobs_for_individuals`
 -- Indexes for table `scholarships`
 --
 ALTER TABLE `scholarships`
-  ADD PRIMARY KEY (`scholarships_ID`);
+  ADD PRIMARY KEY (`scholarship_id`);
 
 --
 -- Indexes for table `universities`
@@ -1026,13 +1143,13 @@ ALTER TABLE `video_progress`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `admin_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `bookmarks`
 --
 ALTER TABLE `bookmarks`
-  MODIFY `bookmark_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `bookmark_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1044,7 +1161,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `company_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `company_profile_views`
@@ -1068,19 +1185,19 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `courses_fields`
 --
 ALTER TABLE `courses_fields`
-  MODIFY `courses_field_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `courses_field_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `course_progress`
 --
 ALTER TABLE `course_progress`
-  MODIFY `course_progress_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `course_progress_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `course_videos`
 --
 ALTER TABLE `course_videos`
-  MODIFY `video_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `video_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `feedback`
@@ -1098,7 +1215,7 @@ ALTER TABLE `individuals`
 -- AUTO_INCREMENT for table `individual_intrested_field`
 --
 ALTER TABLE `individual_intrested_field`
-  MODIFY `Intrested_Field_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `Intrested_Field_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 
 --
 -- AUTO_INCREMENT for table `internship`
@@ -1125,6 +1242,12 @@ ALTER TABLE `majors`
   MODIFY `major_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `save_jobs_for_individuals`
 --
 ALTER TABLE `save_jobs_for_individuals`
@@ -1134,7 +1257,7 @@ ALTER TABLE `save_jobs_for_individuals`
 -- AUTO_INCREMENT for table `scholarships`
 --
 ALTER TABLE `scholarships`
-  MODIFY `scholarships_ID` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `scholarship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `universities`
@@ -1146,13 +1269,23 @@ ALTER TABLE `universities`
 -- AUTO_INCREMENT for table `videos_comments`
 --
 ALTER TABLE `videos_comments`
-  MODIFY `comment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `comment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `video_progress`
 --
 ALTER TABLE `video_progress`
-  MODIFY `video_progress_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `video_progress_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`course_ID`) REFERENCES `courses` (`course_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -13,6 +13,7 @@
 
 ?>
 <!-- save data after submition form part -->
+
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $card_number = isset($_GET['card_number']) ? $_GET['card_number'] : '';
@@ -224,6 +225,8 @@ function formatCardNumber(input) {
 }
 </script>
 
+
+<title>Payment</title>
 
 <style>
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap'); */

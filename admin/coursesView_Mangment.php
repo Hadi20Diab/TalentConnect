@@ -3,59 +3,6 @@
 include "structuralAdminPage.php";
 
 // mysqli_report(MYSQLI_REPORT_STRICT);
-
-
- //alert window for confirm the deletion of a courses
-//  if(isset($_GET['rid'])){
-//     $course_id= $_GET['rid'];
- 
-    
-//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$course_id'");
- 
-//  header("location:companiesView_Mangment.php");
-
-//  }
-
-//  companyblockid
-  if(isset($_GET['companyblockid']) && isset($_GET['name'])){
-    $cid = $_GET['companyblockid'];
-    $name= $_GET['name'];
-    echo ' 
-    <div class="popup "  id="popup" style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255)); ">
-    <img src="assets/imgs/question.jpg" >
-    <h2 style="color:var(--nav-main);">Question</h2>
-    <p style="margin-bottom:3rem;">Are you sure you want to block <span style="color:var(--nav-main); font-weight:500;">'.$name.'</span>?</p>
-    
-    
-    <a href="companiesView_Mangment.php?cid='.$cid.'" class="choice-btn yes">yes</a>
-    <a href="companiesView_Mangment.php" class="choice-btn no">No</a>
-
-    
-
-</div>
-
-
-
-';
-}
-
-
-
-///IF THE ADMIN CLICK ON Pending
-if(isset($_GET['companypendingid'])){
-    $companypendingid = $_GET['companypendingid'];
-    $update_company = mysqli_query($conn, "UPDATE `courses` SET company_Status='approved' WHERE company_id ='$companypendingid'");
-    header("location:companiesView_Mangment.php");
-
-}
-///IF THE ADMIN CLICK ON Block
-if(isset($_GET['cid'])){
-    $cid = $_GET['cid'];
-    $update_company = mysqli_query($conn, "UPDATE `courses` SET company_Status='blocked' WHERE company_id ='$cid'");
-    header("location:companiesView_Mangment.php");
-
-}
-
 ?>
 
 
@@ -103,32 +50,32 @@ if(isset($_GET['cid'])){
         width: 100%;
       }
       .foods-btn{
-  background-color:#ffd700;
-  color: var(--white);
-  border-radius: 10px;
-  text-decoration: none;
-  
-  width: 11rem;
+        background-color:#ffd700;
+        color: var(--white);
+        border-radius: 10px;
+        text-decoration: none;
+        
+        width: 11rem;
 
-  padding: 0.7rem;
-    
-    
-    
-    font-weight: 400;
-    font-size: large;
-    
-    border: none;
-    transition: 0.5s ease;
-  
-
-}
+        padding: 0.7rem;
+            
+        font-weight: 400;
+        font-size: large;
+        
+        border: none;
+        transition: 0.5s ease;
+        }
 .foods-btn:hover{
-  
-  letter-spacing: 0.4rem;
+  /* letter-spacing: 0.4rem; */
   width: 13rem;
   cursor: pointer;
-
+  /* transform: scale(1.5); */
 }
+.view-td:hover{
+  transform: scale(1.2);
+  transition: 0.5s ease;
+}
+
 .navigation ul li a.actived::before,
 .navigation ul li a.actived::before{
   content: "";
@@ -202,7 +149,9 @@ if(isset($_GET['cid'])){
                                     
                                     <td>Name</td>
                                     <td>Category</td>
+                                    <!--
                                     <td>Description</td>
+                                    -->
                                     <td>Creator</td>
                                     <td>Fees</td>
                                     <td>View</td>
@@ -249,11 +198,13 @@ if(isset($_GET['cid'])){
                                 </p>
                                 </td>
                                 <td><?= $fetch_pending_companies['course_Category']; ?></td>
-                                <td><?= $fetch_pending_companies['course_Description']; ?></td>
+                                <!-- <td>< $fetch_pending_companies['course_Description']; ?></td> -->
                                 <td><?= $fetch_pending_companies['course_Creator']; ?></td>
                                 <td><?= $fetch_pending_companies['course_Fees']; ?>$</td>
 
-                                <td><a href="viewCourse.php?course_id=<?= $course_id; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td class="view-td">
+                                    <a href="viewCourse.php?course_id=<?= $course_id; ?>" class="foods-btn" target="_blank">View</a>
+                                </td>
                             </tr>
 
                             <!-- Script Search Bar -->

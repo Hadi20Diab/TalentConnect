@@ -77,7 +77,7 @@ include "structuralAdminPage.php";
             <!-- =======================Companies Cards ================== -->
             <h2 style="padding: 30px;">Courses Analysis</h2>
             <div class="cardBox">
-                <a href="coursesView_Mangment.php">
+                <a href="">
 
                     <div class="card">
                             <div>
