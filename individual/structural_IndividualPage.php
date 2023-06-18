@@ -294,6 +294,11 @@ if(isset($_POST['logout-btn'])){
                                 <i class="fa-solid fa-user-pen"></i>
                                 update profile
                             </a>
+
+                            <a href="changePassword.php" class="update-btn" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);">
+                                <i class="fa-solid fa-key"></i>
+                                Change Password
+                            </a>
                             
                             <div class="flex-btn">
                                 <!-- <input type="submit" class="logout-btn" name="logout-btn" value="Logout" style="box-shadow: 0 5px 10px rgba(0,0,0,0.7);"> -->

@@ -6,7 +6,7 @@ require_once "structuralAdminPage.php";
 // when click update
 if(isset($_POST['submit'])){
 
-    $name = $_POST['name'];
+    // $name = $_POST['name'];
     $email = $_POST['email'];
  
  
