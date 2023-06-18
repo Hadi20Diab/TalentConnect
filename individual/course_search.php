@@ -14,10 +14,13 @@
 </head>
 
 
-
+<h2 style="margin: 1rem 2rem;">
+    Search 
+    <i class="fa-solid fa-magnifying-glass fa-lg" style="color: var(--nav-main);margin-left: 10px;" ></i>
+</h2>
 <div class="filter-container">
 
-    <form action="#" method="GET" style="margin: 4% 0;">
+    <form action="#" method="GET" style="margin: 4% 2rem;">
     <!-- <form action="#" method="GET" style="display: flex;     flex-direction: row;     justify-content: space-around;    flex-wrap: wrap;     margin: 4% 0;"> -->
 
 
@@ -73,11 +76,11 @@
             <label for="fees">Course Fees:</label>
             <select id="select-state" name="course_fee">
                 <option value="">Select Fee</option>
-                <option value="0" <?php echo ($_GET['course_fee'] == '0') ? 'selected' : ''; ?>>Free</option>
-                <option value="100" <?php echo ($_GET['course_fee'] == '100') ? 'selected' : ''; ?>>$100 or less</option>
-                <option value="500" <?php echo ($_GET['course_fee'] == '500') ? 'selected' : ''; ?>>$500 or less</option>
-                <option value="1000" <?php echo ($_GET['course_fee'] == '1000') ? 'selected' : ''; ?>>$1000 or less</option>
-                <option value="5000" <?php echo ($_GET['course_fee'] == '5000') ? 'selected' : ''; ?>>$5000 or less</option>
+                <option value="0" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '0') ? 'selected' : ''; ?>>Free</option>
+                <option value="100" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '100') ? 'selected' : ''; ?>>$100 or less</option>
+                <option value="500" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '500') ? 'selected' : ''; ?>>$500 or less</option>
+                <option value="1000" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '1000') ? 'selected' : ''; ?>>$1000 or less</option>
+                <option value="5000" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '5000') ? 'selected' : ''; ?>>$5000 or less</option>
             </select>
         </div>
 
@@ -92,6 +95,18 @@
     </form>
 </div>
 
+<?php
+// course Name is set?
+if(isset($_GET['courseName'])){
+    echo'
+    <h2 style="margin: -20px 2rem;">
+        Search Result 
+        <i class="fa-solid fa-briefcase fa-lg" style="color: var(--nav-main);margin-left: 10px;" ></i>
+    </h2>
+    ';
+
+}
+?>
 
 
 <section class="courses">
@@ -270,7 +285,7 @@
 
 <?php
 }else{
-    echo '<p class="empty" style="margin: -25% -50%;">You must select a filter category to perform the course search.</p>';
+    echo '<p class="empty" style="margin: -5% 0%;">You must select a filter category to perform the course search.</p>';
 }
 ?>
 <style>

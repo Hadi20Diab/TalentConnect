@@ -32,12 +32,12 @@
     background: rgb(114, 250, 3);
     background: rgb(250, 189, 189);
     border: radius 6px;
-    position: absolute;
+    position: fixed;
     z-index: 5000;
     border-radius: 20px;
     left: 50%;
     right: 50%;
-    top: 22%;
+    top: 50%;
     visibility: visible;
     text-align: center;
     padding: 0 30px 30px;

@@ -48,7 +48,7 @@ if(isset($_GET['job_id']) ){
     $fetch_job_Creator = mysqli_fetch_assoc($select_Job);
 
 
-    if($role="company"){
+    if($role=="company"){
 
         $company_id=$fetch_job_Creator['company_id'];
         $deliveredByLOGO=$fetch_job_Creator['company_Logo'];
@@ -104,15 +104,15 @@ if(isset($_GET['job_id']) ){
                     <div class="sourceName row">
 
                     <?php
-         if($role="company"){
+         if($role=="company"){
             echo '
-            <a href="viewCompanyProfile.php?vcid=' . $company_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;">
+            <a href="viewCompanyProfile.php?company_id=' . $company_id . '" class="row" style="text-decoration: none;" target="_black">
             ';
             
         }
         else{
             echo'
-                <a href="viewCompanyProfile.php?vcid=' . $university_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;">
+                <a href="viewUniversityProfile.php?university_id=' . $university_id . '" class="row" style="text-decoration: none;" target="_black">
             ';
         }
         ?>

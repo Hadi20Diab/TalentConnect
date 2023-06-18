@@ -26,7 +26,7 @@ $creators = []; // Course creators
 
 while ($row = mysqli_fetch_assoc($result)) {
     $labels[] = $row['course_Name'];
-    $data[] = $row['revenue'];
+    $data[] = $row['revenue'] *10/100; // 10% for each course
     $creators[] = $row['course_Creator'];
 }
 ?>

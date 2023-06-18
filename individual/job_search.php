@@ -12,9 +12,26 @@
 
 
 
+<h2 style="margin: 1rem 2rem;">
+    Search 
+    <i class="fa-solid fa-magnifying-glass fa-lg" style="color: var(--nav-main);margin-left: 10px;" ></i>
+</h2>
+
+<style>
+    
+.SelectRow {
+    width: 25rem;
+}
+.row{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap
+}
+</style>
+
 <div class="filter-container">
 
-    <form action="#" method="GET" style="margin: 4% 0;">
+    <form action="#" method="GET" style="margin: 4% 2rem;     text-align: -webkit-center;">
     <!-- <form action="#" method="GET" style="display: flex;     flex-direction: row;     justify-content: space-around;    flex-wrap: wrap;     margin: 4% 0;"> -->
 
 <?php
@@ -22,81 +39,103 @@
 ?>
 
 
-<input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>">          <!-- set job position selected before -->
-    <div class="SelectRow">
-        <label for="jobType">Job Type:</label>
+<input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>" style="width: 200px;      height: 2rem;   margin: 10px 0;    border-radius: 5px;     border: solid 0.5px gray; ">          <!-- set job position selected before -->
+    <div class="row">
 
-        <select id="select-state" name="jobType">
-            <option value="">All</option>
-            <option value="Full-time" <?php echo (isset($_GET['jobType']) && $_GET['jobType'] == 'Full-time') ? 'selected' : ''; ?>>Full-time</option>
-            <option value="Part-time" <?php echo (isset($_GET['jobType']) && $_GET['jobType'] == 'Part-time') ? 'selected' : ''; ?>>Part-time</option>
-        </select>
+        <div class="SelectRow">
+            <label for="jobType">Job Type:</label>
+    
+            <select id="select-state" name="jobType">
+                <option value="">All</option>
+                <option value="Full-time" <?php echo (isset($_GET['jobType']) && $_GET['jobType'] == 'Full-time') ? 'selected' : ''; ?>>Full-time</option>
+                <option value="Part-time" <?php echo (isset($_GET['jobType']) && $_GET['jobType'] == 'Part-time') ? 'selected' : ''; ?>>Part-time</option>
+            </select>
+    
+        </div>
+    
+    
+        <div class="SelectRow">
+            <label for="jobWorkPlace">Job WorkPlace:</label>
+    
+            <select id="select-state" name="jobWorkPlace">
+                <option value="">All</option>
+                <option value="On-site" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'On-site') ? 'selected' : ''; ?>>On-site</option>
+                <option value="Remote" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'Remote') ? 'selected' : ''; ?>>Remote</option>
+                <option value="Hybrid" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'Hybrid') ? 'selected' : ''; ?>>Hybrid</option>
+            </select>
+    
+        </div>
+    </div>
 
+    <div class="row">
+
+        <div class="SelectRow">
+            <label for="category">Category:</label>
+            <select id="select-state" name="category[]" multiple>
+                <option value="">All Category</option>
+                <?php
+                $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
+                
+                while ($select_category = mysqli_fetch_assoc($select_categories)) {
+                    $selected = (in_array($select_category['category_name'], $_GET['category'])) ? 'selected' : '';
+                    echo "<option value='" . $select_category['category_name'] . "' $selected >" . $select_category['category_name'] . "</option>";
+                }
+                ?>
+            </select>
+        </div>
+    
+    
+    
+    
+        <div class="SelectRow">
+            <label for="country">Country:</label>
+            <select id="select-state" name="job_Country[]" multiple>
+                <option value="">All</option>
+                <?php
+                $select_countries = mysqli_query($conn, "SELECT country_name FROM `country`");
+                
+                while ($select_country = mysqli_fetch_assoc($select_countries)) {
+                    $selected = (in_array($select_country['country_name'], $_GET['job_Country'])) ? 'selected' : '';
+                    echo "<option value='" . $select_country['country_name'] . "' $selected >" . $select_country['country_name'] . "</option>";
+                }
+                ?>
+            </select>
+        </div>
     </div>
 
 
-    <div class="SelectRow">
-        <label for="jobWorkPlace">Job WorkPlace:</label>
-
-        <select id="select-state" name="jobWorkPlace">
-            <option value="">All</option>
-            <option value="On-site" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'On-site') ? 'selected' : ''; ?>>On-site</option>
-            <option value="Remote" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'Remote') ? 'selected' : ''; ?>>Remote</option>
-            <option value="Hybrid" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'Hybrid') ? 'selected' : ''; ?>>Hybrid</option>
-        </select>
-
-    </div>
-
-    <div class="SelectRow">
-        <label for="category">Category:</label>
-        <select id="select-state" name="category[]" multiple>
-            <option value="">All Category</option>
-            <?php
-            $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
-            
-            while ($select_category = mysqli_fetch_assoc($select_categories)) {
-                $selected = (in_array($select_category['category_name'], $_GET['category'])) ? 'selected' : '';
-                echo "<option value='" . $select_category['category_name'] . "' $selected >" . $select_category['category_name'] . "</option>";
-            }
-            ?>
-        </select>
-    </div>
 
 
-
-
-    <div class="SelectRow">
-        <label for="country">Country:</label>
-        <select id="select-state" name="job_Country[]" multiple>
-            <option value="">All</option>
-            <?php
-            $select_countries = mysqli_query($conn, "SELECT country_name FROM `country`");
-            
-            while ($select_country = mysqli_fetch_assoc($select_countries)) {
-                $selected = (in_array($select_country['country_name'], $_GET['job_Country'])) ? 'selected' : '';
-                echo "<option value='" . $select_country['country_name'] . "' $selected >" . $select_country['country_name'] . "</option>";
-            }
-            ?>
-        </select>
-    </div>
-
-
-
-
-        <a href="filter.php">
-            <button>Filter</button>
+        <a href="filter.php" style="     width: 10rem;     margin-left: 1.2rem;     height: 2rem;">
+            <button style="     height: 2rem;     width: 200px;     margin: 10px 0;">
+                Filter
+            </button>
         </a>         
 
 
    
       </div>
 
+
+
+
       </form>
 
+      <?php
+// course Name is set?
+if(isset($_GET['jobPosition'])){
+    echo'
+    <h2 style="margin: -20px 2rem;">
+        Search Result 
+        <i class="fa-solid fa-briefcase fa-lg" style="color: var(--nav-main);margin-left: 10px;" ></i>
+    </h2>
+    ';
+
+}
+?>
 
 <div id="jobList">
   <!-- Job listings will be dynamically added here -->
-    <h4 id="loding"></h4>
 
 <?php
     // addmin DELELT 
@@ -233,13 +272,13 @@
     <?php
              if($role=="company"){
                 echo '
-                <a href="../viewCompanyProfile.php?vcid=' . $company_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;" target="_blank">
+                <a href="../viewCompanyProfile.php?company_id=' . $company_id . '" class="row" style="text-decoration: none;" target="_blank">
                 ';
                 
             }
             else{
                 echo'
-                    <a href="../viewUniversityProfile.php?vcid=' . $university_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;" target="_blank">
+                    <a href="../viewUniversityProfile.php?university_id=' . $university_id . '" class="row" style="text-decoration: none;" target="_blank">
                 ';
             }
     ?>
@@ -310,8 +349,15 @@
     
             }
             echo"</section>";
-        }  
+        } 
+        else {
+            echo '<p class="empty" style="margin: 5% 25%; width: 50%;">No results found for the selected job filter.</p>';
+        } 
         
+    }
+    else{
+        echo '<p class="empty" style="margin: 5% 25%; width: 50%;">You must select a filter category to perform the job search.</p>';
+
     }
     ?>
 </div>

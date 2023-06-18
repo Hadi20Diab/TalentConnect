@@ -231,7 +231,8 @@ if ($type === 'company') {
         }
 
         elseif($status == 'pending'){
-          echo '<div class="popup " id="popup">
+          echo '<div class="popup " id="popup" style="     background: rgb(190 240 143); "
+          >
       <img src="admin/assets/imgs/pending.png" >
       <h2>Your account is currently pending approval.</h2>
       <p>Please wait for further instructions or contact the administrator for more information.</p>
@@ -286,7 +287,7 @@ if($check_restaurant > 0){   //if the user registerd in our website, then he suc
        ';
     } elseif($status == "pending") {
       
-      echo '<div class="popup " id="popup">
+      echo '<div class="popup " id="popup" style="     background: rgb(190 240 143); ">
       <img src="admin/assets/imgs/pending.png" >
       <h2>Pending university verification</h2>
       <p>We are in the process of verifying your university account. Thank you for your cooperation.</p>
@@ -316,19 +317,30 @@ else{ //if user didn't registered in our website
 
 elseif($type === 'individuals'){
   
-  $result = mysqli_query($conn, "SELECT * FROM `individuals` WHERE individual_Email='$email' AND individual_Password= '$password'");
+  $result = mysqli_query($conn, "SELECT * FROM `individuals` WHERE individual_Email='$email'");// AND individual_Password= '$password'
   $check_individual = mysqli_num_rows($result);
 
   if($check_individual > 0){   //if the user registerd in our website, then he successfully logged in
     $row = mysqli_fetch_assoc($result);
     $status = $row['individual_Status'];
-    if ($status === 'approved') {
+    $individual_Password = $row['individual_Password'];
+    if ($status === 'approved' && $individual_Password == $password) {
         $_SESSION['individual_ID'] = $row['individual_ID'];
         $_POST['individual_Email'] = '';  //we put it empty to remove the writing of user from inputs fields when hi logged in successfully
         $_POST['individual_Password'] = '';
 
         header("location: individual/home.php");
-    } elseif ($status === "blocked") {
+    }
+    elseif($individual_Password != $password){
+      echo '<div class="popup " id="popup">
+                <img src="admin/assets/imgs/error.jpg" >
+                <h2>Oooops!</h2>
+                <p>It looks like the password you provided is incorrect. <br> If you\'ve forgotten your password, you can use our \'Forgot Password\' feature to reset it.</p>
+                <button type="button" onclick="closePopup()">OK</button>
+              </div>
+      ';
+    }
+    elseif ($status === "blocked") {
         
         echo '<div class="popup " id="popup">
                 <img src="admin/assets/imgs/error.jpg" >
@@ -341,7 +353,7 @@ elseif($type === 'individuals'){
        ';
     } elseif($status === "pending") {
       
-      echo '<div class="popup " id="popup">
+      echo '<div class="popup " id="popup" style="     background: rgb(190 240 143); ">
               <img src="admin/assets/imgs/pending.png" >
               <h2>Our team is currently reviewing your account details. </h2>
               <p>Please stay tuned for further instructions or contact our support team for more information.</p>
@@ -632,7 +644,7 @@ elseif($type === 'individuals'){
               Sign up
             </button>
           </div>
-          <img src="img/log.svg" class="image" alt="" />
+          <img src="images/log.svg" class="image" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
@@ -644,7 +656,7 @@ elseif($type === 'individuals'){
               Sign in
             </button>
           </div>
-          <img src="img/register.svg" class="image" alt="" />
+          <img src="images/register.svg" class="image" alt="" />
         </div>
       </div>
       

@@ -94,13 +94,13 @@
 <?php
          if($role=="company"){
             echo '
-            <a href="../viewCompanyProfile.php?vcid=' . $company_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;" target="_blank">
+            <a href="../viewCompanyProfile.php?company_id=' . $company_id . '" class="row" style="text-decoration: none;" target="_blank">
             ';
             
         }
         else{
             echo'
-                <a href="../viewUniversityProfile.php?vcid=' . $university_id . '&cname=' . $deliveredBy . '" class="row" style="text-decoration: none;" target="_blank">
+                <a href="../viewUniversityProfile.php?university_id=' . $university_id . '" class="row" style="text-decoration: none;" target="_blank">
             ';
         }
 ?>
