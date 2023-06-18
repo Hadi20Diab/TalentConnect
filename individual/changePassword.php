@@ -43,7 +43,7 @@ if(isset($_POST['submit'])){
     }else{
         // $update_profile_name = mysqli_query($conn, "UPDATE `admin` SET admin_Name = '$name' WHERE admin_id  = '$admin_id'");
         // $update_profile_email = mysqli_query($conn, "UPDATE `individuals` SET email = '$email' WHERE admin_id  = '$admin_id'");
-        $update_admin_pass = mysqli_query($conn, "UPDATE `individuals` SET individual_Password = '$confirm_pass' WHERE individual_ID   = '$individual_ID '");
+        $update_admin_pass = mysqli_query($conn, "UPDATE `individuals` SET individual_Password = '$confirm_pass' WHERE individual_ID   = '$individual_ID'");
           
   
           echo '
