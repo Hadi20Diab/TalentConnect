@@ -18,76 +18,96 @@
     Search 
     <i class="fa-solid fa-magnifying-glass fa-lg" style="color: var(--nav-main);margin-left: 10px;" ></i>
 </h2>
+
+<style>
+    
+.SelectRow {
+    width: 25rem;
+}
+.row{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap
+}
+</style>
+
 <div class="filter-container">
 
-    <form action="#" method="GET" style="margin: 4% 2rem;">
+    <form action="#" method="GET" style="margin: 4% 2rem;     text-align: -webkit-center;">
     <!-- <form action="#" method="GET" style="display: flex;     flex-direction: row;     justify-content: space-around;    flex-wrap: wrap;     margin: 4% 0;"> -->
 
 
-        <div class="SelectRow">
-            <input type="text" name="courseName" id="" placeholder="Course Name" value="<?= isset($_GET['courseName']) ? $_GET['courseName'] : '' ?>">
-            
-  
+        <div class="row">
+            <div class="SelectRow">
+                <input type="text" name="courseName" id="" placeholder="Course Name" value="<?= isset($_GET['courseName']) ? $_GET['courseName'] : '' ?>"   style="width: 100%;      height: 2rem;   margin: 10px 0;    border-radius: 5px;     border: solid 0.5px gray; ">
+            </div>
+
+
+            <div class="SelectRow">
+                <label for="fees">Course Fees:</label>
+                <select id="select-state" name="course_fee">
+                    <option value="">Select Fee</option>
+                    <option value="0" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '0') ? 'selected' : ''; ?>>Free</option>
+                    <option value="100" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '100') ? 'selected' : ''; ?>>$100 or less</option>
+                    <option value="500" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '500') ? 'selected' : ''; ?>>$500 or less</option>
+                    <option value="1000" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '1000') ? 'selected' : ''; ?>>$1000 or less</option>
+                    <option value="5000" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '5000') ? 'selected' : ''; ?>>$5000 or less</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="SelectRow">
+                <label for="category">Category:</label>
+                <select id="select-state" name="category[]" multiple>
+                    <option value="">All Category</option>
+                    <?php
+                    $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
+
+                    $selectedCategories = isset($_GET['category']) ? $_GET['category'] : array(); // Get the selected categories form the previous filter 
+
+                    while ($select_category = mysqli_fetch_assoc($select_categories)) {
+                        $categoryName = $select_category["category_name"];
+                        $selected = in_array($categoryName, $selectedCategories) ? 'selected' : ''; // Check if the category is selected
+                        echo '<option value="'.$categoryName.'" '.$selected.'>'.$categoryName.'</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
+
+
+            <div class="SelectRow">
+                <label for="course_Creator">CreatedBy:</label>
+                <select id="select-state" name="course_Creator[]" multiple>
+                    <option value="">All</option>
+                    <?php
+                    $select_course_Creator = mysqli_query($conn, "SELECT course_Creator FROM `courses`");
+
+                    while ($select_Creator = mysqli_fetch_assoc($select_course_Creator)) {
+                        $courseCreator = $select_Creator["course_Creator"];
+                        $selected = in_array($courseCreator, $_GET['course_Creator']) ? 'selected' : '';
+                        
+                        echo '<option value="' . $courseCreator . '" ' . $selected . ' > ' . $courseCreator . ' </option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
         </div>
 
 
 
-
-        <div class="SelectRow">
-            <label for="category">Category:</label>
-            <select id="select-state" name="category[]" multiple>
-                <option value="">All Category</option>
-                <?php
-                $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
-
-                $selectedCategories = isset($_GET['category']) ? $_GET['category'] : array(); // Get the selected categories form the previous filter 
-
-                while ($select_category = mysqli_fetch_assoc($select_categories)) {
-                    $categoryName = $select_category["category_name"];
-                    $selected = in_array($categoryName, $selectedCategories) ? 'selected' : ''; // Check if the category is selected
-                    echo '<option value="'.$categoryName.'" '.$selected.'>'.$categoryName.'</option>';
-                }
-                ?>
-            </select>
-        </div>
-
-
-
-        <div class="SelectRow">
-            <label for="course_Creator">CreatedBy:</label>
-            <select id="select-state" name="course_Creator[]" multiple>
-                <option value="">All</option>
-                <?php
-                $select_course_Creator = mysqli_query($conn, "SELECT course_Creator FROM `courses`");
-
-                while ($select_Creator = mysqli_fetch_assoc($select_course_Creator)) {
-                    $courseCreator = $select_Creator["course_Creator"];
-                    $selected = in_array($courseCreator, $_GET['course_Creator']) ? 'selected' : '';
-                    
-                    echo '<option value="' . $courseCreator . '" ' . $selected . ' > ' . $courseCreator . ' </option>';
-                }
-                ?>
-            </select>
-        </div>
-
-
-
-        <div class="SelectRow">
-            <label for="fees">Course Fees:</label>
-            <select id="select-state" name="course_fee">
-                <option value="">Select Fee</option>
-                <option value="0" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '0') ? 'selected' : ''; ?>>Free</option>
-                <option value="100" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '100') ? 'selected' : ''; ?>>$100 or less</option>
-                <option value="500" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '500') ? 'selected' : ''; ?>>$500 or less</option>
-                <option value="1000" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '1000') ? 'selected' : ''; ?>>$1000 or less</option>
-                <option value="5000" <?php echo (isset($_GET['course_fee']) && $_GET['course_fee'] == '5000') ? 'selected' : ''; ?>>$5000 or less</option>
-            </select>
-        </div>
-
-
-        <a href="filter.php">
+        <!-- <a href="filter.php">
             <button>Filter</button>
-        </a>         
+        </a>          -->
+        <a href="filter.php" style="     width: 10rem;     margin-left: 1.2rem;     height: 2rem;">
+            <button style="     height: 2rem;     width: 200px;     margin: 10px 0;">
+                Filter
+            </button>
+        </a> 
 
 
    
