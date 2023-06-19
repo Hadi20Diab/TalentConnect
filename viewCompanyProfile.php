@@ -34,6 +34,7 @@ if(isset($_GET['company_id']) ){
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
         <title>'. $company_Name . '</title>
     </head>
     <body>
@@ -44,8 +45,9 @@ if(isset($_GET['company_id']) ){
     
     <link rel="stylesheet" href="css/CompanyProfileStyle.css">
     <link rel="stylesheet" href="css/all-icon.css">
+    <link rel= "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" >
     
-    
+
     <section class="companyProfileContainer">
         <div class="companyHeader">
     
