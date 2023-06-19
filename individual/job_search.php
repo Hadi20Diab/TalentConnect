@@ -122,7 +122,8 @@
       </form>
 
       <?php
-// course Name is set?
+// course Name is set?asadf
+
 if(isset($_GET['jobPosition'])){
     echo'
     <h2 style="margin: -20px 2rem;">
