@@ -2,60 +2,40 @@
 
 include "structuralAdminPage.php";
 
-// mysqli_report(MYSQLI_REPORT_STRICT);
+//IF THE ADMIN CLICK ON Block
 
-
- //alert window for confirm the deletion of a company
-//  if(isset($_GET['rid'])){
-//     $company_id= $_GET['rid'];
- 
-    
-//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$company_id'");
- 
-//  header("location:companiesView_Mangment.php");
-
-//  }
-
-//  companyblockid
-  if(isset($_GET['companyblockid']) && isset($_GET['name'])){
-    $cid = $_GET['companyblockid'];
+if(isset($_GET['individual_BlockId']) && isset($_GET['name'])){
+    $individual_ID = $_GET['individual_BlockId'];
     $name= $_GET['name'];
     echo ' 
-    <div class="popup "  id="popup" style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255)); ">
-    <img src="assets/imgs/question.jpg" >
-    <h2 style="color:var(--nav-main);">Question</h2>
-    <p style="margin-bottom:3rem;">Are you sure you want to block <span style="color:var(--nav-main); font-weight:500;">'.$name.'</span>?</p>
-    
-    
-    <a href="companiesView_Mangment.php?cid='.$cid.'" class="choice-btn yes">yes</a>
-    <a href="companiesView_Mangment.php" class="choice-btn no">No</a>
+        <div class="popup "  id="popup" style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255)); ">
+            <img src="assets/imgs/question.jpg" >
+            <h2 style="color:var(--nav-main);">Question</h2>
+            <p style="margin-bottom:3rem;">Are you sure you want to block <span style="color:red; font-weight:500;">'.$name.'</span>?</p>
+            
+            
+            <a href="approvedIndividual_Mangment.php?individual_ID='.$individual_ID.'" class="choice-btn yes">yes</a>
+            <a href="approvedIndividual_Mangment.php" class="choice-btn no">No</a>
 
-    
-
-</div>
-
-
-
-';
+        </div>
+    ';
 }
 
 
 
-///IF THE ADMIN CLICK ON Pending
-if(isset($_GET['companypendingid'])){
-    $companypendingid = $_GET['companypendingid'];
-    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='approved' WHERE company_id ='$companypendingid'");
-    header("location:companiesView_Mangment.php");
-
-}
-///IF THE ADMIN CLICK ON Block
-if(isset($_GET['cid'])){
-    $cid = $_GET['cid'];
-    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='blocked' WHERE company_id ='$cid'");
-    header("location:companiesView_Mangment.php");
-
+//IF THE ADMIN CLICK ON Pending
+if(isset($_GET['individual_PendingId'])){
+    $individual_PendingId = $_GET['individual_PendingId'];
+    $update_individuals = mysqli_query($conn, "UPDATE `individuals` SET individual_Status='pending' WHERE individual_ID  ='$individual_PendingId'");
+    echo '<script>window.location.href = "approvedIndividual_Mangment.php";</script>';
 }
 
+//IF THE ADMIN CLICK ON Yes (Block)
+if(isset($_GET['individual_ID'])){
+    $individual_ID = $_GET['individual_ID'];
+    $update_company = mysqli_query($conn, "UPDATE `individuals` SET individual_Status='blocked' WHERE individual_ID ='$individual_ID'");
+    echo '<script>window.location.href = "approvedIndividual_Mangment.php";</script>';
+}
 ?>
 
 
@@ -167,30 +147,32 @@ if(isset($_GET['cid'])){
 
 
            
-            <!-- ================ pending companies List ================= -->
+            <!-- ================ Approved Individual List ================= -->
             <div class="details">
                             <style>
-                                /* .scroll{
+                                .scroll{
                                     overflow: scroll;
-                                } */
+                                }
                                 .scroll::--webkit-scrollbar{
                                     display:none;
                                 }
                             </style>
-
                 <?php
-                   $select_companies = mysqli_query($conn, "SELECT * FROM company ");
-                   $companies_count = mysqli_num_rows($select_companies);
+                   $select_approved_Individuals = mysqli_query($conn, "SELECT * FROM `individuals` WHERE individual_Status='approved' ");
+                   $approved_Individuals_count = mysqli_num_rows($select_approved_Individuals);
 
 
 
                    echo '
+                   
+                   
+                   
                         <div class="recentOrders scroll">
                             
                             <div class="cardHeader" style="margin:2.5rem 0 ;     justify-self: left;     place-items: center;">
-                                <a href="companys_Management.php" style="display: flex;     place-items: center; ">
+                                <a href="Individuals_Managementy.php" style="display: flex;     place-items: center;">
                                     <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: #4e6997;"></i>
-                                    <h2 style="margin: 0 20px;">Companies</h2>
+                                    <h2 style="margin: 0 20px;">Approved Individual</h2>
                                 </a>
                                 
                             </div>
@@ -204,7 +186,8 @@ if(isset($_GET['cid'])){
                                     <td>Email</td>
                                     <td>Country</td>
                                     <td>View Profile</td>
-                                     
+                                    <td>Edit</td>
+                                    
                                     
                                 </tr>
 
@@ -212,16 +195,16 @@ if(isset($_GET['cid'])){
                    ';
 
 
-                   if ($companies_count >0) {
+                   if ($approved_Individuals_count >0) {
                 ?>
 
                         <!-- Search Bar -->
                         
-                        <tbody id="containerpendingROW">
+                        <tbody id="containerApprovedROW">
                             
                                 <div style="    display: flex;     flex-direction: row;     width: 50%;     margin: 0 25%;     border-radius: 20px;     flex-wrap: nowrap;     justify-content: center;     align-items: center;">
                                     <i class="fa fa-solid fa-magnifying-glass"></i>
-                                    <input type="text" name="" id="search-item" placeholder="Search By Company Name" onkeyup="pendingCompanySearch()" style="width: 50%;     height: 30px;     margin-left: 3%;     border: none;     border-radius: 20px;">                            
+                                    <input type="text" name="" id="search-item" placeholder="Search By Name" onkeyup="approvedindividualsSearch()" style="width: 50%;     height: 30px;     margin-left: 3%;     border: none;     border-radius: 20px;">                            
                                 </div>
 
 
@@ -231,32 +214,39 @@ if(isset($_GET['cid'])){
                         <?php
                                 $number = 0;
                              
-                                while ($fetch_pending_companies = mysqli_fetch_assoc($select_companies)) {
+                                while ($fetch_approved_Individuals = mysqli_fetch_assoc($select_approved_Individuals)) {
                                     $number +=1; 
-                                    $company_id = $fetch_pending_companies['company_id'];
+                                    $individual_ID  = $fetch_approved_Individuals['individual_ID'];
 
                                     
                         ?>
                             <tr id="singleROW">
                                 <td><?= $number ?></td>
                                 <td width="60px">
-                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;"><img src="../images/companies_universities_images/<?= $fetch_pending_companies['company_Logo']; ?>" alt=""></div>
+                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;"><img src="../images/individuals_images/<?= $fetch_approved_Individuals['individual_photo']; ?>" alt=""></div>
                                 </td>
-                                <td class="companyName">
+                                <td class="individualsName">
                                     <p>
-                                        <?= $fetch_pending_companies['company_Name']; ?>
+                                        <?= $fetch_approved_Individuals['individual_Name']; ?>
                                     </p>
                                 </td>
-                                <td><?= $fetch_pending_companies['company_Email']; ?></td>
-                                <td><?= $fetch_pending_companies['company_Country']; ?></td>
+                                <td><?= $fetch_approved_Individuals['individual_Email']; ?></td>
+                                <td><?= $fetch_approved_Individuals['individual_Country']; ?></td>
 
-                                <td><a href="../viewCompanyProfile.php?company_id=<?= $company_id; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td><a href="../viewIndividualsProfile.php?individual_ID=<?= $individual_ID ; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <!--   <td><input type="submit" class="delete-btn"  name="delete-btn"  value="Block"></td> -->
+                                <td style="display: flex; ">
+                                    <a href="approvedIndividual_Mangment.php?individual_PendingId=<?= $fetch_approved_Individuals['individual_ID']; ?>&name=<?= $fetch_approved_Individuals['individual_Name']; ?>"  class="delete-btn" style="background-color: cadetblue;">Pending</a>
+                                
+                                    <a href="approvedIndividual_Mangment.php?individual_BlockId=<?= $fetch_approved_Individuals['individual_ID']; ?>&name=<?= $fetch_approved_Individuals['individual_Name']; ?>"  class="delete-btn">Block</a>
+                                </td>
+                                
                             </tr>
 
                             <!-- Script Search Bar -->
 
                             <script type="text/javascript">
-                                function pendingCompanySearch() {
+                                function approvedindividualsSearch() {
                                     let filter = document.getElementById('search-item').value.toUpperCase();
                                     let singleROW = document.querySelectorAll('#singleROW');
                                     let l = document.getElementsByTagName('p');
@@ -292,7 +282,7 @@ if(isset($_GET['cid'])){
                 else{
                 echo '</table>
                 <p class="empty" style="width: fit-content; margin-bottom: 19%;">
-                    No Companies Yet!
+                    No Approved Individual Yet!
                 </p>';
                 }
             ?>
@@ -313,7 +303,7 @@ if(isset($_GET['cid'])){
 
 
 </div>
-    <title>Companies</title>
+    <title>Approved Individual</title>
 
     <script>
         function closePopup(){

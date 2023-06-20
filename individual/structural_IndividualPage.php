@@ -9,6 +9,16 @@ if(!isset($_SESSION['individual_ID'])){  //if individual id is not  set in the s
 }
 else{
     $individual_ID = $_SESSION['individual_ID'];
+
+    $select_profile = mysqli_query($conn, "SELECT individual_Status FROM `individuals` WHERE  individual_ID = '$individual_ID'");
+                                
+    $fetch_profile = mysqli_fetch_assoc($select_profile);
+
+    if( $fetch_profile['individual_Status'] != "approved"){
+        header('location:logout.php');
+        // echo '<script>window.location.href = "logout.php";</script>';
+    }
+
     }  
 ?>
 <?php
