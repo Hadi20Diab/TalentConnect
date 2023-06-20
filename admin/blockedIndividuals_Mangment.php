@@ -2,58 +2,37 @@
 
 include "structuralAdminPage.php";
 
-// mysqli_report(MYSQLI_REPORT_STRICT);
 
-
- //alert window for confirm the deletion of a company
-//  if(isset($_GET['rid'])){
-//     $company_id= $_GET['rid'];
- 
-    
-//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$company_id'");
- 
-//  header("location:blockedCompany_Mangment.php");
-
-//  }
-
-//  companyApprovedid
-  if(isset($_GET['companyApprovedid']) && isset($_GET['name'])){
-    $cid = $_GET['companyApprovedid'];
+if(isset($_GET['IndividualsApprovedId']) && isset($_GET['name'])){
+    $individual_ID = $_GET['IndividualsApprovedId'];
     $name= $_GET['name'];
     echo ' 
-    <div class="popup "  id="popup" style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255)); ">
-    <img src="assets/imgs/question.jpg" >
-    <h2 style="color:var(--nav-main);">Question</h2>
-    <p style="margin-bottom:3rem;">Are you sure you want to Approve <span style="color:var(--nav-main); font-weight:500;">'.$name.'</span>?</p>
-    
-    
-    <a href="blockedCompany_Mangment.php?cid='.$cid.'" class="choice-btn yes">yes</a>
-    <a href="blockedCompany_Mangment.php" class="choice-btn no">No</a>
-
-    
-
-</div>
-
-
-
-';
+        <div class="popup "  id="popup" style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255)); ">
+            <img src="assets/imgs/question.jpg" >
+            <h2 style="color:var(--nav-main);">Question</h2>
+            <p style="margin-bottom:3rem;">Are you sure you want to Approve <span style="color:red; font-weight:500;">'.$name.'</span>?</p>
+            
+            
+            <a href="blockedIndividuals_Mangment.php?individual_ID='.$individual_ID.'" class="choice-btn yes">yes</a>
+            <a href="blockedIndividuals_Mangment.php" class="choice-btn no">No</a>
+        </div>
+    ';
 }
 
 
 
 ///IF THE ADMIN CLICK ON Pending
-if(isset($_GET['companypendingid'])){
-    $companypendingid = $_GET['companypendingid'];
-    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='pending' WHERE company_id ='$companypendingid'");
-    header("location:blockedCompany_Mangment.php");
+if(isset($_GET['IndividualsPendingId'])){
+    $IndividualsPendingId = $_GET['IndividualsPendingId'];
+    $update_company = mysqli_query($conn, "UPDATE `individuals` SET individual_Status='pending' WHERE individual_ID ='$IndividualsPendingId'");
+    echo '<script>window.location.href = "blockedIndividuals_Mangment.php";</script>';
 
 }
 ///IF THE ADMIN CLICK ON Block
-if(isset($_GET['cid'])){
-    $cid = $_GET['cid'];
-    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='approved' WHERE company_id ='$cid'");
-    header("location:blockedCompany_Mangment.php");
-
+if(isset($_GET['individual_ID'])){
+    $individual_ID = $_GET['individual_ID'];
+    $update_company = mysqli_query($conn, "UPDATE `individuals` SET individual_Status='approved' WHERE individual_ID ='$individual_ID'");
+    echo '<script>window.location.href = "blockedIndividuals_Mangment.php";</script>';
 }
 
 ?>
@@ -174,20 +153,20 @@ if(isset($_GET['cid'])){
                                 }
                             </style>
            
-            <!-- ================ Approved companies List ================= -->
+            <!-- ================ Blocked Individuals List ================= -->
             <div class="details">
                 <?php
-                   $select_blocked_companies = mysqli_query($conn, "SELECT * FROM `company` WHERE company_Status='blocked' ");
-                   $blocked_companies_count = mysqli_num_rows($select_blocked_companies);
+                   $select_blocked_Individuals = mysqli_query($conn, "SELECT * FROM `individuals` WHERE individual_Status='blocked' ");
+                   $blocked_companies_count = mysqli_num_rows($select_blocked_Individuals);
 
 
 
                    echo '                   
                         <div class="recentOrders scroll">
                             <div class="cardHeader" style="margin:2.5rem 0 ;     justify-self: left;     place-items: center;">
-                                <a href="companys_Management.php" style="display: flex;     place-items: center;">
+                                <a href="Individuals_Managementy.php" style="display: flex;     place-items: center;">
                                     <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: #4e6997;"></i>
-                                    <h2 style="margin: 0 20px;">Blocked Companies</h2>
+                                    <h2 style="margin: 0 20px;">Blocked Individuals</h2>
                                 </a>
                                 
                             </div>
@@ -229,31 +208,33 @@ if(isset($_GET['cid'])){
                         <?php
                              $number = 0;
                              
-                                while ($fetch_blocked_companies = mysqli_fetch_assoc($select_blocked_companies)) {
+                                while ($fetch_blocked_Individuals = mysqli_fetch_assoc($select_blocked_Individuals)) {
                                     $number +=1; 
-                                    $company_id = $fetch_blocked_companies['company_id'];
+                                    $individual_ID = $fetch_blocked_Individuals['individual_ID'];
 
                                     
                         ?>
                             <tr id="singleROW">
                                 <td><?= $number ?></td>
                                 <td width="60px">
-                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;"><img src="../images/companies_universities_images/<?= $fetch_blocked_companies['company_Logo']; ?>" alt=""></div>
+                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;">
+                                        <img src="../images/individuals_images/<?= $fetch_blocked_Individuals['individual_photo']; ?>" alt="">
+                                    </div>
                                 </td>
                                 <td class="companyName">
                                     <p>
-                                        <?= $fetch_blocked_companies['company_Name']; ?>
-                                </p>
+                                        <?= $fetch_blocked_Individuals['individual_Name']; ?>
+                                    </p>
                                 </td>
-                                <td><?= $fetch_blocked_companies['company_Email']; ?></td>
-                                <td><?= $fetch_blocked_companies['company_Country']; ?></td>
+                                <td><?= $fetch_blocked_Individuals['individual_Email']; ?></td>
+                                <td><?= $fetch_blocked_Individuals['individual_Country']; ?></td>
 
-                                <td><a href="../viewCompanyProfile.php?company_id=<?= $company_id; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td><a href="../viewIndividualsProfile.php?individual_ID=<?= $individual_ID; ?>" class="foods-btn" target="_blank">View</a></td>
                                 <!--   <td><input type="submit" class="delete-btn"  name="delete-btn"  value="Block"></td> -->
                                 <td style="display: flex;  ">
-                                    <a href="blockedCompany_Mangment.php?companypendingid=<?= $fetch_blocked_companies['company_id']; ?>&name=<?= $fetch_blocked_companies['company_Name']; ?>"  class="delete-btn" style="background-color: cadetblue;">Pending</a>
+                                    <a href="blockedIndividuals_Mangment.php?IndividualsPendingId=<?= $fetch_blocked_Individuals['individual_ID']; ?>&name=<?= $fetch_blocked_Individuals['individual_Name']; ?>"  class="delete-btn" style="background-color: cadetblue;">Pending</a>
                                 
-                                    <a href="blockedCompany_Mangment.php?companyApprovedid=<?= $fetch_blocked_companies['company_id']; ?>&name=<?= $fetch_blocked_companies['company_Name']; ?>"  class="delete-btn accept" style="background-color: #39ff14;">Approved</a>
+                                    <a href="blockedIndividuals_Mangment.php?IndividualsApprovedId=<?= $fetch_blocked_Individuals['individual_ID']; ?>&name=<?= $fetch_blocked_Individuals['individual_Name']; ?>"  class="delete-btn accept" style="background-color: #39ff14;">Approved</a>
                                 </td>
                                 
                             </tr>
@@ -297,7 +278,7 @@ if(isset($_GET['cid'])){
                 else{
                 echo '</table>
                 <p class="empty" style="width: fit-content; margin-bottom: 19%;">
-                    No Approved Companies Yet!
+                    No Blocked Individuals Yet!
                 </p>';
                 }
             ?>
@@ -318,7 +299,7 @@ if(isset($_GET['cid'])){
 
 
 </div>
-    <title>Approved Companies</title>
+    <title>Blocked Individuals</title>
 
     <script>
         function closePopup(){

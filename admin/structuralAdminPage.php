@@ -1,4 +1,4 @@
-<?php 
+    <?php 
 include_once '../connection.php';
 session_start();
 if(!isset($_SESSION['admin_id'])){  //if admin id is not  set in the session, this means the admin  is not logged in and there's a one that's want to access the admin page and we should prevent it in order to allow only the admin that's login correct and save it's id in the session to go to admin page , then we redirect it to the adminLogin page and when he logged in gthen it will store the admin_id in the session and he will be able to go to admin page when he logged in
@@ -21,9 +21,6 @@ if(isset($_POST['logout-btn'])){
             <a href="logout.php?" class="choice-btn yes" onclick="admin-logout()">yes</a>
             <a href="#" class="choice-btn no" onclick="closePopup()">No</a>
         </div>
-
-
-
     ';  
 }
 
@@ -319,41 +316,41 @@ if(isset($_POST['logout-btn'])){
             } 
         </script>
 		
-		
+
 		<!-- make the icon faded when howver on it -->
         <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const links = document.querySelectorAll("a");
+            document.addEventListener("DOMContentLoaded", function() {
+                const links = document.querySelectorAll("a");
 
-    links.forEach(function(link) {
-      link.addEventListener("mouseover", function() {
-        const icons = this.querySelectorAll("i");
-        const images = this.querySelectorAll(".icon img");
+                links.forEach(function(link) {
+                link.addEventListener("mouseover", function() {
+                    const icons = this.querySelectorAll("i");
+                    const images = this.querySelectorAll(".icon img");
 
-        icons.forEach(function(icon) {
-          icon.classList.add("fa-fade");
-        });
+                    icons.forEach(function(icon) {
+                    icon.classList.add("fa-fade");
+                    });
 
-        images.forEach(function(image) {
-          image.classList.add("fa-fade");
-        });
-      });
+                    images.forEach(function(image) {
+                    image.classList.add("fa-fade");
+                    });
+                });
 
-      link.addEventListener("mouseout", function() {
-        const icons = this.querySelectorAll("i");
-        const images = this.querySelectorAll(".icon img");
+                link.addEventListener("mouseout", function() {
+                    const icons = this.querySelectorAll("i");
+                    const images = this.querySelectorAll(".icon img");
 
-        icons.forEach(function(icon) {
-          icon.classList.remove("fa-fade");
-        });
+                    icons.forEach(function(icon) {
+                    icon.classList.remove("fa-fade");
+                    });
 
-        images.forEach(function(image) {
-          image.classList.remove("fa-fade");
-        });
-      });
-    });
-  });
-</script>
+                    images.forEach(function(image) {
+                    image.classList.remove("fa-fade");
+                    });
+                });
+                });
+            });
+        </script>
 		
 		
 		
