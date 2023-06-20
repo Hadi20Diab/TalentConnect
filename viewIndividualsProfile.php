@@ -4,22 +4,21 @@ require_once 'connection.php';
 
 
 if(isset($_GET['individual_ID']) ){
-    $university_id = $_GET['university_id'];
+    $individual_ID = $_GET['individual_ID'];
 
-    $selectuniversity = mysqli_query($conn,"SELECT * FROM universities WHERE university_id='$university_id' ");
+    $selectIndividual = mysqli_query($conn,"SELECT * FROM individuals WHERE individual_ID='$individual_ID' ");
 
-    $fetch_university = mysqli_fetch_assoc($selectuniversity);
+    $fetch_Individual = mysqli_fetch_assoc($selectIndividual);
 
 
-    $universityID=$fetch_university['university_ID'];
-    $university_Name=$fetch_university['university_Name'];
-    $university_acronym=$fetch_university['university_acronym'];
-    $university_Email=$fetch_university['university_Email'];
-    $university_PhoneNumber=$fetch_university['university_phoneNumber'];
-    $university_Logo=$fetch_university['university_Logo'];
-    $university_country=$fetch_university['university_country'];
-    $university_status=$fetch_university['university_Status'];
-    $university_About=$fetch_university['university_About'];
+    $universityID=$fetch_Individual['individual_ID'];
+    $individual_Name=$fetch_Individual['individual_Name'];
+    $individual_Email=$fetch_Individual['individual_Email'];
+    $individual_PhoneNumber=$fetch_Individual['individual_PhoneNumber'];
+    $individual_photo=$fetch_Individual['individual_photo'];
+    $individual_Country=$fetch_Individual['individual_Country'];
+    $individual_About=$fetch_Individual['individual_About'];
+    $individual_Linkedin=$fetch_Individual['individual_Linkedin'];
     echo'
  
     
@@ -30,7 +29,7 @@ if(isset($_GET['individual_ID']) ){
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>'. $university_Name . '</title>
+        <title>'. $individual_Name . '</title>
     </head>
     <body>
     
@@ -41,7 +40,7 @@ if(isset($_GET['individual_ID']) ){
     -->
     
     <link rel="stylesheet" href="css/CompanyProfileStyle.css">
-    <link rel="stylesheet" href="css/all_icon.css">
+    <link rel="stylesheet" href="css/all-icon.css">
     
     
     <section class="companyProfileContainer">
@@ -49,9 +48,9 @@ if(isset($_GET['individual_ID']) ){
     
             <div calss="companyLogo">
         
-                <img src="images/companies_universities_images/'. $university_Logo .' " class="logoIMG" alt="">
+                <img src="images/individuals_images/'. $individual_photo .' " class="logoIMG" alt="">
         
-                <h2>' . $university_Name . '</h2>
+                <h2>' . $individual_Name . '</h2>
                 ';
                 if(!empty($university_Location)){ // if website link is set so will be display
                     echo'
@@ -77,11 +76,11 @@ if(isset($_GET['individual_ID']) ){
                     </div>
                 ';
             }
-            if(!empty($university_Linkedin)){ // if linkedin link is set so will be display
+            if(!empty($individual_Linkedin)){ // if linkedin link is set so will be display
                 echo'
                     <div class="contactLinks" style="margin-top: 10px;">
                         <i class="fa fa-brands fa-linkedin"></i>
-                        <a href="'. $university_Linkedin .' " target="_blank">View linkedin Profile</a>
+                        <a href="'. $individual_Linkedin .' " target="_blank">View linkedin Profile</a>
                     </div>
                 ';
             }
@@ -119,7 +118,7 @@ if(isset($_GET['individual_ID']) ){
 
     <div class="about DIV">
         <h3>About</h3>
-        <p style="white-space: pre-line;">'. $university_About .' 
+        <p style="white-space: pre-line;">'. $individual_About .' 
         </p>
     </div>
 </section>
