@@ -13,8 +13,8 @@ include "structuralAdminPage.php";
 
             <!-- ======================= Cards ================== -->
             <h2 style="padding: 30px;">
-            <i class="fa-solid fa-pen-to-square fa-lg fa-xl" style="     color: var(--nav-main); "></i>  
-            View - Edit Courses
+                <i class="fa-solid fa-pen-to-square fa-lg fa-xl" style="     color: var(--nav-main); "></i>  
+                View - Edit Courses
             </h2>
 
             <div class="cardBox">

@@ -50,7 +50,7 @@ include "structuralAdminPage.php";
 
                 </a>
 
-                <a href="companys_Mangment.php">
+                <a href="Individuals_Managementy.php">
 
                     <div class="card">
                     
@@ -64,8 +64,7 @@ include "structuralAdminPage.php";
                         </div>
                     
                         <div class="iconBx">
-                            <i class="fa fa-regular fa-user"></i>
-                            <!-- <ion-icon name="cart-outline"></ion-icon> -->
+                          <i class="fa-solid fa-users-gear"></i>
                         </div>
                     </div>
 

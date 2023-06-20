@@ -28,7 +28,7 @@ include "structuralAdminPage.php";
     
     
     <a href="pendingCompany_Mangment.php?cid='.$cid.'" class="choice-btn yes">yes</a>
-    <a href="pendingCompany_Mangment.php" class="choice-btn no">No</a>
+    <a href="pendingCompany_Mangment.php" class="choice-btn no" onclick="closePopup()">No</a>
 
     
 
@@ -167,7 +167,7 @@ if(isset($_GET['cid'])){
 
 
            
-            <!-- ================ pending companies List ================= -->
+            <!-- ================ Pending Companies List ================= -->
             <div class="details">
                             <style>
                                 .scroll{
@@ -192,7 +192,7 @@ if(isset($_GET['cid'])){
                             <div class="cardHeader" style="margin:2.5rem 0 ;     justify-self: left;     place-items: center;">
                                 <a href="companys_Management.php" style="display: flex;     place-items: center;">
                                     <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: #4e6997;"></i>
-                                    <h2 style="margin: 0 20px;">pending companies</h2>
+                                    <h2 style="margin: 0 20px;">Pending Companies</h2>
                                 </a>
                                 
                             </div>
@@ -256,7 +256,7 @@ if(isset($_GET['cid'])){
                                 <td><a href="../viewCompanyProfile.php?company_id=<?= $company_id; ?>" class="foods-btn" target="_blank">View</a></td>
                                 <!--   <td><input type="submit" class="delete-btn"  name="delete-btn"  value="Block"></td> -->
                                 <td style="display: flex; ">
-                                    <a href="pendingCompany_Mangment.php?companypendingid=<?= $fetch_pending_companies['company_id']; ?>&name=<?= $fetch_pending_companies['company_Name']; ?>"  class="delete-btn" style="background-color: #39ff14;">Approved</a>
+                                    <a href="pendingCompany_Mangment.php?companypendingid=<?= $fetch_pending_companies['company_id']; ?>"  class="delete-btn" style="background-color: #39ff14;">Approved</a>
                                 
                                     <a href="pendingCompany_Mangment.php?companyblockid=<?= $fetch_pending_companies['company_id']; ?>&name=<?= $fetch_pending_companies['company_Name']; ?>"  class="delete-btn">Block</a>
                                 </td>
@@ -302,7 +302,7 @@ if(isset($_GET['cid'])){
                 else{
                 echo '</table>
                 <p class="empty" style="width: fit-content; margin-bottom: 19%;">
-                    No pending Companies Yet!
+                    No Pending Companies Yet!
                 </p>';
                 }
             ?>
@@ -323,7 +323,7 @@ if(isset($_GET['cid'])){
 
 
 </div>
-    <title>pending Companies</title>
+    <title>Pending Companies</title>
 
     <script>
         function closePopup(){

@@ -9,7 +9,10 @@ include "structuralAdminPage.php";
 
 
             <!-- ======================= Cards ================== -->
-            <h2 style="padding: 30px;">View - Edit Companies</h2>
+            <h2 style="padding: 30px;">
+                <i class="fa-solid fa-pen-to-square fa-lg fa-xl" style="     color: var(--nav-main); "></i>  
+                View - Edit Companies
+            </h2>
 
             <div class="cardBox">
 
@@ -34,18 +37,25 @@ include "structuralAdminPage.php";
 
                 </a>
 
-                <a href="addAndDeleteCompanies_Mangment.php">
-                    <div class="card">
-                        <div>
-                            <div class="cardName">Add/Delete Company</div>
+                <?php
+                if($fetch_profile['role']=='host'){
+                                    
+                ?>
+                    <a href="addAndDeleteCompanies_Mangment.php">
+                        <div class="card">
+                            <div>
+                                <div class="cardName">Add/Delete Company</div>
+                            </div>
+        
+                            <div class="iconBx">
+                                <i class="fas fa-light fa-building-circle-check"></i>                            <!-- <ion-icon name="storefront-outline"></ion-icon> -->
+                            </div>
                         </div>
-    
-                        <div class="iconBx">
-                            <i class="fas fa-light fa-building-circle-check"></i>                            <!-- <ion-icon name="storefront-outline"></ion-icon> -->
-                        </div>
-                    </div>
 
-                </a>
+                    </a>
+                <?php
+                }
+                ?>
 
                 <!-- <a href="companysAnalytics_Management.php">
 
@@ -71,7 +81,10 @@ include "structuralAdminPage.php";
             <!-- Company Status-->
 
             <!-- =======================Companies Cards ================== -->
-            <h2 style="padding: 30px;">Companies Status</h2>
+            <h2 style="padding: 30px;">
+                <i class="fa-solid fa-circle-exclamation fa-lg" style="     color: var(--nav-main); "></i>
+                Companies Status
+            </h2>
             <div class="cardBox">
                 <a href="pendingCompany_Mangment.php"  class="card pending" >
                     <?php

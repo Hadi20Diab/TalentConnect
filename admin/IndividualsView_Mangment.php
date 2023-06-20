@@ -7,10 +7,10 @@ include "structuralAdminPage.php";
 
  //alert window for confirm the deletion of a company
 //  if(isset($_GET['rid'])){
-//     $company_id= $_GET['rid'];
+//     $individual_ID= $_GET['rid'];
  
     
-//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$company_id'");
+//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$individual_ID'");
  
 //  header("location:companiesView_Mangment.php");
 
@@ -44,14 +44,14 @@ include "structuralAdminPage.php";
 ///IF THE ADMIN CLICK ON Pending
 if(isset($_GET['companypendingid'])){
     $companypendingid = $_GET['companypendingid'];
-    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='approved' WHERE company_id ='$companypendingid'");
+    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='approved' WHERE individual_ID ='$companypendingid'");
     header("location:companiesView_Mangment.php");
 
 }
 ///IF THE ADMIN CLICK ON Block
 if(isset($_GET['cid'])){
     $cid = $_GET['cid'];
-    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='blocked' WHERE company_id ='$cid'");
+    $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='blocked' WHERE individual_ID ='$cid'");
     header("location:companiesView_Mangment.php");
 
 }
@@ -179,8 +179,8 @@ if(isset($_GET['cid'])){
                             </style>
 
                 <?php
-                   $select_companies = mysqli_query($conn, "SELECT * FROM company ");
-                   $companies_count = mysqli_num_rows($select_companies);
+                   $select_individuals = mysqli_query($conn, "SELECT * FROM individuals ");
+                   $individuals_count = mysqli_num_rows($select_individuals);
 
 
 
@@ -188,9 +188,9 @@ if(isset($_GET['cid'])){
                         <div class="recentOrders scroll">
                             
                             <div class="cardHeader" style="margin:2.5rem 0 ;     justify-self: left;     place-items: center;">
-                                <a href="companys_Management.php" style="display: flex;     place-items: center; ">
+                                <a href="Individuals_Managementy.php" style="display: flex;     place-items: center; ">
                                     <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: #4e6997;"></i>
-                                    <h2 style="margin: 0 20px;">Companies</h2>
+                                    <h2 style="margin: 0 20px;">Individuals</h2>
                                 </a>
                                 
                             </div>
@@ -212,7 +212,7 @@ if(isset($_GET['cid'])){
                    ';
 
 
-                   if ($companies_count >0) {
+                   if ($individuals_count >0) {
                 ?>
 
                         <!-- Search Bar -->
@@ -221,7 +221,7 @@ if(isset($_GET['cid'])){
                             
                                 <div style="    display: flex;     flex-direction: row;     width: 50%;     margin: 0 25%;     border-radius: 20px;     flex-wrap: nowrap;     justify-content: center;     align-items: center;">
                                     <i class="fa fa-solid fa-magnifying-glass"></i>
-                                    <input type="text" name="" id="search-item" placeholder="Search By Company Name" onkeyup="pendingCompanySearch()" style="width: 50%;     height: 30px;     margin-left: 3%;     border: none;     border-radius: 20px;">                            
+                                    <input type="text" name="" id="search-item" placeholder="Search By Individual Name" onkeyup="pendingCompanySearch()" style="width: 50%;     height: 30px;     margin-left: 3%;     border: none;     border-radius: 20px;">                            
                                 </div>
 
 
@@ -231,26 +231,39 @@ if(isset($_GET['cid'])){
                         <?php
                                 $number = 0;
                              
-                                while ($fetch_pending_companies = mysqli_fetch_assoc($select_companies)) {
+                                while ($fetch_individuals = mysqli_fetch_assoc($select_individuals)) {
                                     $number +=1; 
-                                    $company_id = $fetch_pending_companies['company_id'];
+                                    $individual_ID = $fetch_individuals['individual_ID'];
 
                                     
                         ?>
                             <tr id="singleROW">
                                 <td><?= $number ?></td>
                                 <td width="60px">
-                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;"><img src="../images/companies_universities_images/<?= $fetch_pending_companies['company_Logo']; ?>" alt=""></div>
+                                    <div class="imgBx" style="width: 60px ; height:60px; border-radius:0;">
+                                        <?php
+                                            if($fetch_individuals['individual_photo'] != ""){
+                                                echo '
+                                                    <img src="../images/individuals_images/'. $fetch_individuals['individual_photo'] .'" alt="">
+                                                ';
+                                            }
+                                            else{
+                                                echo '
+                                                    <img src="../images/individuals_images/default_Image.png" alt="">
+                                                ';
+                                            }
+                                        ?>
+                                    </div>
                                 </td>
                                 <td class="companyName">
                                     <p>
-                                        <?= $fetch_pending_companies['company_Name']; ?>
+                                        <?= $fetch_individuals['individual_Name']; ?>
                                     </p>
                                 </td>
-                                <td><?= $fetch_pending_companies['company_Email']; ?></td>
-                                <td><?= $fetch_pending_companies['company_Country']; ?></td>
+                                <td><?= $fetch_individuals['individual_Email']; ?></td>
+                                <td><?= $fetch_individuals['individual_Country']; ?></td>
 
-                                <td><a href="../viewCompanyProfile.php?company_id=<?= $company_id; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <td><a href="../viewIndividualsProfile.php?individual_ID=<?= $individual_ID; ?>" class="foods-btn" target="_blank">View</a></td>
                             </tr>
 
                             <!-- Script Search Bar -->
@@ -313,7 +326,7 @@ if(isset($_GET['cid'])){
 
 
 </div>
-    <title>Companies</title>
+    <title>Individuals</title>
 
     <script>
         function closePopup(){
