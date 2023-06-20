@@ -192,7 +192,7 @@ if( isset($_GET['save_bookmarks'])  ){
                      }
                      else if ($courseProgress['course_Status']=="done") {
                         echo'
-                           <a id="downleadCertificate" class="a-btn"><i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Downlead Certificate</a>
+                           <a id="downleadCertificate" class="a-btn"><i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Download Certificate</a>
                         ';
                      }
                   }
@@ -238,11 +238,52 @@ if( isset($_GET['save_bookmarks'])  ){
             </h3>
             <p><?= $fetch_course['course_Description']; ?></p>
             <div style="display: flex;     justify-content: space-between;     align-items: center;">
-               <div class="date"><i class="fas fa-calendar" style="color: var(--nav-main);"></i><span><?= $fetch_course['course_Launch_Date']; ?></span></div>
-               <div> <h3>
-                        <i class="fa-solid fa-money-bill" style="color: var(--nav-main);"></i>
-                        <?= $fetch_course['course_Fees']; ?>$
-                     </h3></div>
+               <div class="date"><i class="fas fa-calendar" style="color: var(--nav-main);"></i><span><?= $fetch_course['course_Launch_Date']; ?></span>
+               </div>
+
+
+               <?php
+                  // Prepare the SQL query
+                  $query = "SELECT COUNT(*) AS total_rates, SUM(course_Rate) AS total_rate
+                  FROM course_progress
+                  WHERE course_ID = $course_id
+                    AND course_Rate != 0";
+
+                  // Execute the query
+                  $result = mysqli_query($conn, $query);
+
+                  // Check if the count query was successful
+                  if ($result) {
+                     // Fetch the count values
+                     $countRow = mysqli_fetch_assoc($result);
+                     $totalRates = $countRow['total_rates'];
+                     $totalRate = $countRow['total_rate'];
+                  
+                     // Calculate the average rate
+                     $averageRate = ($totalRates > 0) ? round($totalRate / $totalRates) : 0;
+                  } 
+               
+               ?>
+               <div class="rating-stars">
+                  <h5 style="color:black; margin-right: 10px;">
+                     Rate:
+                  </h5>
+                  <span class="star<?php echo ($averageRate >= 1) ? ' clicked' : ''; ?>" data-rating="1">&#9733;</span>
+                  <span class="star<?php echo ($averageRate >= 2) ? ' clicked' : ''; ?>" data-rating="2">&#9733;</span>
+                  <span class="star<?php echo ($averageRate >= 3) ? ' clicked' : ''; ?>" data-rating="3">&#9733;</span>
+                  <span class="star<?php echo ($averageRate >= 4) ? ' clicked' : ''; ?>" data-rating="4">&#9733;</span>
+                  <span class="star<?php echo ($averageRate >= 5) ? ' clicked' : ''; ?>" data-rating="5">&#9733;</span>
+               </div>
+
+
+
+
+               <div>
+                  <h3>
+                     <i class="fa-solid fa-money-bill" style="color: var(--nav-main);"></i>
+                     <?= $fetch_course['course_Fees']; ?>$
+                  </h3>
+               </div>
                </div>
             </div>
          </div>
@@ -345,8 +386,8 @@ if( isset($_GET['save_bookmarks'])  ){
 
 
 
-<!-- Script to Downlead Certificate button -->
-   <!-- Include the library to  Downlead Certificate-->
+<!-- Script toDownload Certificate button -->
+   <!-- Include the library to Download Certificate-->
    <script src="assets/js/cdnjs.cloudflare.com_ajax_libs_html2pdf.js_0.9.2_html2pdf.bundle.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 <?php
@@ -367,7 +408,7 @@ $certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_N
                   course_ID: <?= $course_id; ?>
                },
                beforeSend: function() {
-                  // Disable the  Downlead Certificate button temporarily
+                  // Disable the Download Certificate button temporarily
                   button.attr('disabled', 'disabled').html('<i class="fa-duotone fa-loader fa-spin-pulse"></i> Loading...');
                },
                success: function(response) {
@@ -380,8 +421,8 @@ $certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_N
                };
                html2pdf().from(response).set(option).save();
 
-                  // Re-enable the Downlead Certificate button
-               button.removeAttr('disabled').html('<i class="fa-regular fa-file-certificate" style="margin-right:5px"></i> Downlead Certificate');
+                  // Re-enable theDownload Certificate button
+               button.removeAttr('disabled').html('<i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Download Certificate');
                }
          });
       });
@@ -810,6 +851,21 @@ section.videos-container {
    cursor: pointer;
    
 }
+.rating-stars {
+  font-size: 24px;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.rating-stars .star {
+  display: inline-block;
+}
+
+.clicked {
+   color: var(--nav-main);
+}
+
 
 </style>
 

@@ -22,7 +22,6 @@
 
   }
 ?>
-
 <!-- check the individual is watch the previous video or not  -->
 
 <?php
@@ -361,11 +360,100 @@ else{
             }
             else{
                echo'
-                  <a id="downleadCertificate" class="a-btn"><i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Downlead Certificate</a>
+                  
+                  <div class="rating-stars">
+                     <h5 style="color:black; margin-right: 10px;">
+                        Rate Course:
+                     </h5>
+                     
+                     <span class="star" data-rating="1">&#9733;</span>
+                     <span class="star" data-rating="2">&#9733;</span>
+                     <span class="star" data-rating="3">&#9733;</span>
+                     <span class="star" data-rating="4">&#9733;</span>
+                     <span class="star" data-rating="5">&#9733;</span>
+                  </div>
+                  <input type="hidden" id="course_id" value="'. $course_ID .'">
+                  <input type="hidden" id="individual_ID" value="'. $individual_ID .'">
+
+                  <a id="downleadCertificate" class="a-btn"><i class="fa-regular fa-file-certificate" style="margin-right:5px"></i>Download Certificate</a>
                ';
+               ?>
+            <style>
+               .rating-stars {
+               font-size: 24px;
+               color: #ccc;
+               display: block;
+               }
+
+               .rating-stars .star {
+               cursor: pointer;
+               display: inline-block;
+               }
+
+               .rating-stars .star:hover,
+               .rating-stars .star:hover ~ .star {
+               color: var(--nav-main);
+               }
+
+               .rating-stars.clicked .star {
+               color: var(--nav-main);
+               }
+
+               .rating-stars.clicked .star:hover ~ .star {
+               color: #ccc;
+               }
+
+            </style>
+            <script>
+               // Get the parent element of the stars
+               const ratingStars = document.querySelector('.rating-stars');
+
+               // Get all the star elements
+               const stars = ratingStars.querySelectorAll('.star');
+
+               // Add event listeners to each star
+               stars.forEach(star => {
+                  star.addEventListener('click', () => {
+                     ratingStars.classList.add('clicked');
+                     star.classList.add('clicked');
+                  });
+
+                  star.addEventListener('mouseenter', () => {
+                     ratingStars.classList.add('hovered');
+                     star.classList.add('hovered');
+                  });
+
+                  star.addEventListener('mouseleave', () => {
+                     ratingStars.classList.remove('hovered');
+                     star.classList.remove('hovered');
+                  });
+               });
+
+
+
+
+
+               $(document).ready(function() {
+                  // Handle star click event
+                  $('.rating-stars .star').click(function() {
+                     var rating = $(this).data('rating');
+                     var courseId = $('#course_id').val();
+                     var individual_ID = $('#individual_ID').val();
+
+                     // Send the rating data to the server using AJAX to udate rating for the course
+                     $.ajax({
+                           url: 'rate_course.php',
+                           method: 'POST',
+                           data: { course_id: courseId, individual_ID: individual_ID , rating: rating },
+                     });
+                  });
+               });
+
+            </script>
+            <?php
             }
+            ?>
             
-         ?>
       </div>
    </div>
    <?php
@@ -496,8 +584,8 @@ $certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_N
 ?>
 
 
-<!-- Script to Downlead Certificate button -->
-   <!-- Include the library to  Downlead Certificate-->
+<!-- Script to Download Certificate button -->
+   <!-- Include the library to  Download Certificate-->
    <script src="assets/js/cdnjs.cloudflare.com_ajax_libs_html2pdf.js_0.9.2_html2pdf.bundle.js"></script>
    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script> -->
 
@@ -516,7 +604,7 @@ $certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_N
                   course_ID: <?= $course_ID; ?>
                },
                beforeSend: function() {
-                  // Disable the  Downlead Certificate button temporarily
+                  // Disable the  Download Certificate button temporarily
                   button.attr('disabled', 'disabled').html('<i class="fa-duotone fa-loader fa-spin-pulse"></i> Loading...');
                },
                success: function(response) {
@@ -529,8 +617,8 @@ $certificate_Name= $fetch_profile['individual_Name']."_".$fetch_course['course_N
                };
                html2pdf().from(response).set(option).save();
 
-                  // Re-enable the Downlead Certificate button
-               button.removeAttr('disabled').html('<i class="fa-regular fa-file-certificate" style="margin-right:5px"></i> Downlead Certificate');
+                  // Re-enable the Download Certificate button
+               button.removeAttr('disabled').html('<i class="fa-regular fa-file-certificate" style="margin-right:5px"></i> Download Certificate');
                }
          });
       });
