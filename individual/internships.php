@@ -4,7 +4,7 @@
 
 ?>
 <script>
-  document.getElementById("Scholarship-LeftBar").classList.add("actived");
+  document.getElementById("InternshipManagement-LeftBar").classList.add("actived");
 </script>
 
 
@@ -67,31 +67,7 @@
       Personalized Scholarship Suggestions
     </h1>
     <div class="scholarships">
-        <!-- <div class="stack" id="">
-            <a href="">
-                <div class="stack-details" id="">
-                    <h3>
-                        Lorem ipsum dolor sit
-                    </h3>
-                    <div class="work-location">
-                        <span class="fees">
-                            <i class="fas fa-money-bill"></i>
-                            asd
-                        </span>
-                        <span class="date">
-                            <i class="fas fa-calendar"></i>
-                            02/02/2022
-                        </span>
-
-                    </div>
-                    <span class="see-details">See Details</span>
-                </div>
-            </a>
-        </div>         -->
         
-
-
-
       <?php
         // Fetch all scholarships from the database
         // Query the database and fetch all scholarship records
@@ -99,7 +75,7 @@
         // Display each scholarship as a card
 
         // Fetch all scholarships from the database
-        $sql = "SELECT * FROM scholarships";
+        $sql = "SELECT * FROM internship";
         $result = $conn->query($sql);
         
         // Display each scholarship as a card
@@ -109,39 +85,35 @@
 
 
                 <div class=\"stack\" id=\"stack\">
-                    <a href=\"scholarshipDetails.php?scholarshipId=".$row['scholarship_id']."\">
-                        <div class=\"stack-details\" id=\"stack-details\">
-                            <h3>
-                                ". $row['scholarship_title']." 
-                            </h3>
-                            <div class=\"work-location\">
-                                <span class=\"fees\">
-                                    <i class=\"fas fa-money-bill\"></i>
-                                    ".$row['award_amount']."
-                                </span>
-                                <span class=\"date\">
-                                    <i class=\"fas fa-calendar\"></i>
-                                    ".$row['application_deadline']."
-                                </span>
-
-                            </div>
-                            <span class=\"see-details\">See Details</span>
+                <a href=\"internshipDetails.php?internshipId=".$row['internship_ID']."\">
+                    <div class=\"stack-details\" id=\"stack-details\">
+                        <h3>
+                            ". $row['internship_Title']." 
+                        </h3>
+                        <div class=\"work-location\">
+                            <span>
+                                <i class=\"fa fa-thin fa-briefcase\"></i>
+                                ". $row['work']." 
+                            </span>
+                            <span>
+                                <i class=\"fas fa-location-arrow\"></i>
+                                ". $row['location']."  
+                            </span>
+                            <span>
+                                <i class=\"fa fa-thin fa-stopwatch\"></i>
+                                ". $row['commitment']." 
+                            </span>
+                            <span>
+                              <i class=\"fa fa-solid fa-hourglass\"></i>
+                              ".$row['period']."
+                        </span>
                         </div>
-                    </a>
+                        <span class=\"see-details\">See Details</span>
+                    </div>
+                </a>
                 </div>
 
                 ";
-
-                // $scholarshipId = $row['scholarship_id'];
-                // $scholarshipTitle = $row['scholarship_title'];
-                // $scholarshipDescription = $row['scholarship_description'];
-                // // ...
-                
-                // echo '<div class="scholarship-card">';
-                // echo '<h2>'.$scholarshipTitle.'</h2>';
-                // echo '<p>'.$scholarshipDescription.'</p>';
-                // echo '<a href="scholarship.php?id='.$scholarshipId.'">View Details</a>';
-                // echo '</div>';
             }
         }
       ?>
@@ -171,10 +143,10 @@
     color: black;
 }
 .stack-details h3 {
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     line-height: 30px;
     height: 100px;
-    height: 90px;
+    height: 80px;
 }
 .see-details {
     align-self: end;

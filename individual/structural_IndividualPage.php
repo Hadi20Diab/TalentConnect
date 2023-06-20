@@ -171,7 +171,7 @@ if(isset($_POST['logout-btn'])){
                     </li>
 
                     <li>
-                        <a href="delivery.php" id="InternshipManagement-LeftBar">
+                        <a href="internships.php" id="InternshipManagement-LeftBar">
                             <span class="icon">
                                 <img class="imgIcon" src="https://cdn-icons-png.flaticon.com/512/8920/8920564.png" alt="">
                                 <!-- <i class="fa-solid fa-truck"></i> -->
