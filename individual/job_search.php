@@ -38,8 +38,18 @@
 
 ?>
 
+    <div class="row">
+        <input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>" style="width: 25rem;      height: 2rem;   margin: 1.6rem 0 10px ;    border-radius: 5px;     border: solid 0.5px gray; ">          <!-- set job position selected before -->
+    
+        <div class="SelectRow">
+            <label for="yearOfExperiance">Experiance Year:</label>
+    
+            <input type="number" name="yearOfExperiance" id="" placeholder="Experiance Year"  value="<?= isset($_GET['yearOfExperiance']) ? $_GET['yearOfExperiance'] : '' ?>" style="width: 25rem;      height: 2rem;   margin: 10px 0;    border-radius: 5px;     border: solid 0.5px gray; ">          <!-- set job position selected before -->
+            <!-- maxlength="2" -->
+        </div>
+    </div>
 
-<input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>" style="width: 200px;      height: 2rem;   margin: 10px 0;    border-radius: 5px;     border: solid 0.5px gray; ">          <!-- set job position selected before -->
+
     <div class="row">
 
         <div class="SelectRow">
@@ -122,7 +132,7 @@
       </form>
 
       <?php
-// course Name is set?asadf
+// Job Postion is set?
 
 if(isset($_GET['jobPosition'])){
     echo'
@@ -143,12 +153,14 @@ if(isset($_GET['jobPosition'])){
     if(isset($_GET['jobType'])){
         
         $jobPosition = $_GET['jobPosition'];
+        $yearOfExperiance = $_GET['yearOfExperiance'];
         $jobType = $_GET['jobType'];
         $jobWorkPlace = isset($_GET['jobWorkPlace']) ? $_GET['jobWorkPlace'] : '';
         $category = isset($_GET['category']) ? $_GET['category'] : array();
         $job_Country = isset($_GET['job_Country']) ? $_GET['job_Country'] : array();
         
-        $sql = "SELECT DISTINCT jobs.*, company.*, universities.*
+        $sql = "SELECT DISTINCT jobs.*, company.company_id ,company_Name,company_Logo,
+                                        universities.university_ID ,university_Name,university_Logo
                 FROM jobs 
                     LEFT JOIN company ON deliveredBy = company_Name
                     LEFT JOIN universities ON universities.university_Name = jobs.deliveredBy
@@ -158,6 +170,10 @@ if(isset($_GET['jobPosition'])){
         
         if (!empty($jobPosition)) {
             $conditions[] = "position LIKE '%$jobPosition%'";
+        }
+
+        if (!empty($yearOfExperiance)) {
+            $conditions[] = "yearOfExperiance <= '$yearOfExperiance'";
         }
         
         if (!empty($jobType)) {
