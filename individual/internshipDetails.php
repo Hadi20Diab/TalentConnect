@@ -125,14 +125,13 @@ ul.t1 {
     list-style: disc;
 }
 ul.t1 li{
-    margin-top: 10px;
+    margin: 17px 0px;
 }
 .scholarship-details-intro-data div ul{
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .scholarship-details-intro-data h2 {
-
     margin: 30px 0px 8px;
 }
         </style>

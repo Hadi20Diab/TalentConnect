@@ -135,6 +135,7 @@
     padding: 25px 25px 10px 25px;
     border-radius: 5px;
     background-color: #eee;
+    transition: 0.5s;
 }
 .stack-details {
     display: flex;
@@ -174,7 +175,8 @@
 }
 
  .stack:hover{
-    box-shadow: 1px 9px 10px #333;
+  transform: translate3d(-5px, -12px, 0px);
+  box-shadow: 1px 1px 0 1px #f9f9fb, 0px -35px 19px 0px rgba(34, 33, 81, 0.01), 31px 34px 43px -10px rgba(34, 33, 81, 0.15);
 
 }
 .stack:hover .see-details {

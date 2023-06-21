@@ -23,6 +23,12 @@
             $query = "SELECT * From scholarships where scholarship_id=".$id."";
             $result = mysqli_query($conn,$query);
             $row= mysqli_fetch_assoc($result);
+
+            $qUniversityName= "SELECT university_Name,contact_email From universities where university_ID=".$row['provider_Id']."";
+            $resultUniversityName = mysqli_query($conn,$qUniversityName);
+            $rUniversity= mysqli_fetch_assoc($resultUniversityName);
+            $UniversityName=$rUniversity['university_Name'];
+            $UniversityContactEmail=$rUniversity['contact_email'];
             echo "
                 <title>Scholarships in ".$row['scholarship_title']."</title>
             ";
@@ -102,7 +108,19 @@
         width: 100%;
     }
 }
+ul.t1 {
+    list-style: disc;
+}
+ul.t1 li{
+    margin: 17px 0px;
+}
+.scholarship-details-intro-data div ul{
+    /* padding: 10px; */
+}
 
+.scholarship-details-intro-data h2 {
+    margin: 30px 0px 8px;
+}
 
 
 /*  */
@@ -115,6 +133,7 @@
 .scholarship-details-intro-data.dark{
     color: white;
 }
+
         </style>
     </head>
     <body>
@@ -135,7 +154,7 @@
                             <div>
                                 <span>
                                     <i class=\"fa fa-solid fa-person-sign fa-lg\"></i>
-                                    ".$row['provider_name']."
+                                    ".$UniversityName."
                                 </span>
                             </div>
                             <div>
@@ -161,17 +180,29 @@
                     </div>
                     <div class=\"scholarship-details-intro-data\" id=\"s_details\">
                         <h2>Eligibility Criteria</h2>
+                            
                         <p>
-                            ".$row['eligibility_criteria']."
+                                <ul class=\"t1\" id=\"q\">
+                                        "
+                                        .
+                                        $row['eligibility_criteria'].
+                                        "
+                                </ul>
+                            
                         </p>
                         <h2>Additional Requirements</h2>
                         <p>
-                            ".$row['additional_requirements']."
+                                <ul class=\"t1\" id=\"q\">
+                                    "
+                                    .
+                                    $row['additional_requirements'].
+                                    "
+                                </ul>
                         </p>
-                        <p>
-                            <span style=\"font-weight: bold\">Contact Email: </span>
-                            <a href=\"mailto: ".$row['contact_email']." \" style=\"\">
-                                ".$row['contact_email']."
+                        <p style=\" margin-top:30px;\">
+                            <span style=\"font-weight: bold;\">Contact Email: </span>
+                            <a href=\"mailto: ".$UniversityContactEmail." \" style=\"\">
+                                ".$UniversityContactEmail."
                             </a>
                         </p>
                         
@@ -180,6 +211,30 @@
             </div>
 
             ";
+            echo '
+            <script>
+                var target= document.querySelectorAll("ul");
+                var str;	
+                for(var i=0;i<target.length;i++){
+                    str= target[i].innerHTML;
+                    if(target[i].id=="q"){
+                    var arr = str.split("*");
+                        var final="<li>";
+                            for (let i = 0; i < arr.length; i++) {
+                        
+                                final+=arr[i];
+                                if(i==arr.length-1){
+                                    break;
+                                } 
+                                final+="</li><li>";
+                            
+                            } //end for
+                        target[i].innerHTML=final;
+            
+                        }
+            
+                    }   
+            </script>';
         ?>
     </body>
 </html>
