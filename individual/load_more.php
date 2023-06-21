@@ -4,7 +4,12 @@ include "../connection.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contentType = $_POST['contentType'];
     $offset = $_POST['offset'];
-    $individual_ID = $_POST['individual_ID'];
+	if($_POST['individual_ID']){
+		$individual_ID = $_POST['individual_ID'];
+	}
+	else{
+		$admin="";
+	}
  
     if ($contentType === 'comment') {
 
@@ -29,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h4><?= $fetch_comment['comment_Date'] ?></h4>
                     </div>
                     <?php
-                    if ($fetch_commentor['individual_ID'] == $individual_ID) {
+                    if ($fetch_commentor['individual_ID'] == $individual_ID || isset($admin)) {
                         echo '<button class="removeButton fa-solid fa-trash fa-lg" data-comment-id="' . $fetch_comment['comment_ID'] . '" style="border: none;     color: var(--nav-main);     position: absolute;     right: 2rem;     top: 2.5rem; cursor: pointer;"></button>';
                     }
                     ?>
