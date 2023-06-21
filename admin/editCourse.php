@@ -244,7 +244,7 @@ while ($row = mysqli_fetch_assoc($selectedFieldsResult)) {
 
   <label for="course_status"><i class="fa-solid fa-circle-info" style="color: var(--nav-main);"></i> Course Status: </label>
   <select id="course_status" name="course_status" required>
-    <option value="active" <?php if ($courseStatus == 'active') echo 'selected'; ?>>active</option>
+    <option value="active" <?php if ($courseStatus == 'active') echo 'selected'; ?>>Active</option>
     <option value="Inactive" <?php if ($courseStatus == 'Inactive') echo 'selected'; ?>>Inactive</option>
   </select>
 
