@@ -27,7 +27,7 @@
 
   </a>
 
-  <a href="savedScholarships.php">
+  <a href="savedInternship.php">
       <div class="card">
 
           <div>
