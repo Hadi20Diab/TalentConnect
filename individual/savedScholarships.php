@@ -42,9 +42,10 @@
 
 
 
-        // Display each scholarship as a card
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
+    // Display each scholarship as a card
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+
                 echo "
 
 
