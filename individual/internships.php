@@ -6,7 +6,7 @@
 <script>
   document.getElementById("InternshipManagement-LeftBar").classList.add("actived");
 </script>
-
+<title>Internships</title>
 
 
 <div class="cardBox">
@@ -61,10 +61,10 @@
 
 
 
-<div class="container">
+<div class="container" style="padding: 1rem;">
     <h1>
       <i class="fa-solid fa-hand-holding-dollar fa-lg" style="     color: var(--switchers-main); "></i>
-      Personalized Scholarship Suggestions
+      Personalized Internships Suggestions
     </h1>
     <div class="scholarships">
         
@@ -85,7 +85,7 @@
 
 
                 <div class=\"stack\" id=\"stack\">
-                <a href=\"internshipDetails.php?internshipId=".$row['internship_ID']."\">
+                <a href=\"internshipDetails.php?internshipId=".$row['internship_ID']."\" target='_black'>
                     <div class=\"stack-details\" id=\"stack-details\">
                         <h3>
                             ". $row['internship_Title']." 

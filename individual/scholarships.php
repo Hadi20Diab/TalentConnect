@@ -6,7 +6,7 @@
 <script>
   document.getElementById("Scholarship-LeftBar").classList.add("actived");
 </script>
-
+<title>Scholarships</title>
 
 
 <div class="cardBox">
@@ -61,9 +61,9 @@
 
 
 
-<div class="container">
+<div class="container" style="padding: 1rem;">
     <h1>
-      <i class="fa-solid fa-hand-holding-dollar fa-lg" style="     color: var(--switchers-main); "></i>
+      <i class="fa-solid fa-graduation-cap fa-lg" style="     color: var(--switchers-main); "></i>
       Personalized Scholarship Suggestions
     </h1>
     <div class="scholarships">
@@ -109,7 +109,7 @@
 
 
                 <div class=\"stack\" id=\"stack\">
-                    <a href=\"scholarshipDetails.php?scholarshipId=".$row['scholarship_id']."\">
+                    <a href=\"scholarshipDetails.php?scholarshipId=".$row['scholarship_id']."\" target='_black'>
                         <div class=\"stack-details\" id=\"stack-details\">
                             <h3>
                                 ". $row['scholarship_title']." 
@@ -128,9 +128,48 @@
                             <span class=\"see-details\">See Details</span>
                         </div>
                     </a>
-                </div>
 
-                ";
+
+                    ";
+                    //bookmark
+                    $scholarshipId= $row['scholarship_id'];
+                    $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND scholarships_ID = " . $scholarshipId ;
+
+                    // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
+                    $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+                    $bookmarkCount=mysqli_num_rows($bookmarkResult);
+
+
+                        if(!$bookmarkCount>0){ //is not saved before 
+                            echo'
+                                <a  class="addBookmark" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+
+                                    <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                                </a>
+                                <a class="removeBookmark hide" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+            
+                                    <i class="fas fa-bookmark fa-2xl" ></i>
+                                </a>
+                            ';
+                        }
+                        else{ // is saved before 
+                            echo'
+                                <a  class="addBookmark hide" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+
+                                    <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                                </a>
+                                <a class="removeBookmark" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+
+                                    <i class="fas fa-bookmark fa-2xl" ></i>
+                                </a>
+                            ';
+                        }
+
+                    // close stack div
+                    echo"
+                    </div> 
+                    ";
+
 
                 // $scholarshipId = $row['scholarship_id'];
                 // $scholarshipTitle = $row['scholarship_title'];
@@ -257,4 +296,52 @@ p {
   background-color: #204b99;
 } */
 
+
+.stack{
+        position: relative;
+    }
+    
+    .addBookmark, .removeBookmark{
+        position: absolute;
+        top: 5px;
+        right: 5%;
+        background-color: transparent;
+        color: var(--nav-main);
+    }
+    .hide{
+        display: none;
+    }
     </style>
+
+
+
+
+    <!-- script for Bookmarks add-remove -->
+    <script>
+
+        var addBookmarks = document.querySelectorAll('.addBookmark');
+        var removeBookmarks = document.querySelectorAll('.removeBookmark');
+
+        // Add event listener for each addBookmark button
+        addBookmarks.forEach(function(addBookmark) {
+        addBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var removeBookmark = parent.querySelector('.removeBookmark');
+
+            removeBookmark.style.display = 'block'; // Show the removeBookmark element
+            this.style.display = 'none'; // Hide the addBookmark element
+        });
+        });
+
+        // Add event listener for each removeBookmark button
+        removeBookmarks.forEach(function(removeBookmark) {
+        removeBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var addBookmark = parent.querySelector('.addBookmark');
+
+            addBookmark.style.display = 'block'; // Show the addBookmark element
+            this.style.display = 'none'; // Hide the removeBookmark element
+        });
+        });
+
+    </script>
