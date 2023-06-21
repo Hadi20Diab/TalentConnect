@@ -51,58 +51,59 @@ else{
             $linkedinProfile = 'https://' . $linkedinProfile;
         }
 
-        // $image = $_FILES['image']['name'];  
-        // $image_size = $_FILES['image']['size'];
-        // $image_tmp_name = $_FILES['image']['tmp_name'];
-        // $image_folder = '../images/companies_images/'.$image;
-        // $old_image = $_POST['old_image'];
-     
-
-        // if(!empty($image)){
-        //    if($image_size > 2000000){
-        //       $message[] = 'image size is too large!';
-        //    }else{
-        //      $update_image = mysqli_query($conn, "UPDATE `company` SET company_Logo = '$image' WHERE individual_ID = '$individual_ID' ") ;
-             
-        //       if($update_image){
-        //          move_uploaded_file($individual_ID, $image_folder); // we rename the image with the ID to avoid the conflict btw images name (may be 2 user upload image with same name)
-        //          if (!empty($old_image)){ // if image uploded for first time so we will not delete the preivous one
-        //             unlink('../images/companies_images/'.$old_image);
-        //          }
-        //         //  $message[] = 'image updated successfully!';
-        //       };
-        //    };
-        // };
 
 
 
-// -------------------------------------
-        // $image = $_FILES['image']['name'];
-        // $image_size = $_FILES['image']['size'];
-        // $image_tmp_name = $_FILES['image']['tmp_name'];
-        // $image_folder = '../images/companies_images/'.$individual_ID.'.jpg'; // Assuming you want to save the image with the ID as the filename and using the JPG format
-        // $old_image = $_POST['old_image'];
-        
-        // if (!empty($image)) {
-        //    if ($image_size > 2000000) {
-        //       $message[] = 'Image size is too large!';
-        //    } else {
-        //      if (move_uploaded_file($image_tmp_name, $image_folder)) {
-        //          $update_image = mysqli_query($conn, "UPDATE `company` SET company_Logo = '$image' WHERE individual_ID = '$individual_ID'");
-        //          if ($update_image) {
-        //              if (!empty($old_image)) {
-        //                 unlink('../images/companies_images/'.$old_image);
-        //              }
-        //              // $message[] = 'Image updated successfully!';
-        //          } else {
-        //              $message[] = 'Failed to update image in the database.';
-        //          }
-        //      } else {
-        //          $message[] = 'Failed to upload the image.';
-        //      }
-        //    }
+        // IMAGE Uploud
+
+        // Check if the 'image' field is set and not empty
+        if (isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
+          // Get the uploaded image details
+          $image = $_FILES['image']['name'];
+          $image_size = $_FILES['image']['size'];
+          $image_tmp_name = $_FILES['image']['tmp_name'];
+          $image_folder = '../images/individuals_images/'.$individual_ID.'.jpg'; // Assuming you want to save the image with the ID as the filename and using the JPG format
+          // $old_image = $_POST['old_image'];
+
+
+          // Process the uploaded image
+          if ($image_size > 0) {
+            if (move_uploaded_file($image_tmp_name, $image_folder)) {
+              // Update the individual's profile photo in the database
+              $update_image = mysqli_query($conn, "UPDATE `individuals` SET individual_photo = '$individual_ID.jpg' WHERE individual_ID = '$individual_ID'");
+              
+              
+              // if ($update_image) {
+              //   if (!empty($old_image)) {
+              //     // unlink('../images/individuals_images/'.$old_image);
+              //     $message[] = 'OLD Image deleted successfully!';
+              //   }
+              //   $message[] = 'Image updated successfully!';
+              // } else {
+              //   $message[] = 'Failed to update image in the database.';
+              // }
+            } 
+            // else {
+            //   $message[] = 'Failed to upload the image.';
+            // }
+          }
+        }
+        // else {
+        //   // No image uploaded
+        //   $message[] = 'No image uploaded.';
         // }
-        
+
+        // Output any messages
+        // if (!empty($message)) {
+        //   foreach ($message as $msg) {
+        //     echo $msg . "<br>";
+        //   }
+        // }
+
+
+
+
+
 
         
         // UPDATE graduation status
@@ -142,22 +143,19 @@ else{
         //   mysqli_query($conn, $insertQuery);
         // }
 
-
-
-
-        $pass="21232f297a57a5a743894a0e4a801fc3";//admin
-
         $updateProfileQuery = mysqli_query($conn, "UPDATE `individuals` SET individual_Name = '$individualName', individual_Email = '$Email', individual_PhoneNumber = '$PhoneNumber', individual_Country = '$country', individual_Linkedin = '$linkedinProfile', individual_About = '$about',  individual_Major = '$Major'  WHERE individual_ID = '$individual_ID'");
 
+        
+      if($_POST['individualName']){
 
         // check if pending or not, if he pending so the admin will review his infromation
-          if ($select_individual['individual_Status']=="pending"){
+          if ($select_individual['individual_Status']=="pending" || $select_individual['individual_Status']=="blocked"){
             echo '<div class="popup " id="popup" style="    top: 50%;">
                     <img src="../admin/assets/imgs/pending.png" >
                     <h2>Our team is currently reviewing your account details. </h2>
                     <p>Please stay tuned for further instructions or contact our support team for more information.</p>
                     <button type="button">
-                      <a href="logout.php" style="text-decoration: none;">OK</a>
+                      <a href="logout.php" style="text-decoration: none; width:100%">OK</a>
                     </button>
                   </div>    
                 ';
@@ -165,12 +163,23 @@ else{
           else {
             header('location:home.php');
           }
+      }
 
         if (!$updateProfileQuery) {
           echo "Update query error: " . mysqli_error($conn);
         }
     }
 ?>
+
+<?php
+    // fetch individual
+    $sql="SELECT * FROM individuals WHERE individual_ID='$individual_ID' ";
+    // Execute the query
+    $result = mysqli_query($conn, $sql);
+    
+    $select_individual = mysqli_fetch_assoc($result);
+    ?>
+
 
 
   <!-- Search Script For Select -->
@@ -205,18 +214,20 @@ else{
 
 
 
-<form action="updateProfile.php" method="POST" enctype="../images/companies_images">
+<form action="updateProfile.php" method="POST" enctype="multipart/form-data">
 <h2 style="text-align: center;">Update Your Profile</h2>
 
 
-<input type="hidden" name="old_image" value="<?php echo $old_image; ?>">
+<!-- <input type="hidden" name="old_image" value="<php echo $old_image; ?>"> -->
 <div class="profile-photo">
     <label for="profilePhoto" class="edit-icon">
       <i class="fa-regular fa-pen-to-square"></i>
     </label>
 
     
+    <!-- <input type="file" id="profilePhoto" name="image" accept="image/jpg, image/jpeg, image/png" onchange="previewImage(event)"> -->
     <input type="file" id="profilePhoto" name="image" accept="image/jpg, image/jpeg, image/png" onchange="previewImage(event)">
+    
     <?php
     if ($select_individual['individual_photo']) {
       echo'

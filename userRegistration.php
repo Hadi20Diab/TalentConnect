@@ -65,8 +65,8 @@ if ($type === 'company') {
             $result = mysqli_query($conn, $sql);
             if ($result) {
 
-                $_SESSION['company_id'] = $row['company_id'];
-                $_SESSION['company_Email'] = $row['company_Email'];
+                $_SESSION['company_id'] =  mysqli_insert_id($conn);
+                // $_SESSION['company_Email'] = $row['company_Email'];
 
                 header("location: company/updateProfile.php");
 
@@ -121,8 +121,8 @@ if ($type === 'company') {
           $result = mysqli_query($conn, $sql);
           if ($result) {
 
-            $_SESSION['university_ID'] = $row['university_ID'];
-            $_SESSION['university_Email'] = $row['university_Email'];
+            $_SESSION['university_ID'] =  mysqli_insert_id($conn);
+            // $_SESSION['university_Email'] = $row['university_Email'];
 
             header("location: university/updateProfile.php");
   
@@ -171,8 +171,9 @@ if ($type === 'company') {
 
           if ($result) {
             
-            $_SESSION['individual_ID'] = $row['individual_ID'];
-            $_SESSION['individual_Email'] = $row['individual_Email'];
+            $_SESSION['individual_ID'] = mysqli_insert_id($conn);
+            // $_SESSION['individual_ID'] = $row['individual_ID'];
+            // $_SESSION['individual_Email'] = $row['individual_Email'];
             
             
             header("location: individual/updateProfile.php");
