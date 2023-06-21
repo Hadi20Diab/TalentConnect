@@ -191,6 +191,7 @@ include_once 'structuralAdminPage.php';
                                     <td>Email</td>
                                     
                                     <td>Status</td>
+                                    <td>View</td>
                                     <td>Delete</td>
                                 </tr>
                             </thead>
@@ -255,6 +256,9 @@ include_once 'structuralAdminPage.php';
                                         <td>
                                             <?= $fetch_Individual['individual_Status']; ?>
                                         </td>
+
+                                        <td><a href="../viewIndividualsProfile.php?individual_ID=<?= $fetch_Individual['individual_ID']; ?>" class="foods-btn" target="_blank">View</a></td>
+
                                         
                                         <!--<td><input type="submit" class="delete-btn" name="delete-btn"  value="Delete"></td> -->
                                         <td><a href="addAndDeleteIndividuals_Mangment.php?aid=<?= $fetch_Individual['individual_ID']; ?>&aname=<?= $fetch_Individual['individual_Name']; ?>"  class="delete-btn">Delete</a></td>
@@ -293,5 +297,27 @@ include_once 'structuralAdminPage.php';
 
         <title>Manage Company</title>
     </body>
+
+    <style>
+        .foods-btn{
+            background-color: #ffd700;
+            color: var(--white);
+            border-radius: 10px;
+            text-decoration: none;
+            width: 11rem;
+            padding: 0.7rem;
+            font-weight: 400;
+            font-size: large;
+            border: none;
+            transition: 0.5s ease;
+        }
+
+        .foods-btn:hover {
+            letter-spacing: 0.4rem;
+            /* width: 13rem; */
+            cursor: pointer;
+            
+        }
+    </style>
 
 </html>

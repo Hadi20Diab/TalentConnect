@@ -63,7 +63,7 @@ if( isset($_GET['save_bookmarks'])  ){
    <?php
          $select_course =  mysqli_query($conn,"SELECT * FROM `courses`
          INNER JOIN company ON company.company_Name  = courses.course_Creator
-         WHERE course_ID = $course_id and course_Status = 'active' LIMIT 1");
+         WHERE course_ID = $course_id LIMIT 1");
 
 
          if(mysqli_num_rows($select_course) > 0){
@@ -80,7 +80,7 @@ if( isset($_GET['save_bookmarks'])  ){
          "SELECT * FROM courses 
          INNER JOIN universities ON universities.university_Name  = courses.course_Creator
 
-         WHERE course_ID = $course_id and course_Status = 'active' LIMIT 1");
+         WHERE course_ID = $course_id LIMIT 1");
 
 
             if(mysqli_num_rows($select_course) > 0){

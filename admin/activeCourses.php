@@ -3,6 +3,60 @@
 include "structuralAdminPage.php";
 
 // mysqli_report(MYSQLI_REPORT_STRICT);
+
+
+ //alert window for confirm the deletion of a company
+//  if(isset($_GET['rid'])){
+//     $course_ID= $_GET['rid'];
+ 
+    
+//  $delete_company = mysqli_query($conn, "UPDATE `companies` SET status='rejected' WHERE id='$course_ID'");
+ 
+//  header("location:activeCourses.php");
+
+//  }
+
+//  makeInactive_ID
+  if(isset($_GET['makeInactive_ID']) && isset($_GET['name'])){
+    $cid = $_GET['makeInactive_ID'];
+    $name= $_GET['name'];
+    echo ' 
+    <div class="popup "  id="popup" style="box-shadow: 0 5px 10px rgba(0,0,0,0.4); background-image: linear-gradient(to top, var(--nav-main), rgb(255, 255, 255)); ">
+    <img src="assets/imgs/question.jpg" >
+    <h2 style="color:var(--nav-main);">Question</h2>
+    <p style="margin-bottom:3rem;">Are you sure you want to make the course <span style="color:red; font-weight:500;">'.$name.'</span> Inactive?</p>
+    
+    
+    <a href="activeCourses.php?cid='.$cid.'" class="choice-btn yes">yes</a>
+    <a href="activeCourses.php" class="choice-btn no" onclick="closePopup()">No</a>
+
+    
+
+</div>
+
+
+
+';
+}
+
+// ///IF THE ADMIN CLICK ON Pending
+// if(isset($_GET['companypendingid'])){
+//     $companypendingid = $_GET['companypendingid'];
+//     $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='approved' WHERE course_ID ='$companypendingid'");
+//     header("location:activeCourses.php");
+
+// }
+
+
+///IF THE ADMIN CLICK ON Block
+if(isset($_GET['cid'])){
+    $cid = $_GET['cid'];
+    $update_company = mysqli_query($conn, "UPDATE `courses` SET course_Status='Inactive' WHERE course_ID ='$cid'");
+    echo '<script>window.location.href = "activeCourses.php";</script>';
+
+    // header("location:activeCourses.php");
+}
+
 ?>
 
 
@@ -50,32 +104,32 @@ include "structuralAdminPage.php";
         width: 100%;
       }
       .foods-btn{
-        background-color:#ffd700;
-        color: var(--white);
-        border-radius: 10px;
-        text-decoration: none;
-        
-        width: 11rem;
+  background-color:#ffd700;
+  color: var(--white);
+  border-radius: 10px;
+  text-decoration: none;
+  
+  width: 11rem;
 
-        padding: 0.7rem;
-            
-        font-weight: 400;
-        font-size: large;
-        
-        border: none;
-        transition: 0.5s ease;
-        }
+  padding: 0.7rem;
+    
+    
+    
+    font-weight: 400;
+    font-size: large;
+    
+    border: none;
+    transition: 0.5s ease;
+  
+
+}
 .foods-btn:hover{
-  /* letter-spacing: 0.4rem; */
+  
+  letter-spacing: 0.4rem;
   width: 13rem;
   cursor: pointer;
-  /* transform: scale(1.5); */
-}
-.view-td:hover{
-  transform: scale(1.2);
-  transition: 0.5s ease;
-}
 
+}
 .navigation ul li a.actived::before,
 .navigation ul li a.actived::before{
   content: "";
@@ -114,48 +168,46 @@ include "structuralAdminPage.php";
 
 
            
-            <!-- ================ pending companies List ================= -->
+            <!-- ================ Active Courses List ================= -->
             <div class="details">
-                            <style>
-                                /* .scroll{
+                            <!-- <style>
+                                .scroll{
                                     overflow: scroll;
-                                } */
+                                }
                                 .scroll::--webkit-scrollbar{
                                     display:none;
                                 }
-                            </style>
-
+                            </style> -->
                 <?php
-                   $select_courses = mysqli_query($conn, "SELECT * FROM courses ");
-                   $courses_count = mysqli_num_rows($select_courses);
+                   $select_active_courses = mysqli_query($conn,"SELECT course_ID,course_Name,course_Category,course_Creator,course_Fees FROM `courses` WHERE course_Status ='active'");
+                   $pending_active_count = mysqli_num_rows($select_active_courses);
 
 
 
                    echo '
+                   
+                   
+                   
                         <div class="recentOrders scroll">
                             
-                            <div class="cardHeader" style="margin:2.5rem 0 ; justify-self: left; place-items: center;">
-                                <a href="courses_Management.php" style="display: flex; place-items: center; ">
+                            <div class="cardHeader" style="margin:2.5rem 0 ;     justify-self: left;     place-items: center;">
+                                <a href="courses_Management.php" style="display: flex;     place-items: center;">
                                     <i class="fa fa-light fa-circle-chevron-left fa-xl" style="color: #4e6997;"></i>
-                                    <h2 style="margin: 0 20px;">Courses</h2>
+                                    <h2 style="margin: 0 20px;">Active Courses</h2>
                                 </a>
-
+                                
                             </div>
         
                             <table >
                                 <thead>
                                 <tr>
                                     <td>No.</td>
-                                    
                                     <td>Name</td>
                                     <td>Category</td>
-                                    <!--
-                                    <td>Description</td>
-                                    -->
                                     <td>Creator</td>
                                     <td>Fees</td>
                                     <td>View</td>
-                                     
+                                    <td>Make it Inactive</td>
                                     
                                 </tr>
 
@@ -163,7 +215,7 @@ include "structuralAdminPage.php";
                    ';
 
 
-                   if ($courses_count >0) {
+                   if ($pending_active_count >0) {
                 ?>
 
                         <!-- Search Bar -->
@@ -172,7 +224,7 @@ include "structuralAdminPage.php";
                             
                                 <div style="    display: flex;     flex-direction: row;     width: 50%;     margin: 0 25%;     border-radius: 20px;     flex-wrap: nowrap;     justify-content: center;     align-items: center;">
                                     <i class="fa fa-solid fa-magnifying-glass"></i>
-                                    <input type="text" name="" id="search-item" placeholder="Search By courses Name" onkeyup="pendingCompanySearch()" style="width: 50%;     height: 30px;     margin-left: 3%;     border: none;     border-radius: 20px;">                            
+                                    <input type="text" name="" id="search-item" placeholder="Search By Course Name" onkeyup="pendingCompanySearch()" style="width: 50%;     height: 30px;     margin-left: 3%;     border: none;     border-radius: 20px;">                            
                                 </div>
 
 
@@ -182,9 +234,9 @@ include "structuralAdminPage.php";
                         <?php
                                 $number = 0;
                              
-                                while ($fetch_pending_companies = mysqli_fetch_assoc($select_courses)) {
+                                while ($fetch_active_course = mysqli_fetch_assoc($select_active_courses)) {
                                     $number +=1; 
-                                    $course_id = $fetch_pending_companies['course_ID'];
+                                    $course_ID = $fetch_active_course['course_ID'];
 
                                     
                         ?>
@@ -192,17 +244,23 @@ include "structuralAdminPage.php";
                                 <td><?= $number ?></td>
                                 <td class="companyName">
                                     <p>
-                                        <?= $fetch_pending_companies['course_Name']; ?>
-                                </p>
+                                        <?= $fetch_active_course['course_Name']; ?>
+                                    </p>
                                 </td>
-                                <td><?= $fetch_pending_companies['course_Category']; ?></td>
-                                <!-- <td>< $fetch_pending_companies['course_Description']; ?></td> -->
-                                <td><?= $fetch_pending_companies['course_Creator']; ?></td>
-                                <td><?= $fetch_pending_companies['course_Fees']; ?>$</td>
+                                <td class="companyName">
+                                    <p>
+                                        <?= $fetch_active_course['course_Category']; ?>
+                                    </p>
+                                </td>
+                                <td><?= $fetch_active_course['course_Creator']; ?></td>
+                                <td><?= $fetch_active_course['course_Fees']; ?>$</td>
 
-                                <td class="view-td">
-                                    <a href="viewCourse.php?course_id=<?= $course_id; ?>" class="foods-btn" target="_blank">View</a>
+                                <td><a href="viewCourse.php?course_id=<?= $course_ID; ?>" class="foods-btn" target="_blank">View</a></td>
+                                <!--   <td><input type="submit" class="delete-btn"  name="delete-btn"  value="Block"></td> -->
+                                <td>
+                                    <a href="activeCourses.php?makeInactive_ID=<?= $fetch_active_course['course_ID']; ?>&name=<?= $fetch_active_course['course_Name']; ?>"  class="delete-btn">Inactive</a>
                                 </td>
+                                
                             </tr>
 
                             <!-- Script Search Bar -->
@@ -244,7 +302,7 @@ include "structuralAdminPage.php";
                 else{
                 echo '</table>
                 <p class="empty" style="width: fit-content; margin-bottom: 19%;">
-                    No Courses Yet!
+                    No Active Courses Yet!
                 </p>';
                 }
             ?>
@@ -265,10 +323,8 @@ include "structuralAdminPage.php";
 
 
 </div>
-    <title>Courses</title>
-    <script>
-        document.getElementById("CourseManagement-LeftBar").classList.add("actived");
-    </script>
+    <title>Active Courses</title>
+
     <script>
         function closePopup(){
             var popup = document.getElementById("popup");

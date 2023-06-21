@@ -211,8 +211,9 @@ include "structuralAdminPage.php";
                          <input type="text" style="color: black;" name="course_name" required placeholder="Course Name" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">                   
                          
                          <input type="text" style="color: black;" name="course_description" required placeholder="Course Description" class="box" oninput="this.value = this.value.replace(/\s/g, "")">                   
+                         <!--
                          <input type="text" style="color: black;" name="course_instructor" required placeholder="Instructor Name" maxlength="50"  class="box" oninput="this.value = this.value.replace(/\s/g, "")">                   
-                         
+                         -->
                          
                          <select name="course_creator" id="" style="padding: 1.2rem;     width: 90%;     margin: 4% 5%;     border-radius: 0.8rem;">
                             <option value="">->Course Creator <-</option>
@@ -305,6 +306,7 @@ include "structuralAdminPage.php";
                                     <td>Category</td>
                                     <td>Fees</td>
                                     <td>Description</td>
+                                    <td>View</td>
                                     <td>Delete</td>
                                 </tr>
                             </thead>
@@ -373,11 +375,15 @@ include "structuralAdminPage.php";
                                         <td>
                                             <?= $fetch_course['course_Fees']; ?>
                                         </td>
-                                        
+
                                         <td>
                                             <textarea name="" id="" readonly style="width: 200px;     min-height: 50px;   resize: vertical;     border: none;     border-radius: 10px;">
                                                 <?= $fetch_course['course_Description']; ?>
                                             </textarea>
+                                        </td>
+
+                                        <td class="view-td">
+                                            <a href="viewCourse.php?course_id=<?= $fetch_course['course_ID']; ?>" class="foods-btn" target="_blank">View</a>
                                         </td>
                                         <!--<td><input type="submit" class="delete-btn" name="delete-btn"  value="Delete"></td> -->
                                         <td><a href="addAndDeleteCourses_Mangment.php?cid=<?= $fetch_course['course_ID']; ?>&cname=<?= $fetch_course['course_Name']; ?>"  class="delete-btn">Delete</a></td>
