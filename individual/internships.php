@@ -45,22 +45,6 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="container" style="padding: 1rem;">
     <h1>
       <i class="fa-solid fa-hand-holding-dollar fa-lg" style="     color: var(--switchers-main); "></i>
