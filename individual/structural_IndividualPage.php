@@ -278,18 +278,18 @@ if(isset($_POST['logout-btn'])){
                             ?>
 
                     <div class="user" style="border-radius:50%; margin-right:2rem; width:3rem; height:3rem; ">
-                    <?php
-                        if(empty($fetch_profile['individual_photo'])){ // if the user doesn't set photo 
+                        <?php
+                            if(empty($fetch_profile['individual_photo'])){ // if the user doesn't set photo 
 
-                            ?>
-                            <ion-icon name="person-outline" id="user-btn" style=" margin:.5rem; font-size:40px; font-weight:500;margin-left:.3rem;margin-right:5rem;  border-radius:50%;"></ion-icon>
-                    <?php
-                        }else{
-                            ?>
-                            <img id="user-btn" src="../images/individuals_images/<?= $fetch_profile['individual_photo']; ?>" alt="<?= $fetch_profile['individual_Name']; ?>" srcset="">
-                    <?php
-                        }
-                    ?>
+                                ?>
+                                <ion-icon name="person-outline" id="user-btn" style=" margin:.5rem; font-size:40px; font-weight:500;margin-left:.3rem;margin-right:5rem;  border-radius:50%;"></ion-icon>
+                        <?php
+                            }else{
+                                ?>
+                                <img id="user-btn" src="../images/individuals_images/<?= $fetch_profile['individual_photo']; ?>" alt="<?= $fetch_profile['individual_Name']; ?>" srcset="">
+                        <?php
+                            }
+                        ?>
                     </div>
                     
 
