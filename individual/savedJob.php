@@ -239,7 +239,7 @@ echo"</section>";
     margin-top: 30px;
 
     /* width: 80%; */
-        /* margin:3% 10%; */
+    /* margin:3% 10%; */
 }
 .stack {
     width: 240px;
