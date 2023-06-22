@@ -142,6 +142,17 @@ input{
                                     <span class="title">Jobs</span>
                                 </a>
                             </li>
+        
+                            <li>
+                                <a href="userRegistration.php" id="Job-LeftBar">
+                                    <span class="icon">
+                                        <!-- <img class="imgIcon" src="https://cdn-icons-png.flaticon.com/512/8388/8388689.png" alt=""> -->
+                                        <!-- <ion-icon name="fast-food-outline"></ion-icon> -->
+                                        <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+                                    </span>
+                                    <span class="title">Login/ Signup</span>
+                                </a>
+                            </li>
                         </ul>
                     </div><!-- end navigation -->
         <div class="rightSide">
