@@ -4,20 +4,12 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Render All Elements Normally -->
-        <link rel="stylesheet" href="../css/normalize.css" />
-        <!-- Font Awesome Library -->
-        <link rel="stylesheet" href="../css/all.min.css" />
-        <!-- Main CSS File -->
-        <link rel="stylesheet" href="../css/master.css">
-        <link rel="stylesheet" href="../css/scholarship.css">
-        <link rel="stylesheet" href="../css/details.css">
-
         <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
 
         
 
         <?php
+            
             require_once '../connection.php';
             $id= $_GET['scholarshipId'];
             $query = "SELECT * From scholarships where scholarship_id=".$id."";

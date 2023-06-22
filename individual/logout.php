@@ -3,6 +3,6 @@
    session_start();
    session_unset();
    session_destroy();
-   header("location: ../userRegistration.php");  //after he logout, then it will be redirected to adminLogin.php file which is the login page of admin  in order to relogin agqin if he want 
+   header("location: ../index.php");  //after he logout, then it will be redirected to adminLogin.php file which is the login page of admin  in order to relogin agqin if he want 
    
 ?>
