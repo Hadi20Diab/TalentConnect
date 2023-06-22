@@ -194,7 +194,7 @@ ul.t1 li{
                                         ".$row['location']."
                                     </span>
                                 </div>
-                                <a href=\"".$row['location']."\" target=\"_blank\" >Apply Now</a>
+                                <a href=\"".$row['applyLink']."\" target=\"_blank\" >Apply Now</a>
                             </div>
                         </div>
                         <div class=\"scholarship-details-intro-data\" id=\"s_details\">
