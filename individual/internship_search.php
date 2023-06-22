@@ -39,7 +39,7 @@
 ?>
 
     <div class="row">
-        <input type="text" name="jobPosition" id="" placeholder="Job Position" value="<?= isset($_GET['jobPosition']) ? $_GET['jobPosition'] : '' ?>" style="width: 25rem;      height: 2rem;   margin: 1.6rem 0 10px ;    border-radius: 5px;     border: solid 0.5px gray; ">          <!-- set job position selected before -->
+        <input type="text" name="internship_Title" id="" placeholder="Internship Position" value="<?= isset($_GET['internship_Title']) ? $_GET['internship_Title'] : '' ?>" style="width: 25rem;      height: 2rem;   margin: 1.6rem 0 10px ;    border-radius: 5px;     border: solid 0.5px gray; ">          <!-- set job position selected before -->
     
         <div class="SelectRow">
             <label for="yearOfExperiance">Experiance Year:</label>
@@ -53,25 +53,25 @@
     <div class="row">
 
         <div class="SelectRow">
-            <label for="jobType">Job Type:</label>
+            <label for="work">Internship Type:</label>
     
-            <select id="select-state" name="jobType">
+            <select id="select-state" name="work">
                 <option value="">All</option>
-                <option value="Full-time" <?php echo (isset($_GET['jobType']) && $_GET['jobType'] == 'Full-time') ? 'selected' : ''; ?>>Full-time</option>
-                <option value="Part-time" <?php echo (isset($_GET['jobType']) && $_GET['jobType'] == 'Part-time') ? 'selected' : ''; ?>>Part-time</option>
+                <option value="Full-time" <?php echo (isset($_GET['work']) && $_GET['work'] == 'Full-time') ? 'selected' : ''; ?>>Full-time</option>
+                <option value="Part-time" <?php echo (isset($_GET['work']) && $_GET['work'] == 'Part-time') ? 'selected' : ''; ?>>Part-time</option>
             </select>
     
         </div>
     
     
         <div class="SelectRow">
-            <label for="jobWorkPlace">Job WorkPlace:</label>
+            <label for="commitment">Internship WorkPlace:</label>
     
-            <select id="select-state" name="jobWorkPlace">
+            <select id="select-state" name="commitment">
                 <option value="">All</option>
-                <option value="On-site" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'On-site') ? 'selected' : ''; ?>>On-site</option>
-                <option value="Remote" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'Remote') ? 'selected' : ''; ?>>Remote</option>
-                <option value="Hybrid" <?php echo (isset($_GET['jobWorkPlace']) && $_GET['jobWorkPlace'] == 'Hybrid') ? 'selected' : ''; ?>>Hybrid</option>
+                <option value="On-site" <?php echo (isset($_GET['commitment']) && $_GET['commitment'] == 'On-site') ? 'selected' : ''; ?>>On-site</option>
+                <option value="Remote" <?php echo (isset($_GET['commitment']) && $_GET['commitment'] == 'Remote') ? 'selected' : ''; ?>>Remote</option>
+                <option value="Hybrid" <?php echo (isset($_GET['commitment']) && $_GET['commitment'] == 'Hybrid') ? 'selected' : ''; ?>>Hybrid</option>
             </select>
     
         </div>
@@ -79,33 +79,33 @@
 
     <div class="row">
 
-        <div class="SelectRow">
+        <!-- <div class="SelectRow">
             <label for="category">Category:</label>
             <select id="select-state" name="category[]" multiple>
                 <option value="">All Category</option>
                 <?php
-                $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
+                // $select_categories = mysqli_query($conn, "SELECT category_name FROM `categories`");
                 
-                while ($select_category = mysqli_fetch_assoc($select_categories)) {
-                    $selected = (in_array($select_category['category_name'], $_GET['category'])) ? 'selected' : '';
-                    echo "<option value='" . $select_category['category_name'] . "' $selected >" . $select_category['category_name'] . "</option>";
-                }
+                // while ($select_category = mysqli_fetch_assoc($select_categories)) {
+                //     $selected = (in_array($select_category['category_name'], $_GET['category'])) ? 'selected' : '';
+                //     echo "<option value='" . $select_category['category_name'] . "' $selected >" . $select_category['category_name'] . "</option>";
+                // }
                 ?>
             </select>
-        </div>
+        </div> -->
     
     
     
     
         <div class="SelectRow">
             <label for="country">Country:</label>
-            <select id="select-state" name="job_Country[]" multiple>
+            <select id="select-state" name="internship_Country[]" multiple>
                 <option value="">All</option>
                 <?php
                 $select_countries = mysqli_query($conn, "SELECT country_name FROM `country`");
                 
                 while ($select_country = mysqli_fetch_assoc($select_countries)) {
-                    $selected = (in_array($select_country['country_name'], $_GET['job_Country'])) ? 'selected' : '';
+                    $selected = (in_array($select_country['country_name'], $_GET['internship_Country'])) ? 'selected' : '';
                     echo "<option value='" . $select_country['country_name'] . "' $selected >" . $select_country['country_name'] . "</option>";
                 }
                 ?>
@@ -134,7 +134,7 @@
       <?php
 // Job Postion is set?
 
-if(isset($_GET['jobPosition'])){
+if(isset($_GET['internship_Title'])){
     echo'
     <h2 style="margin: -20px 2rem;">
         Search Result 
@@ -150,55 +150,55 @@ if(isset($_GET['jobPosition'])){
 
 <?php
     // addmin DELELT 
-    if(isset($_GET['jobType'])){
+    if(isset($_GET['work'])){
         
-        $jobPosition = $_GET['jobPosition'];
+        $internship_Title = $_GET['internship_Title'];
         $yearOfExperiance = $_GET['yearOfExperiance'];
-        $jobType = $_GET['jobType'];
-        $jobWorkPlace = isset($_GET['jobWorkPlace']) ? $_GET['jobWorkPlace'] : '';
+        $work = $_GET['work'];
+        $commitment = isset($_GET['commitment']) ? $_GET['commitment'] : '';
         $category = isset($_GET['category']) ? $_GET['category'] : array();
-        $job_Country = isset($_GET['job_Country']) ? $_GET['job_Country'] : array();
+        $internship_Country = isset($_GET['internship_Country']) ? $_GET['internship_Country'] : array();
         
-        $sql = "SELECT DISTINCT jobs.*, company.company_id ,company_Name,company_Logo,
+        $sql = "SELECT DISTINCT internship.*, company.company_id ,company_Name,company_Logo,
                                         universities.university_ID ,university_Name,university_Logo
-                FROM jobs 
-                    LEFT JOIN company ON deliveredBy = company_Name
-                    LEFT JOIN universities ON universities.university_Name = jobs.deliveredBy
-                    LEFT JOIN job_fields ON jobs.job_ID = job_fields.job_ID
+                FROM internship 
+                    LEFT JOIN company ON publisher_Id = company_id
+                    LEFT JOIN universities ON universities.university_ID = internship.publisher_Id
                     WHERE ";
+                    // LEFT JOIN interenship_fields ON internship.job_ID = job_fields.job_ID
         $conditions = array();
         
-        if (!empty($jobPosition)) {
-            $conditions[] = "position LIKE '%$jobPosition%'";
+        if (!empty($internship_Title)) {
+            $conditions[] = "internship_Title LIKE '%$internship_Title%'";
         }
 
         if (!empty($yearOfExperiance)) {
             $conditions[] = "yearOfExperiance <= '$yearOfExperiance'";
         }
         
-        if (!empty($jobType)) {
-            $conditions[] = "jobType = '$jobType'";
+        if (!empty($work)) {
+            $conditions[] = "work = '$work'";
         }
 
-        if (!empty($jobWorkPlace)) {
-            $conditions[] = "jobs.job_WorkPlace = '$jobWorkPlace'";
+        if (!empty($commitment)) {
+            $conditions[] = "internship.commitment = '$commitment'";
         }
         
-        if (!empty($job_Country)) {
-            if (!is_array($job_Country)) {
-                $job_Country = array($job_Country); // Convert to array if it's not already
+        if (!empty($internship_Country)) {
+            if (!is_array($internship_Country)) {
+                $internship_Country = array($internship_Country); // Convert to array if it's not already
             }
-            $conditions[] = "job_Country IN ('" . implode("', '", $job_Country) . "')";
+            $conditions[] = "internship_Country IN ('" . implode("', '", $internship_Country) . "')";
         }
         
         
 
-        if (!empty($category)) {
-            if (!is_array($category)) {
-                $category = array($category); // Convert to array if it's not already
-            }
-            $conditions[] = "job_fields.job_field_Name IN ('" . implode("', '", $category) . "')";
-        }
+        // if (!empty($category)) {
+        //     if (!is_array($category)) {
+        //         $category = array($category); // Convert to array if it's not already
+        //     }
+        //     $conditions[] = "job_fields.job_field_Name IN ('" . implode("', '", $category) . "')";
+        // }
         
         
         if (!empty($conditions)) {
@@ -226,101 +226,103 @@ if(isset($_GET['jobPosition'])){
                 <section class="scholarships">
             ';
     
-            
             while ($row = $result->fetch_assoc()) {
                 echo "
 
+
                 <div class=\"stack\" id=\"stack\">
-                <a href=\"../viewJob.php?job_id=".$row['job_id']."\" target='_black'>
+                <a href=\"internshipDetails.php?internshipId=".$row['internship_ID']."\" target='_black'>
                     <div class=\"stack-details\" id=\"stack-details\">
                         <h3>
-                            ". $row['position']." 
+                            ". $row['internship_Title']." 
                         </h3>
                         <div class=\"work-location\">
                             <span>
                                 <i class=\"fa fa-thin fa-briefcase\"></i>
-                                ". $row['jobType']." 
+                                ". $row['work']." 
                             </span>
                             <span>
                                 <i class=\"fas fa-location-arrow\"></i>
-                                ". $row['job_Country'].' ('.$row['job_City'].')'."
+                                ". $row['location']."  
                             </span>
                             <span>
                                 <i class=\"fa fa-thin fa-stopwatch\"></i>
-                                ". $row['job_WorkPlace']." 
+                                ". $row['commitment']." 
                             </span>
                             <span>
-                                <i class='fa-solid fa-money-bill'></i>
-                              ".$row['salaryRange']."
+                              <i class=\"fa fa-solid fa-hourglass\"></i>
+                              ".$row['period']."
                         </span>
                         </div>
                         <span class=\"see-details\">See Details</span>
                     </div>
                 </a>
-                
 
+                
                 ";
 
+                //bookmark
+                $internship_ID= $row['internship_ID'];
+                $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND internship_ID = " . $internship_ID ;
 
-            $bookmarkSql = " SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND job_ID = $row[job_id] ";
-
-            // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$row['company_id'] ";
-            $bookmarkResult = mysqli_query($conn, $bookmarkSql);
-            $bookmarkCount=mysqli_num_rows($bookmarkResult);
-
-                if(!$bookmarkCount>0){ //is not saved before 
-                    echo'
-                        <a  class="addBookmark" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
-
-                            <i class="fa-regular fa-bookmark fa-2xl" ></i>
-                        </a>
-                        <a class="removeBookmark hide" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
-    
-                            <i class="fas fa-bookmark fa-2xl" ></i>
-                        </a>
-                    ';
-                }
-                else{ // is saved before 
-                    echo'
-                    <a  class="addBookmark hide" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
-
-                        <i class="fa-regular fa-bookmark fa-2xl" ></i>
-                    </a>
-                    <a class="removeBookmark" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
-
-                        <i class="fas fa-bookmark fa-2xl" ></i>
-                    </a>
-                ';
-                }//else
-                
-// close post DIV
-            echo'
-               </div> 
-            ';
-
-        }
+                // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
+                $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+                $bookmarkCount=mysqli_num_rows($bookmarkResult);
 
 
+                    if(!$bookmarkCount>0){ //is not saved before 
+                        echo'
+                            <a  class="addBookmark" href="../addRemoveBookmark.php?internship_ID='. $internship_ID .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+
+                                <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                            </a>
+                            <a class="removeBookmark hide" href="../addRemoveBookmark.php?internship_ID='. $internship_ID .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+
+                                <i class="fas fa-bookmark fa-2xl" ></i>
+                            </a>
+                        ';
+                    }
+                    else{ // is saved before 
+                        echo'
+                            <a  class="addBookmark hide" href="../addRemoveBookmark.php?internship_ID='. $internship_ID .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+
+                                <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                            </a>
+                            <a class="removeBookmark" href="../addRemoveBookmark.php?internship_ID='. $internship_ID .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+
+                                <i class="fas fa-bookmark fa-2xl" ></i>
+                            </a>
+                        ';
+                    }
+
+                // close stack div
+                echo"
+                </div> 
+                ";
+                                
+
+
+            }// end while loop
             echo"</section>";
         } 
         else {
-            echo '<p class="empty" style="margin: 5% 25%; width: 50%;">No results found for the selected job filter.</p>';
+            echo '<p class="empty" style="margin: 5% 25%; width: 50%;">No results found for the selected Internship filter.</p>';
         } 
         
     }
     else{
-        echo '<p class="empty" style="margin: 5% 25%; width: 50%;">You must select a filter category to perform the job search.</p>';
+        echo '<p class="empty" style="margin: 5% 25%; width: 50%;">You must select a filter category to perform the Internship search.</p>';
 
     }
     ?>
 </div>
 
 <style>
-   .scholarships{
+   /* .scholarships{
         width: 80%;
         margin:3% 10%;
-   } 
-   .Post{
+   }  */
+   /* .Post{
         padding: 15px;
         border-radius: 25px;
         background-color: #f3f2ef;
@@ -354,7 +356,7 @@ if(isset($_GET['jobPosition'])){
     }
    .postDetails a:hover{
         scale: 1.15;
-    }
+    } */
     .stack{
         position: relative;
     }
@@ -370,61 +372,11 @@ if(isset($_GET['jobPosition'])){
     .hide{
     display:none;
     }
-</style>
-<link rel="stylesheet" href="../css/all_icon.css">
-
-<script>
-    $(document).ready(function () {
-        $('select').selectize({
-            sortField: 'text'
-          });
-       });
-</script>
 
 
 
 
-
-
-
-    </div>
-    <title>Search Jobs</title>
-    <script>
-        document.getElementById("Job-LeftBar").classList.add("actived");
-
-        //  script for Bookmarks add-remove 
-
-        var addBookmarks = document.querySelectorAll('.addBookmark');
-        var removeBookmarks = document.querySelectorAll('.removeBookmark');
-
-        // Add event listener for each addBookmark button
-        addBookmarks.forEach(function(addBookmark) {
-        addBookmark.addEventListener('click', function() {
-            var parent = this.parentElement;
-            var removeBookmark = parent.querySelector('.removeBookmark');
-
-            removeBookmark.style.display = 'block'; // Show the removeBookmark element
-            this.style.display = 'none'; // Hide the addBookmark element
-        });
-        });
-
-        // Add event listener for each removeBookmark button
-        removeBookmarks.forEach(function(removeBookmark) {
-        removeBookmark.addEventListener('click', function() {
-            var parent = this.parentElement;
-            var addBookmark = parent.querySelector('.addBookmark');
-
-            addBookmark.style.display = 'block'; // Show the addBookmark element
-            this.style.display = 'none'; // Hide the removeBookmark element
-        });
-        });
-
-    </script>
-
-
-
-
-<style>
+    
 /*  */
 .scholarships{
     display: flex;
@@ -535,7 +487,63 @@ p {
   background-color: #204b99;
 } */
 
-    </style>
+
+
+
+
+
+
+</style>
+<link rel="stylesheet" href="../css/all_icon.css">
+
+<script>
+    $(document).ready(function () {
+        $('select').selectize({
+            sortField: 'text'
+          });
+       });
+</script>
+
+
+
+
+
+
+
+    </div>
+    <title>Search Internships</title>
+    <script>
+        document.getElementById("InternshipManagement-LeftBar").classList.add("actived");
+
+        //  script for Bookmarks add-remove 
+
+        var addBookmarks = document.querySelectorAll('.addBookmark');
+        var removeBookmarks = document.querySelectorAll('.removeBookmark');
+
+        // Add event listener for each addBookmark button
+        addBookmarks.forEach(function(addBookmark) {
+        addBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var removeBookmark = parent.querySelector('.removeBookmark');
+
+            removeBookmark.style.display = 'block'; // Show the removeBookmark element
+            this.style.display = 'none'; // Hide the addBookmark element
+        });
+        });
+
+        // Add event listener for each removeBookmark button
+        removeBookmarks.forEach(function(removeBookmark) {
+        removeBookmark.addEventListener('click', function() {
+            var parent = this.parentElement;
+            var addBookmark = parent.querySelector('.addBookmark');
+
+            addBookmark.style.display = 'block'; // Show the addBookmark element
+            this.style.display = 'none'; // Hide the removeBookmark element
+        });
+        });
+
+    </script>
+
 </body>
 
 </html>

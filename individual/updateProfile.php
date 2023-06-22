@@ -31,6 +31,7 @@ else{
         $PhoneNumber = mysqli_real_escape_string($conn, $_POST['IndividualPhoneNumber'] );
         
         $Major = mysqli_real_escape_string($conn, $_POST['Major'] );
+        $highestDegree = mysqli_real_escape_string($conn, $_POST['highestDegree'] );
         $graduated = mysqli_real_escape_string($conn, $_POST['Graduated'] );
         
         $country = mysqli_real_escape_string($conn, $_POST['IndividualCountry'] );
@@ -100,7 +101,7 @@ else{
         //   }
         // }
 
-
+//-----
 
 
 
@@ -143,7 +144,7 @@ else{
         //   mysqli_query($conn, $insertQuery);
         // }
 
-        $updateProfileQuery = mysqli_query($conn, "UPDATE `individuals` SET individual_Name = '$individualName', individual_Email = '$Email', individual_PhoneNumber = '$PhoneNumber', individual_Country = '$country', individual_Linkedin = '$linkedinProfile', individual_About = '$about',  individual_Major = '$Major'  WHERE individual_ID = '$individual_ID'");
+        $updateProfileQuery = mysqli_query($conn, "UPDATE `individuals` SET individual_Name = '$individualName', individual_Email = '$Email', individual_PhoneNumber = '$PhoneNumber', individual_Country = '$country', individual_Linkedin = '$linkedinProfile', individual_About = '$about',  individual_Major = '$Major', individual_highestDegree = '$highestDegree'  WHERE individual_ID = '$individual_ID'");
 
         
       if($_POST['individualName']){
@@ -288,6 +289,18 @@ if ($resultMajors && mysqli_num_rows($resultMajors) > 0) {
 
 
 
+  <label for="highestDegree">Highest Education Degree:</label>
+  <select id="select-state" name="highestDegree">
+    <option value="">Highest Degree</option>
+    <option value="Bachelor" <?= ($select_individual['individual_highestDegree']) == 'Bachelor' ? 'selected' : '' ?>>Bachelor</option>
+    <option value="Master" <?= ($select_individual['individual_highestDegree']) == 'Master' ? 'selected' : '' ?>>Master</option>
+    <option value="Phd" <?= ($select_individual['individual_highestDegree']) == 'Phd' ? 'selected' : '' ?>>Phd</option>
+  </select>
+
+  
+
+
+
 <!-- individual's graduation -->
 
 <?php
@@ -361,7 +374,6 @@ if (isset( $select_individual['Is_Graduated']) ){
         <?php echo $options; ?>
   </select>
 
-  
 
 
 

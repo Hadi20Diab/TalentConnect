@@ -50,15 +50,15 @@
 
 
                 <div class=\"stack\" id=\"stack\">
-                    <a href=\"scholarshipDetails.php?scholarshipId=".$row['scholarship_id']."\" target='_black'>
+                    <a href=\"internshipDetails.php?internshipId=".$row['internship_ID']."\" target='_black'>
                         <div class=\"stack-details\" id=\"stack-details\">
                             <h3>
-                                ". $row['scholarship_title']." 
+                                ". $row['internship_Title']." 
                             </h3>
                             <div class=\"work-location\">
                                 <span class=\"fees\">
                                     <i class=\"fas fa-money-bill\"></i>
-                                    ".$row['award_amount']."
+                                    ".$row['fees']."
                                 </span>
                                 <span class=\"date\">
                                     <i class=\"fas fa-calendar\"></i>
@@ -73,8 +73,8 @@
 
                     ";
                     //bookmark
-                    $scholarshipId= $row['scholarship_id'];
-                    $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND scholarships_ID = " . $scholarshipId ;
+                    $scholarshipId= $row['internship_ID'];
+                    $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND internship_ID = " . $scholarshipId ;
 
                     // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_course['company_id'] ";
                     $bookmarkResult = mysqli_query($conn, $bookmarkSql);
@@ -83,11 +83,11 @@
 
                         if(!$bookmarkCount>0){ //is not saved before 
                             echo'
-                                <a  class="addBookmark" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+                                <a  class="addBookmark" href="../addRemoveBookmark.php?internship_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
 
                                     <i class="fa-regular fa-bookmark fa-2xl" ></i>
                                 </a>
-                                <a class="removeBookmark hide" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+                                <a class="removeBookmark hide" href="../addRemoveBookmark.php?internship_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
             
                                     <i class="fas fa-bookmark fa-2xl" ></i>
                                 </a>
@@ -95,11 +95,11 @@
                         }
                         else{ // is saved before 
                             echo'
-                                <a  class="addBookmark hide" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+                                <a  class="addBookmark hide" href="../addRemoveBookmark.php?internship_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
 
                                     <i class="fa-regular fa-bookmark fa-2xl" ></i>
                                 </a>
-                                <a class="removeBookmark" href="../addRemoveBookmark.php?scholarships_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
+                                <a class="removeBookmark" href="../addRemoveBookmark.php?internship_ID='. $scholarshipId .'&user_ID='. $individual_ID .'&user_role=individual" target="_black">
 
                                     <i class="fas fa-bookmark fa-2xl" ></i>
                                 </a>
@@ -217,7 +217,7 @@
 
 
     </div>
-    <title>Search courses</title>
+    <title>Search Internship</title>
 
     <!-- Script Search Bar -->
 

@@ -2,7 +2,8 @@
   include "structural_IndividualPage.php";
 
 ?>
-<section class="PostContainer">
+<section class="scholarships">
+
     <h1 class="heading">
         <!-- back button -->
         <a href="jobs.php"> 
@@ -22,155 +23,92 @@
 
 
     
-    $select_jobs = mysqli_query($conn, $sql);
-    if (!$select_jobs) {
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
         die(mysqli_error($conn));
     }
 
-    if(!mysqli_num_rows($select_jobs)>0){
+    if(!mysqli_num_rows($result)>0){
         echo"<p class='empty'>No saved Job Yet!</p>";
     }
 
-    while ($fetch_job = mysqli_fetch_assoc($select_jobs)) {
-            $job_id = $fetch_job["job_id"];
-            
-            $deliveredBy = $fetch_job["deliveredBy"];
-            
-            // $company_id = $fetch_job["company_id"];
-            
 
+    while ($row = $result->fetch_assoc()) {
+        echo "
 
-            $select_deliveredBy = mysqli_query($conn,
-                "SELECT * FROM jobs 
-                INNER JOIN company ON company.company_Name  = jobs.deliveredBy
-                WHERE jobs.job_id  = $job_id"
-            );
-            $role="company";
-            $count = mysqli_num_rows($select_deliveredBy);
-        
-         if (!$count >0) { // course creator not company so it's univeristy 
-            $select_deliveredBy = mysqli_query($conn,
-            "SELECT * FROM jobs 
-            INNER JOIN universities ON universities.university_Name  = jobs.deliveredBy
-            
-            WHERE jobs.job_id  = $job_id"
-            );
-            $role="univeristy";
-
-         }
-        
-         $fetch_job_Creator = mysqli_fetch_assoc($select_deliveredBy);
-         
-         if(!$fetch_job_Creator){
-            echo mysqli_error($conn);
-         }
-        
-
-        
-         if($role=="company"){
-        
-            $company_id=$fetch_job_Creator['company_id'];
-            $deliveredByLOGO=$fetch_job_Creator['company_Logo'];
-         }
-         else{
-            $university_id=$fetch_job_Creator['university_ID'];
-            $deliveredByLOGO=$fetch_job_Creator['university_Logo'];
-         }
-        
-
-
-
-
-
-
-            
-            
-            ?>
-                <div class="Post">
-                    <div class="postHeader">
-                        <div class="postTitle">
-                            
-        <!--  go to creator  job profile either company or university -->
-<?php
-         if($role=="company"){
-            echo '
-            <a href="../viewCompanyProfile.php?company_id=' . $company_id . '" class="row" style="text-decoration: none;" target="_blank">
-            ';
-            
-        }
-        else{
-            echo'
-                <a href="../viewUniversityProfile.php?university_id=' . $university_id . '" class="row" style="text-decoration: none;" target="_blank">
-            ';
-        }
-?>
-
-                                <img src="../images/companies_universities_images/<?= $deliveredByLOGO ?>" alt="">
-                            
-                            </a>
-                
-                            <div>
-                                <h3>
-                                    <?= $fetch_job['position']; ?>
-                                </h3>
-                                <br>
-                                <h4>
-                                    <?= $fetch_job['deliveredBy']; ?>
-                                </h4>
-                            </div>
-                        </div>
-            
-                        <h4 class="deadline">
-                            <?= $fetch_job['applicationDeadline']; ?>
-                        </h4>
-                    </div>
-                    
-
-                    <div class="postDetails">
-                        <h5><?= $fetch_job['job_Country']; ?> - <?= $fetch_job['jobType']; ?> - <?= $fetch_job['job_WorkPlace']; ?></h5>
-                        <a href="../viewJob.php?job_id=<?= $job_id; ?>" target="_blank">Read Details</a>
-                            
-                    </div>
-
-<?php
-
-$bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND job_ID = " . $fetch_job['job_id'];
-
-            // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$fetch_job['company_id'] ";
-            $bookmarkResult = mysqli_query($conn, $bookmarkSql);
-            $bookmarkCount=mysqli_num_rows($bookmarkResult);
-
-                if(!$bookmarkCount>0){ //is not saved before 
-                    echo'
-                        <a  class="addBookmark" href="../addRemoveBookmark.php?job_ID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
-
-                            <i class="fa-regular fa-bookmark fa-2xl" ></i>
-                        </a>
-                        <a class="removeBookmark hide" href="../addRemoveBookmark.php?job_ID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
-    
-                            <i class="fas fa-bookmark fa-2xl" ></i>
-                        </a>
-                    ';
-                }
-                else{ // is saved before 
-                    echo'
-                    <a  class="addBookmark hide" href="../addRemoveBookmark.php?job_ID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
-
-                        <i class="fa-regular fa-bookmark fa-2xl" ></i>
-                    </a>
-                    <a class="removeBookmark" href="../addRemoveBookmark.php?job_ID='. $fetch_job['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
-
-                        <i class="fas fa-bookmark fa-2xl" ></i>
-                    </a>
-                ';
-                }
-// close post DIV
-            echo'
+        <div class=\"stack\" id=\"stack\">
+        <a href=\"../viewJob.php?job_id=".$row['job_id']."\" target='_black'>
+            <div class=\"stack-details\" id=\"stack-details\">
+                <h3>
+                    ". $row['position']." 
+                </h3>
+                <div class=\"work-location\">
+                    <span>
+                        <i class=\"fa fa-thin fa-briefcase\"></i>
+                        ". $row['jobType']." 
+                    </span>
+                    <span>
+                        <i class=\"fas fa-location-arrow\"></i>
+                        ". $row['job_Country'].' ('.$row['job_City'].')'."
+                    </span>
+                    <span>
+                        <i class=\"fa fa-thin fa-stopwatch\"></i>
+                        ". $row['job_WorkPlace']." 
+                    </span>
+                    <span>
+                        <i class='fa-solid fa-money-bill'></i>
+                      ".$row['salaryRange']."
+                </span>
                 </div>
-            ';
+                <span class=\"see-details\">See Details</span>
+            </div>
+        </a>
+        
 
+        ";
+
+
+    $bookmarkSql = " SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_role = 'individual' AND job_ID = $row[job_id] ";
+
+    // $bookmarkSql="SELECT * FROM bookmarks WHERE user_ID=$individual_ID AND user_role='individual' AND job_ID=$row['company_id'] ";
+    $bookmarkResult = mysqli_query($conn, $bookmarkSql);
+    $bookmarkCount=mysqli_num_rows($bookmarkResult);
+
+        if(!$bookmarkCount>0){ //is not saved before 
+            echo'
+                <a  class="addBookmark" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
+
+                    <i class="fa-regular fa-bookmark fa-2xl" ></i>
+                </a>
+                <a class="removeBookmark hide" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
+
+                    <i class="fas fa-bookmark fa-2xl" ></i>
+                </a>
+            ';
         }
-        echo"</section>";
+        else{ // is saved before 
+            echo'
+            <a  class="addBookmark hide" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=add" target="_black">
+
+                <i class="fa-regular fa-bookmark fa-2xl" ></i>
+            </a>
+            <a class="removeBookmark" href="../addRemoveBookmark.php?job_ID='. $row['job_id'] .'&user_ID= '. $individual_ID .'&user_role=individual&status=remove" target="_black">
+
+                <i class="fas fa-bookmark fa-2xl" ></i>
+            </a>
+        ';
+        }//else
+        
+// close post DIV
+    echo'
+       </div> 
+    ';
+
+}
+    
+
+
+echo"</section>";
     // } 
     
     
@@ -216,7 +154,7 @@ $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_
 
 
 <style>
-   .PostContainer{
+   /* .PostContainer{
         width: 80%;
         margin:3% 10%;
    } 
@@ -254,9 +192,9 @@ $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_
     }
    .postDetails a:hover{
         scale: 1.15;
-    }
+    } */
 
-   .Post{
+   .stack{
     position: relative;
    }
    .addBookmark, .removeBookmark{
@@ -286,6 +224,125 @@ $bookmarkSql = "SELECT * FROM bookmarks WHERE user_ID = $individual_ID AND user_
     <script>
         document.getElementById("Job-LeftBar").classList.add("actived");
     </script>
+
+
+
+
+<style>
+/*  */
+.scholarships{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    margin-top: 30px;
+
+    /* width: 80%; */
+        /* margin:3% 10%; */
+}
+.stack {
+    width: 240px;
+    padding: 25px 25px 10px 25px;
+    border-radius: 5px;
+    background-color: #eee;
+    transition: 0.5s;
+}
+.stack-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: black;
+}
+.stack-details h3 {
+    /* margin-bottom: 30px; */
+    line-height: 30px;
+    height: 100px;
+    height: 80px;
+}
+.see-details {
+    align-self: end;
+    margin-bottom: 8px;
+}
+.work-location {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.work-location span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.stack-details .fees,
+.stack-details .date {
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 6px 14px;
+    transition: 0.5s;
+    border-radius: 20px;
+    outline: 1px solid #4444;
+    margin-bottom: 8px;
+}
+
+ .stack:hover{
+  transform: translate3d(-5px, -12px, 0px);
+  box-shadow: 1px 1px 0 1px #f9f9fb, 0px -35px 19px 0px rgba(34, 33, 81, 0.01), 31px 34px 43px -10px rgba(34, 33, 81, 0.15);
+
+}
+.stack:hover .see-details {
+    text-decoration: underline;
+}
+/*  */
+
+
+        /* .container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+} */
+
+h1 {
+  color: #333;
+}
+
+.scholarships-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+/* .scholarship-card {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+} */
+
+h2 {
+  color: #333;
+}
+
+p {
+  color: #666;
+}
+
+/* a {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #3366cc;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+} */
+
+/* a:hover {
+  background-color: #204b99;
+} */
+
+    </style>
 
 </body>
 
