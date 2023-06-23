@@ -45,14 +45,16 @@ include "structuralAdminPage.php";
 if(isset($_GET['companypendingid'])){
     $companypendingid = $_GET['companypendingid'];
     $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='approved' WHERE company_id ='$companypendingid'");
-    header("location:pendingCompany_Mangment.php");
+    // header("location:pendingCompany_Mangment.php");
+    echo '<script>window.location.href = "pendingCompany_Mangment.php";</script>';
 
 }
 ///IF THE ADMIN CLICK ON Block
 if(isset($_GET['cid'])){
     $cid = $_GET['cid'];
     $update_company = mysqli_query($conn, "UPDATE `company` SET company_Status='blocked' WHERE company_id ='$cid'");
-    header("location:pendingCompany_Mangment.php");
+    // header("location:pendingCompany_Mangment.php");
+    echo '<script>window.location.href = "pendingCompany_Mangment.php";</script>';
 
 }
 

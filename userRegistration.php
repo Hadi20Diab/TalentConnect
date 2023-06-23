@@ -548,7 +548,7 @@ elseif($type === 'individuals'){
             </div>
            <!-- radio button -->
             <div class="radio-group" >
-              <label class="radio" >
+              <!-- <label class="radio" >
                 <input type="radio"  value="company" name="type" >
                 Company
                 <span></span>
@@ -557,7 +557,7 @@ elseif($type === 'individuals'){
                 <input type="radio"  value="university" name="type">
                 University
                 <span></span>
-              </label>
+              </label> -->
               <label class="radio"  >
                 <input type="radio"  value="individuals" name="type">
                 Individuals
@@ -602,7 +602,7 @@ elseif($type === 'individuals'){
 
             <!-- radio button -->
             <div class="radio-group">
-              <label class="radio" >
+              <!-- <label class="radio" >
                 <input type="radio" value="company" name="type" >
                 Company
                 <span></span>
@@ -611,7 +611,7 @@ elseif($type === 'individuals'){
                 <input type="radio" value="university" name="type">
                 University
                 <span></span>
-              </label>
+              </label> -->
               <label class="radio" >
                 <input type="radio" value="individuals" name="type">
                 Individuals
